@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:todo_turno/views/widgets/card_information.dart';
+
+import '../../util/util.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -23,14 +26,7 @@ class HomeScreen extends StatelessWidget {
 
   Widget _shiftList(){
     final statusDetails = [
-      _shiftDetail('Titulo Informativo', 'VALOR'),
-      _shiftDetail('Titulo Informativo', 'VALOR'),
-      _shiftDetail('Titulo Informativo', 'VALOR'),
-      _shiftDetail('Titulo Informativo', 'VALOR'),
-      _shiftDetail('Titulo Informativo', 'VALOR'),
-      _shiftDetail('Titulo Informativo', 'VALOR'),
-      _shiftDetail('Titulo Informativo', 'VALOR'),
-      _shiftDetail('Titulo Informativo', 'VALOR'),
+      CardInformation(shift: Util.getSampleShift())
     ];
 
     return Container(
@@ -39,32 +35,10 @@ class HomeScreen extends StatelessWidget {
         child: ConstrainedBox(
             constraints: const BoxConstraints(maxHeight: 800),
             child: SingleChildScrollView(
-              child: Column(children: _buildShiftDetails(statusDetails)),
+              child: Column(children: statusDetails),
             )
         )
     );
 
   }
-
-  List<Widget> _buildShiftDetails(List<Widget> statusDetails) {
-    return statusDetails.expand((detail) => [detail, const SizedBox(height: 15)]).toList()..removeLast();
-  }
-
-
-  Widget _shiftDetail(String device, String status) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(device, style: const TextStyle(fontSize: 20, color: Colors.black)),
-        Expanded(
-          child: Text(
-            status,
-            textAlign: TextAlign.right,
-            style: const TextStyle(fontSize: 20, color: Colors.amber),
-          ),
-        ),
-      ],
-    );
-  }
-
 }
