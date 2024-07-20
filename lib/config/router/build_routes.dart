@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 // Importa las pantallas que vas a usar en tu aplicación
 
-import '../../screens/home_screen.dart';
+import '../../views/screens/home_screen.dart';
 import '../constants/routes_constants.dart';
 
 Map<String, Widget Function(BuildContext)> buildRoutes() {
