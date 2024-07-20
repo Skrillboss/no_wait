@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 
 import '../../config/dio/dio_config.dart';
 
-
+// Use UpperCamelCase for enum names
 enum ApiType {
   backend,
   paymentGateway,
@@ -17,29 +17,42 @@ class ApiService {
 
   ApiService(this.apiType);
 
-  Future<Response> _requestErrorHandler(
-      Future<Response> Function() request, String methodName) async {
+  // Improved error handling with more specific error types
+  Future<Response<dynamic>> _requestErrorHandler<T>(
+      Future<Response<T>> Function() request, String methodName) async {
     try {
       var response = await request();
       if (response.statusCode == 200) {
         return response;
       } else {
-        return Response;
+        // Handle non-200 responses with more informative error
+        throw DioException(
+          requestOptions: response.requestOptions,
+          response: response,
+          error: 'Request failed with status code: ${response.statusCode}',
+        );
       }
-    }catch (e) {
-      //se debe manejar este error
+    } on DioException catch (e) {
+      // Handle DioError specifically, log the error, and rethrow
+      print('Error in $methodName: ${e.message}');
+      rethrow;
+    } catch (e) {
+      // Handle other unexpected errors
+      print('Unexpected error in $methodName: $e');
       rethrow;
     }
   }
 
-  String _getApiUrl() {
+  // Use a more descriptive name for the method
+  String _getBaseUrlForApiType() {
     switch (apiType) {
       case ApiType.backend:
-        return 'https://debo.colocar.mi.api.aqui.com';
+      // Use placeholders for actual API URLs
+        return 'https://api.backend.com';
       case ApiType.paymentGateway:
-        return 'https://demo.colocar.la.api.pasareladepago.aqui.com';
+        return 'https://api.paymentgateway.com';
       default:
-        throw Exception('ApiType no soportado: $apiType');
+        throw UnsupportedError('Unsupported ApiType: $apiType');
     }
   }
 
@@ -55,10 +68,10 @@ class ApiService {
   /// ***************************************************************************
   ///                                      GET                                 *
   ///***************************************************************************
-  Future<Response> getRequest(String url, {String? token}) async {
+  Future<Response<dynamic>> getRequest(String path, {String? token}) async {
     return _requestErrorHandler(
             () => _dioRetry.get(
-          '${_getApiUrl()}$url',
+          '${_getBaseUrlForApiType()}$path',
           options: _getOptions(token),
         ),
         'getRequest');
@@ -67,11 +80,11 @@ class ApiService {
   /// ***************************************************************************
   ///                                      POST                                *
   ///***************************************************************************
-  Future<Response> postRequest(
-      {required String url, Object? data, String? token}) async {
+  Future<Response<dynamic>> postRequest(
+      {required String path, Map<String, dynamic>? data, String? token}) async {
     return _requestErrorHandler(
             () => _dio.post(
-          '${_getApiUrl()}$url',
+          '${_getBaseUrlForApiType()}$path',
           data: data != null ? json.encode(data) : null,
           options: _getOptions(token),
         ),
@@ -81,12 +94,12 @@ class ApiService {
   /// ***************************************************************************
   ///                                      PATCH                               *
   ///***************************************************************************
-  Future<Response> patchRequest(String url,
-      {Object? data, String? token, bool retry = false}) async {
+  Future<Response<dynamic>> patchRequest(String path,
+      {Map<String, dynamic>? data, String? token, bool retry = false}) async {
     var dioInstance = retry ? _dioRetry : _dio;
     return _requestErrorHandler(
             () => dioInstance.patch(
-          '${_getApiUrl()}$url',
+          '${_getBaseUrlForApiType()}$path',
           data: data != null ? json.encode(data) : null,
           options: _getOptions(token),
         ),
