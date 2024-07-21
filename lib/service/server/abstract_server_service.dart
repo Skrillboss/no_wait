@@ -15,12 +15,12 @@ abstract class AbstractServerService {
   Future<Shift?> creteShift(
       {required String idItem,
       required String idBusiness,
-      required String userId});
+      required AuthTokenResponse token});
 
   Future<Shift> updateShift(
       {required String idItem,
       required String idBusiness,
-      required String userId});
+      required AuthTokenResponse token});
 
   Future<bool> deleteShift(
       {required String idItem,
@@ -34,7 +34,7 @@ abstract class AbstractServerService {
       required String email,
       required String phoneNumber});
 
-  Future<User> updateUser(User user);
+  Future<User> updateUser(User user, AuthTokenResponse token);
 
   Future<bool> deleteUser(String id, AuthTokenResponse token);
 
@@ -44,9 +44,10 @@ abstract class AbstractServerService {
       required String imageUrl,
       required String phone,
       required String address,
-      required String email});
+      required String email,
+      required AuthTokenResponse token});
 
-  Future<Business> updateBusiness(Business business);
+  Future<Business> updateBusiness(Business business, AuthTokenResponse token);
 
   Future<bool> deleteBusiness(String id, AuthTokenResponse token);
 
@@ -54,15 +55,16 @@ abstract class AbstractServerService {
       {required String name,
       required String description,
       required String imageUrl,
-      required ItemStatus itemStatus});
+      required ItemStatus itemStatus,
+      required AuthTokenResponse token});
 
-  Future<Item> updateItem({required Item item});
+  Future<Item> updateItem({required Item item, required AuthTokenResponse token});
 
   Future<bool> deleteItem(String id, AuthTokenResponse token);
 
-  Future<Operation> savePaymentProcess(Operation operation, String token);
+  Future<Operation> savePaymentProcess(Operation operation, AuthTokenResponse token);
 
-  Future<Operation> updatePaymentProcess(Operation operation, String token);
+  Future<Operation> updatePaymentProcess(Operation operation, AuthTokenResponse token);
 
-  Future<Operation> completePaymentProcess(Operation operation, String token);
+  Future<Operation> completePaymentProcess(Operation operation, AuthTokenResponse token);
 }

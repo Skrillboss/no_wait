@@ -40,7 +40,7 @@ class ServerService {
     } catch (ex, st) {
       print('ERROR AL EJECUTAR EL METODO $methodName');
       final Exception exception =
-          (ex is Exception) ? ex : Exception(ex.toString());
+      (ex is Exception) ? ex : Exception(ex.toString());
       executionResult = ExecutionResult(
           statusCode: 700,
           message: ex.toString(),
@@ -51,52 +51,56 @@ class ServerService {
   }
 
   Future<ExecutionResult> completePaymentProcess(
-      Operation operation, String token) async {
+      Operation operation, AuthTokenResponse token) async {
     return await performOperation(
-        (serverService) =>
+            (serverService) =>
             serverService.completePaymentProcess(operation, token),
         'completePaymentProcess');
   }
 
   Future<ExecutionResult> createBusiness(
       {required String cif,
-      required String name,
-      required String imageUrl,
-      required String phone,
-      required String address,
-      required String email}) async {
+        required String name,
+        required String imageUrl,
+        required String phone,
+        required String address,
+        required String email,
+        required AuthTokenResponse token}) async {
     return await performOperation(
-        (serverService) => serverService.createBusiness(
+            (serverService) => serverService.createBusiness(
             cif: cif,
             name: name,
             imageUrl: imageUrl,
             phone: phone,
             address: address,
-            email: email),
+            email: email,
+            token: token),
         'createBusiness');
   }
 
   Future<ExecutionResult> createItem(
       {required String name,
-      required String description,
-      required String imageUrl,
-      required ItemStatus itemStatus}) async {
+        required String description,
+        required String imageUrl,
+        required ItemStatus itemStatus,
+        required AuthTokenResponse token}) async {
     return await performOperation(
-        (serverService) => serverService.createItem(
+            (serverService) => serverService.createItem(
             name: name,
             description: description,
             imageUrl: imageUrl,
-            itemStatus: itemStatus),
+            itemStatus: itemStatus,
+            token: token),
         'createItem');
   }
 
   Future<ExecutionResult> createUser(
       {PaymentInfo? paymentInfo,
-      required String name,
-      required String email,
-      required String phoneNumber}) async {
+        required String name,
+        required String email,
+        required String phoneNumber}) async {
     return await performOperation(
-        (serverService) => serverService.createUser(
+            (serverService) => serverService.createUser(
             paymentInfo: paymentInfo,
             name: name,
             email: email,
@@ -106,87 +110,92 @@ class ServerService {
 
   Future<ExecutionResult> creteShift(
       {required String idItem,
-      required String idBusiness,
-      required String userId}) async {
+        required String idBusiness,
+        required AuthTokenResponse token}) async {
     return await performOperation(
-        (serverService) => serverService.creteShift(
-            idItem: idItem, idBusiness: idBusiness, userId: userId),
+            (serverService) => serverService.creteShift(
+            idItem: idItem, idBusiness: idBusiness, token: token),
         'creteShift');
   }
 
   Future<ExecutionResult> deleteBusiness(String id, AuthTokenResponse token) async {
     return await performOperation(
-        (serverService) => serverService.deleteBusiness(id, token), 'deleteBusiness');
+            (serverService) => serverService.deleteBusiness(id, token), 'deleteBusiness');
   }
 
   Future<ExecutionResult> deleteItem(String id, AuthTokenResponse token) async {
     return await performOperation(
-        (serverService) => serverService.deleteItem(id, token), 'deleteItem');
+            (serverService) => serverService.deleteItem(id, token), 'deleteItem');
   }
 
   Future<ExecutionResult> deleteShift(
       {required String idItem,
-      required String idBusiness,
-      required String userId,
-      required AuthTokenResponse token}) async {
+        required String idBusiness,
+        required String userId,
+        required AuthTokenResponse token}) async {
     return await performOperation(
-        (serverService) => serverService.deleteShift(
+            (serverService) => serverService.deleteShift(
             idItem: idItem, idBusiness: idBusiness, userId: userId, token: token),
         'deleteShift');
   }
 
   Future<ExecutionResult> deleteUser(String id, AuthTokenResponse token) async {
     return await performOperation(
-        (serverService) => serverService.deleteUser(id, token), 'deleteUser');
+            (serverService) => serverService.deleteUser(id, token), 'deleteUser');
   }
 
   Future<ExecutionResult> getStatus() async {
     return await performOperation(
-        (serverService) => serverService.getStatus(), 'getStatus');
+            (serverService) => serverService.getStatus(), 'getStatus');
   }
 
   Future<ExecutionResult> login(String userName, String password) async {
     return await performOperation(
-        (serverService) => serverService.login(userName, password), 'login');
+            (serverService) => serverService.login(userName, password), 'login');
   }
 
   Future<ExecutionResult> savePaymentProcess(
-      Operation operation, String token) async {
+      Operation operation, AuthTokenResponse token) async {
     return await performOperation(
-        (serverService) => serverService.savePaymentProcess(operation, token),
+            (serverService) =>
+            serverService.savePaymentProcess(operation, token),
         'savePaymentProcess');
   }
 
-  Future<ExecutionResult> updateBusiness(Business business) async {
+  Future<ExecutionResult> updateBusiness(
+      Business business, AuthTokenResponse token) async {
     return await performOperation(
-        (serverService) => serverService.updateBusiness(business),
+            (serverService) => serverService.updateBusiness(business, token),
         'updateBusiness');
   }
 
-  Future<ExecutionResult> updateItem({required Item item}) async {
+  Future<ExecutionResult> updateItem(
+      {required Item item, required AuthTokenResponse token}) async {
     return await performOperation(
-        (serverService) => serverService.updateItem(item: item), 'updateItem');
+            (serverService) => serverService.updateItem(item: item, token: token),
+        'updateItem');
   }
 
   Future<ExecutionResult> updatePaymentProcess(
-      Operation operation, String token) async {
+      Operation operation, AuthTokenResponse token) async {
     return await performOperation(
-        (serverService) => serverService.updatePaymentProcess(operation, token),
+            (serverService) =>
+            serverService.updatePaymentProcess(operation, token),
         'updatePaymentProcess');
   }
 
   Future<ExecutionResult> updateShift(
       {required String idItem,
-      required String idBusiness,
-      required String userId}) async {
+        required String idBusiness,
+        required AuthTokenResponse token}) async {
     return await performOperation(
-        (serverService) => serverService.updateShift(
-            idItem: idItem, idBusiness: idBusiness, userId: userId),
+            (serverService) => serverService.updateShift(
+            idItem: idItem, idBusiness: idBusiness, token: token),
         'updateShift');
   }
 
-  Future<ExecutionResult> updateUser(User user) async {
+  Future<ExecutionResult> updateUser(User user, AuthTokenResponse token) async {
     return await performOperation(
-        (serverService) => serverService.updateUser(user), 'updateUser');
+            (serverService) => serverService.updateUser(user, token), 'updateUser');
   }
 }

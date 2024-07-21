@@ -8,9 +8,12 @@ import 'package:todo_turno/model/shift.dart';
 import 'package:todo_turno/model/user.dart';
 import 'package:todo_turno/service/server/abstract_server_service.dart';
 
+import '../../../util/util.dart';
+
 class DemoServer extends AbstractServerService {
   @override
-  Future<Operation> completePaymentProcess(Operation operation, String token) async{
+  Future<Operation> completePaymentProcess(
+      Operation operation, AuthTokenResponse token) async {
     await Future.delayed(const Duration(seconds: 2));
     return operation;
   }
@@ -18,17 +21,19 @@ class DemoServer extends AbstractServerService {
   @override
   Future<Business> createBusiness(
       {required String cif,
-        required String name,
-        required String imageUrl,
-        required String phone,
-        required String address,
-        required String email}) async {
+      required String name,
+      required String imageUrl,
+      required String phone,
+      required String address,
+      required String email,
+      required AuthTokenResponse token}) async {
     // Simulate a delay of 2 seconds
     await Future.delayed(const Duration(seconds: 2));
 
     // Create a Business object with provided data and a dummy ID
     Business business = Business(
-      id: 'someGeneratedId', // Replace with actual ID generation logic
+      id: 'someGeneratedId',
+      // Replace with actual ID generation logic
       cif: cif,
       name: name,
       imageUrl: imageUrl,
@@ -46,9 +51,19 @@ class DemoServer extends AbstractServerService {
       {required String name,
       required String description,
       required String imageUrl,
-      required ItemStatus itemStatus}) {
-    // TODO: implement createItemS
-    throw UnimplementedError();
+      required ItemStatus itemStatus,
+      required AuthTokenResponse token}) async {
+    final Item item = Item(
+      id: 'DEMO ID',
+      name: name,
+      description: description,
+      imageUrl: imageUrl,
+      status: ItemStatus.active
+    );
+    await Future.delayed(
+      const Duration(seconds: 1),
+    );
+    return item;
   }
 
   @override
@@ -56,28 +71,26 @@ class DemoServer extends AbstractServerService {
       {PaymentInfo? paymentInfo,
       required String name,
       required String email,
-      required String phoneNumber}) {
-    // TODO: implement createUser
-    throw UnimplementedError();
+      required String phoneNumber}) async{
+    final User user = User(
+      userId: 'UserId DEMO',
+      name: name,
+      email: email,
+      phoneNumber: phoneNumber,
+      paymentInfo: paymentInfo
+    );
+    await Future.delayed(const Duration(seconds: 2),);
+    return user;
   }
 
   @override
-  Future<Shift?> creteShift(
-      {required String idItem,
-      required String idBusiness,
-      required String userId}) {
-    // TODO: implement creteShift
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<bool> deleteBusiness(String id, AuthTokenResponse token) async{
+  Future<bool> deleteBusiness(String id, AuthTokenResponse token) async {
     await Future.delayed(const Duration(seconds: 1));
     return true;
   }
 
   @override
-  Future<bool> deleteItem(String id, AuthTokenResponse token) async{
+  Future<bool> deleteItem(String id, AuthTokenResponse token) async {
     await Future.delayed(const Duration(seconds: 1));
     return true;
   }
@@ -87,13 +100,13 @@ class DemoServer extends AbstractServerService {
       {required String idItem,
       required String idBusiness,
       required String userId,
-      required AuthTokenResponse token}) async{
+      required AuthTokenResponse token}) async {
     await Future.delayed(const Duration(seconds: 1));
     return true;
   }
 
   @override
-  Future<bool> deleteUser(String id, AuthTokenResponse token) async{
+  Future<bool> deleteUser(String id, AuthTokenResponse token) async {
     await Future.delayed(const Duration(seconds: 1));
     return true;
   }
@@ -119,42 +132,56 @@ class DemoServer extends AbstractServerService {
   }
 
   @override
-  Future<Operation> savePaymentProcess(Operation operation, String token) async{
+  Future<Operation> savePaymentProcess(
+      Operation operation, AuthTokenResponse token) async {
     await Future.delayed(const Duration(seconds: 1));
     return operation;
-
   }
 
   @override
-  Future<Business> updateBusiness(Business business) async{
+  Future<Business> updateBusiness(
+      Business business, AuthTokenResponse token) async {
     await Future.delayed(const Duration(seconds: 1));
     return business;
   }
 
   @override
-  Future<Item> updateItem({required Item item}) async{
+  Future<Item> updateItem(
+      {required Item item, required AuthTokenResponse token}) async {
     await Future.delayed(const Duration(seconds: 1));
     return item;
   }
 
   @override
-  Future<Operation> updatePaymentProcess(Operation operation, String token) async{
+  Future<Operation> updatePaymentProcess(
+      Operation operation, AuthTokenResponse token) async {
     await Future.delayed(const Duration(seconds: 1));
     return operation;
+  }
+
+  @override
+  Future<User> updateUser(User user, AuthTokenResponse token) async {
+    await Future.delayed(const Duration(seconds: 1));
+    return user;
+  }
+
+  @override
+  Future<Shift?> creteShift(
+      {required String idItem,
+      required String idBusiness,
+      required AuthTokenResponse token}) async{
+    final Shift shift = Util.getSampleShift();
+    await Future.delayed(const Duration(seconds: 1),);
+    return shift;
   }
 
   @override
   Future<Shift> updateShift(
       {required String idItem,
       required String idBusiness,
-      required String userId}) {
-    // TODO: implement updateShift
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<User> updateUser(User user) async{
-    await Future.delayed(const Duration(seconds: 1));
-    return user;
+      required AuthTokenResponse token}) async{
+    final Shift shift = Util.getSampleShift();
+    await Future.delayed(const Duration(seconds: 1),);
+    return shift;
   }
 }
