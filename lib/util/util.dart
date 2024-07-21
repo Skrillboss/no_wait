@@ -49,6 +49,7 @@ class Util {
       name: 'Sample Item',
       description: 'This is a description of the sample item.',
       imageUrl: 'https://example.com/sample-item.jpg',
+      status: ItemStatus.active,
     );
   }
 
