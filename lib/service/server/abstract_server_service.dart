@@ -22,10 +22,11 @@ abstract class AbstractServerService {
       required String idBusiness,
       required String userId});
 
-  Future<void> deleteShift(
+  Future<bool> deleteShift(
       {required String idItem,
       required String idBusiness,
-      required String userId});
+      required String userId,
+      required AuthTokenResponse token});
 
   Future<User> createUser(
       {PaymentInfo? paymentInfo,
@@ -35,7 +36,7 @@ abstract class AbstractServerService {
 
   Future<User> updateUser(User user);
 
-  Future<void> deleteUser(String id);
+  Future<bool> deleteUser(String id, AuthTokenResponse token);
 
   Future<Business> createBusiness(
       {required String cif,
@@ -47,7 +48,7 @@ abstract class AbstractServerService {
 
   Future<Business> updateBusiness(Business business);
 
-  Future<void> deleteBusiness(String id);
+  Future<bool> deleteBusiness(String id, AuthTokenResponse token);
 
   Future<Item> createItem(
       {required String name,
@@ -57,7 +58,7 @@ abstract class AbstractServerService {
 
   Future<Item> updateItem({required Item item});
 
-  Future<void> deleteItem(String id);
+  Future<bool> deleteItem(String id, AuthTokenResponse token);
 
   Future<Operation> savePaymentProcess(Operation operation, String token);
 

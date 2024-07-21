@@ -6,6 +6,7 @@ import 'package:todo_turno/model/user.dart';
 import 'package:todo_turno/service/server/abstract_server_service.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
+import '../../model/auth_token_response.dart';
 import '../../model/execution_result.dart';
 import 'cloud/api_server.dart';
 import 'demo/demo_server.dart';
@@ -113,29 +114,30 @@ class ServerService {
         'creteShift');
   }
 
-  Future<ExecutionResult> deleteBusiness(String id) async {
+  Future<ExecutionResult> deleteBusiness(String id, AuthTokenResponse token) async {
     return await performOperation(
-        (serverService) => serverService.deleteBusiness(id), 'deleteBusiness');
+        (serverService) => serverService.deleteBusiness(id, token), 'deleteBusiness');
   }
 
-  Future<ExecutionResult> deleteItem(String id) async {
+  Future<ExecutionResult> deleteItem(String id, AuthTokenResponse token) async {
     return await performOperation(
-        (serverService) => serverService.deleteItem(id), 'deleteItem');
+        (serverService) => serverService.deleteItem(id, token), 'deleteItem');
   }
 
   Future<ExecutionResult> deleteShift(
       {required String idItem,
       required String idBusiness,
-      required String userId}) async {
+      required String userId,
+      required AuthTokenResponse token}) async {
     return await performOperation(
         (serverService) => serverService.deleteShift(
-            idItem: idItem, idBusiness: idBusiness, userId: userId),
+            idItem: idItem, idBusiness: idBusiness, userId: userId, token: token),
         'deleteShift');
   }
 
-  Future<ExecutionResult> deleteUser(String id) async {
+  Future<ExecutionResult> deleteUser(String id, AuthTokenResponse token) async {
     return await performOperation(
-        (serverService) => serverService.deleteUser(id), 'deleteUser');
+        (serverService) => serverService.deleteUser(id, token), 'deleteUser');
   }
 
   Future<ExecutionResult> getStatus() async {
