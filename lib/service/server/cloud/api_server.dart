@@ -1,0 +1,114 @@
+import 'package:todo_turno/model/auth_token_response.dart';
+import 'package:todo_turno/model/business.dart';
+import 'package:todo_turno/model/item.dart';
+import 'package:todo_turno/model/operation.dart';
+import 'package:todo_turno/model/payment_info.dart';
+import 'package:todo_turno/model/server_settings.dart';
+import 'package:todo_turno/model/shift.dart';
+import 'package:todo_turno/model/user.dart';
+import 'package:todo_turno/service/server/abstract_server_service.dart';
+
+class ApiServer extends AbstractServerService{
+  @override
+  Future<Operation> completePaymentProcess(Operation operation, String token) {
+    // TODO: implement completePaymentProcess
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Business> createBusiness({required String cif, required String name, required String imageUrl, required String phone, required String address, required String email}) {
+    // TODO: implement createBusiness
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Item> createItem({required String name, required String description, required String imageUrl, required ItemStatus itemStatus}) {
+    // TODO: implement createItem
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<User> createUser({PaymentInfo? paymentInfo, required String name, required String email, required String phoneNumber}) {
+    // TODO: implement createUser
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Shift?> creteShift({required String idItem, required String idBusiness, required String userId}) {
+    // TODO: implement creteShift
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> deleteBusiness(String id) {
+    // TODO: implement deleteBusiness
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> deleteItem(String id) {
+    // TODO: implement deleteItem
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> deleteShift({required String idItem, required String idBusiness, required String userId}) {
+    // TODO: implement deleteShift
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> deleteUser(String id) {
+    // TODO: implement deleteUser
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<ServerStatus> getStatus() {
+    // TODO: implement getStatus
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<AuthTokenResponse> login(String userName, String password) {
+    // TODO: implement login
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Operation> savePaymentProcess(Operation operation, String token) {
+    // TODO: implement savePaymentProcess
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Business> updateBusiness(Business business) {
+    // TODO: implement updateBusiness
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Item> updateItem({required Item item}) {
+    // TODO: implement updateItem
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Operation> updatePaymentProcess(Operation operation, String token) {
+    // TODO: implement updatePaymentProcess
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Shift> updateShift({required String idItem, required String idBusiness, required String userId}) {
+    // TODO: implement updateShift
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<User> updateUser(User user) {
+    // TODO: implement updateUser
+    throw UnimplementedError();
+  }
+  
+}

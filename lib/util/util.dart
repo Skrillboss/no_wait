@@ -45,9 +45,11 @@ class Util {
   // Método estático para obtener un modelo de prueba de Item
   static Item getSampleItem() {
     return Item(
+      id: 'I1',
       name: 'Sample Item',
       description: 'This is a description of the sample item.',
       imageUrl: 'https://example.com/sample-item.jpg',
+      status: ItemStatus.active,
     );
   }
 
