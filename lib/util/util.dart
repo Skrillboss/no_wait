@@ -16,7 +16,7 @@ class Util {
       address: '123 Sample Street, Sample City',
       imageUrl: 'imagen.json or png or com',
       email: 'contact@samplebusiness.com',
-      createdAt: '2024-01-01T00:00:00Z',
+      createdAt: DateTime.now(),
     );
   }
 

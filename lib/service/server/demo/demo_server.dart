@@ -10,21 +10,35 @@ import 'package:todo_turno/service/server/abstract_server_service.dart';
 
 class DemoServer extends AbstractServerService {
   @override
-  Future<Operation> completePaymentProcess(Operation operation, String token) {
-    // TODO: implement completePaymentProcess
-    throw UnimplementedError();
+  Future<Operation> completePaymentProcess(Operation operation, String token) async{
+    await Future.delayed(const Duration(seconds: 2));
+    return operation;
   }
 
   @override
   Future<Business> createBusiness(
       {required String cif,
-      required String name,
-      required String imageUrl,
-      required String phone,
-      required String address,
-      required String email}) {
-    // TODO: implement createBusiness
-    throw UnimplementedError();
+        required String name,
+        required String imageUrl,
+        required String phone,
+        required String address,
+        required String email}) async {
+    // Simulate a delay of 2 seconds
+    await Future.delayed(const Duration(seconds: 2));
+
+    // Create a Business object with provided data and a dummy ID
+    Business business = Business(
+      id: 'someGeneratedId', // Replace with actual ID generation logic
+      cif: cif,
+      name: name,
+      imageUrl: imageUrl,
+      phone: phone,
+      address: address,
+      email: email,
+      createdAt: DateTime.now(),
+    );
+
+    return business;
   }
 
   @override
@@ -33,7 +47,7 @@ class DemoServer extends AbstractServerService {
       required String description,
       required String imageUrl,
       required ItemStatus itemStatus}) {
-    // TODO: implement createItem
+    // TODO: implement createItemS
     throw UnimplementedError();
   }
 

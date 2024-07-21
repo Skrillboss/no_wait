@@ -6,7 +6,7 @@ class Business {
   final String phone;
   final String address;
   final String email;
-  final String createdAt;
+  final DateTime createdAt;
 
   Business(
       {required this.id,
