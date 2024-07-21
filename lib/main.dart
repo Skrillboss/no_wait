@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 // import 'package:provider/provider.dart'; // Importa esto cuando vayas a usar Provider
 import 'config/constants/routes_constants.dart';
 import 'config/router/build_routes.dart'; // Asegúrate de que esta ruta sea correcta
@@ -9,6 +10,7 @@ Future<void> main() async {
 
   // Configura cualquier servicio o librería que necesites antes de iniciar la app
   await configureServices();
+  await dotenv.load(fileName: '.env');
 
   // Corre la aplicación
   runApp(const MyApp());
