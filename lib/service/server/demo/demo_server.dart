@@ -8,107 +8,180 @@ import 'package:todo_turno/model/shift.dart';
 import 'package:todo_turno/model/user.dart';
 import 'package:todo_turno/service/server/abstract_server_service.dart';
 
-class DemoServer extends AbstractServerService{
+import '../../../util/util.dart';
+
+class DemoServer extends AbstractServerService {
   @override
-  Future<Operation> completePaymentProcess(Operation operation, String token) {
-    // TODO: implement completePaymentProcess
-    throw UnimplementedError();
+  Future<Operation> completePaymentProcess(
+      Operation operation, AuthTokenResponse token) async {
+    await Future.delayed(const Duration(seconds: 2));
+    return operation;
   }
 
   @override
-  Future<Business> createBusiness({required String cif, required String name, required String imageUrl, required String phone, required String address, required String email}) {
-    // TODO: implement createBusiness
-    throw UnimplementedError();
+  Future<Business> createBusiness(
+      {required String cif,
+      required String name,
+      required String imageUrl,
+      required String phone,
+      required String address,
+      required String email,
+      required AuthTokenResponse token}) async {
+    // Simulate a delay of 2 seconds
+    await Future.delayed(const Duration(seconds: 2));
+
+    // Create a Business object with provided data and a dummy ID
+    Business business = Business(
+      id: 'someGeneratedId',
+      // Replace with actual ID generation logic
+      cif: cif,
+      name: name,
+      imageUrl: imageUrl,
+      phone: phone,
+      address: address,
+      email: email,
+      createdAt: DateTime.now(),
+    );
+
+    return business;
   }
 
   @override
-  Future<Item> createItem({required String name, required String description, required String imageUrl, required ItemStatus itemStatus}) {
-    // TODO: implement createItem
-    throw UnimplementedError();
+  Future<Item> createItem(
+      {required String name,
+      required String description,
+      required String imageUrl,
+      required ItemStatus itemStatus,
+      required AuthTokenResponse token}) async {
+    final Item item = Item(
+      id: 'DEMO ID',
+      name: name,
+      description: description,
+      imageUrl: imageUrl,
+      status: ItemStatus.active
+    );
+    await Future.delayed(
+      const Duration(seconds: 1),
+    );
+    return item;
   }
 
   @override
-  Future<User> createUser({PaymentInfo? paymentInfo, required String name, required String email, required String phoneNumber}) {
-    // TODO: implement createUser
-    throw UnimplementedError();
+  Future<User> createUser(
+      {PaymentInfo? paymentInfo,
+      required String name,
+      required String email,
+      required String phoneNumber}) async{
+    final User user = User(
+      userId: 'UserId DEMO',
+      name: name,
+      email: email,
+      phoneNumber: phoneNumber,
+      paymentInfo: paymentInfo
+    );
+    await Future.delayed(const Duration(seconds: 2),);
+    return user;
   }
 
   @override
-  Future<Shift?> creteShift({required String idItem, required String idBusiness, required String userId}) {
-    // TODO: implement creteShift
-    throw UnimplementedError();
+  Future<bool> deleteBusiness(String id, AuthTokenResponse token) async {
+    await Future.delayed(const Duration(seconds: 1));
+    return true;
   }
 
   @override
-  Future<void> deleteBusiness(String id) {
-    // TODO: implement deleteBusiness
-    throw UnimplementedError();
+  Future<bool> deleteItem(String id, AuthTokenResponse token) async {
+    await Future.delayed(const Duration(seconds: 1));
+    return true;
   }
 
   @override
-  Future<void> deleteItem(String id) {
-    // TODO: implement deleteItem
-    throw UnimplementedError();
+  Future<bool> deleteShift(
+      {required String idItem,
+      required String idBusiness,
+      required String userId,
+      required AuthTokenResponse token}) async {
+    await Future.delayed(const Duration(seconds: 1));
+    return true;
   }
 
   @override
-  Future<void> deleteShift({required String idItem, required String idBusiness, required String userId}) {
-    // TODO: implement deleteShift
-    throw UnimplementedError();
+  Future<bool> deleteUser(String id, AuthTokenResponse token) async {
+    await Future.delayed(const Duration(seconds: 1));
+    return true;
   }
 
   @override
-  Future<void> deleteUser(String id) {
-    // TODO: implement deleteUser
-    throw UnimplementedError();
+  Future<ServerStatus> getStatus() async {
+    await Future.delayed(const Duration(seconds: 1));
+    return ServerStatus.ok;
   }
 
   @override
-  Future<ServerStatus> getStatus() {
-    // TODO: implement getStatus
-    throw UnimplementedError();
+  Future<AuthTokenResponse> login(String userName, String password) async {
+    final AuthTokenResponse authTokenResponse = AuthTokenResponse(
+      token:
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c',
+      createAt: DateTime.now(),
+      expiration: DateTime.now().add(
+        const Duration(minutes: 10),
+      ),
+    );
+    await Future.delayed(const Duration(seconds: 1));
+    return authTokenResponse;
   }
 
   @override
-  Future<AuthTokenResponse> login(String userName, String password) {
-    // TODO: implement login
-    throw UnimplementedError();
+  Future<Operation> savePaymentProcess(
+      Operation operation, AuthTokenResponse token) async {
+    await Future.delayed(const Duration(seconds: 1));
+    return operation;
   }
 
   @override
-  Future<Operation> savePaymentProcess(Operation operation, String token) {
-    // TODO: implement savePaymentProcess
-    throw UnimplementedError();
+  Future<Business> updateBusiness(
+      Business business, AuthTokenResponse token) async {
+    await Future.delayed(const Duration(seconds: 1));
+    return business;
   }
 
   @override
-  Future<Business> updateBusiness(Business business) {
-    // TODO: implement updateBusiness
-    throw UnimplementedError();
+  Future<Item> updateItem(
+      {required Item item, required AuthTokenResponse token}) async {
+    await Future.delayed(const Duration(seconds: 1));
+    return item;
   }
 
   @override
-  Future<Item> updateItem({required Item item}) {
-    // TODO: implement updateItem
-    throw UnimplementedError();
+  Future<Operation> updatePaymentProcess(
+      Operation operation, AuthTokenResponse token) async {
+    await Future.delayed(const Duration(seconds: 1));
+    return operation;
   }
 
   @override
-  Future<Operation> updatePaymentProcess(Operation operation, String token) {
-    // TODO: implement updatePaymentProcess
-    throw UnimplementedError();
+  Future<User> updateUser(User user, AuthTokenResponse token) async {
+    await Future.delayed(const Duration(seconds: 1));
+    return user;
   }
 
   @override
-  Future<Shift> updateShift({required String idItem, required String idBusiness, required String userId}) {
-    // TODO: implement updateShift
-    throw UnimplementedError();
+  Future<Shift?> creteShift(
+      {required String idItem,
+      required String idBusiness,
+      required AuthTokenResponse token}) async{
+    final Shift shift = Util.getSampleShift();
+    await Future.delayed(const Duration(seconds: 1),);
+    return shift;
   }
 
   @override
-  Future<User> updateUser(User user) {
-    // TODO: implement updateUser
-    throw UnimplementedError();
+  Future<Shift> updateShift(
+      {required String idItem,
+      required String idBusiness,
+      required AuthTokenResponse token}) async{
+    final Shift shift = Util.getSampleShift();
+    await Future.delayed(const Duration(seconds: 1),);
+    return shift;
   }
-
 }

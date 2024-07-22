@@ -5,7 +5,7 @@ class User {
   final String name; // Nombre del usuario
   final String email; // Correo electrónico del usuario
   final String phoneNumber; // Número de teléfono del usuario
-  final PaymentInfo paymentInfo; // Información de pago del usuario
+  final PaymentInfo? paymentInfo; // Información de pago del usuario
 
   User({
     required this.userId,

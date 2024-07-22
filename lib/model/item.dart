@@ -6,6 +6,9 @@ enum ItemStatus{
   unhandledError
 }
 
+//TODO: se le debe agregar un atributo que represente el tiempo
+//aproximado que tarda el negocio en poder brindar cada Item,
+//para asi poder calcular el shiftTime de Shift
 class Item {
   final String id;
   final String name;
