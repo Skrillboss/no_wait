@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../widgets/custom_bottom_navigation_bar.dart';
+import '../../widgets/custom_appbar.dart';
 
 abstract class AbstractScreen extends StatefulWidget {
   const AbstractScreen({super.key});
@@ -57,19 +59,15 @@ mixin AbstractScreenMixin<Page extends AbstractScreen>
     );
   }
 
-  PreferredSizeWidget appbarWidget() {
-    //TODO: falta por implementar
-    return AppBar(title: const Text('Placeholder'));
+  CustomAppBar appbarWidget() {
+    return const CustomAppBar(title: 'Issue nº5',);
   }
 
   Widget bodyWidget() {
-    //TODO: falta por implementar
     return Container();
   }
 
-  Widget bottomNavigationBarWidget(){
-    //TODO: falta por implentar
-    return Container();
+  CustomBottomNavigationBar bottomNavigationBarWidget(){
+    return const CustomBottomNavigationBar();
   }
-
 }
