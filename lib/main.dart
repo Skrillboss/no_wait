@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
-// import 'package:provider/provider.dart'; // Importa esto cuando vayas a usar Provider
 import 'config/constants/providers_constants.dart';
 import 'config/constants/routes_constants.dart';
-import 'config/router/build_routes.dart'; // Asegúrate de que esta ruta sea correcta
+import 'config/router/build_routes.dart';
 
 Future<void> main() async {
   // Asegúrate de que Flutter esté inicializado
