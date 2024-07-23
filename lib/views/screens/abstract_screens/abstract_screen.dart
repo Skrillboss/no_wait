@@ -60,7 +60,18 @@ mixin AbstractScreenMixin<Page extends AbstractScreen>
   }
 
   CustomAppBar appbarWidget() {
-    return const CustomAppBar(title: 'Issue nº5',);
+    return CustomAppBar(
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.add_alert),
+          onPressed: () {
+            // Acción al presionar el botón de configuración
+          },
+        ),
+      ],
+      canGoToHome: false,
+      title: 'Home Screen',
+    );
   }
 
   Widget bodyWidget() {

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:todo_turno/views/widgets/card_information.dart';
-
 import '../../util/util.dart';
 import 'abstract_screens/abstract_screen.dart';
 
