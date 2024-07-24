@@ -63,7 +63,7 @@ mixin AbstractScreenMixin<Page extends AbstractScreen>
     return CustomAppBar(
       actions: [
         IconButton(
-          icon: const Icon(Icons.add_alert),
+          icon: const Icon(Icons.add),
           onPressed: () {
             // Acción al presionar el botón de configuración
           },
