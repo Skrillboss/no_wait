@@ -1,27 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:todo_turno/views/widgets/card_information.dart';
-
 import '../../util/util.dart';
+import 'abstract_screens/abstract_screen.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends AbstractScreen {
   const HomeScreen({super.key});
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends AbstractScreenState<HomeScreen>
+    with AbstractScreenMixin{
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Turno"),
-      ),
-      body: _shiftList(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Acción a realizar al presionar el botón
-          print("¡Botón presionado!");
-        },
-        child: const Icon(Icons.add),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-    );
+  Widget bodyWidget() {
+    return _shiftList();
   }
 
   Widget _shiftList(){
@@ -39,6 +32,7 @@ class HomeScreen extends StatelessWidget {
             )
         )
     );
-
   }
 }
+
+

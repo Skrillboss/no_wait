@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-// import 'package:provider/provider.dart'; // Importa esto cuando vayas a usar Provider
+import 'package:provider/provider.dart';
+import 'config/constants/providers_constants.dart';
 import 'config/constants/routes_constants.dart';
-import 'config/router/build_routes.dart'; // Asegúrate de que esta ruta sea correcta
+import 'config/router/build_routes.dart';
 
 Future<void> main() async {
   // Asegúrate de que Flutter esté inicializado
@@ -13,7 +14,11 @@ Future<void> main() async {
   await dotenv.load(fileName: '.env');
 
   // Corre la aplicación
-  runApp(const MyApp());
+  runApp(MultiProvider(
+    providers: ProvidersConstants.ALL_PROVIDERS,
+    child: const MyApp(),
+  ));
+
 }
 
 Future<void> configureServices() async {
