@@ -10,7 +10,7 @@ import '../../model/user.dart';
 abstract class AbstractServerService {
   Future<ServerStatus> getStatus();
 
-  Future<AuthTokenResponse> login(String userName, String password);
+  Future<AuthTokenResponse> login(String userNickName, String password);
 
   Future<Shift?> creteShift(
       {required String idItem,
@@ -31,6 +31,7 @@ abstract class AbstractServerService {
   Future<User> createUser(
       {PaymentInfo? paymentInfo,
       required String name,
+        required String nickName,
       required String email,
       required String phoneNumber});
 

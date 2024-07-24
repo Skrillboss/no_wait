@@ -36,6 +36,7 @@ class Util {
     return User(
       userId: 'user001',
       name: 'John Doe',
+      nickName: 'JohnPradels_659',
       email: 'john.doe@example.com',
       phoneNumber: '+0987654321',
       paymentInfo: getSamplePaymentInfo(),

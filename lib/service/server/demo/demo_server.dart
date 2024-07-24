@@ -70,11 +70,13 @@ class DemoServer extends AbstractServerService {
   Future<User> createUser(
       {PaymentInfo? paymentInfo,
       required String name,
+        required String nickName,
       required String email,
       required String phoneNumber}) async{
     final User user = User(
       userId: 'UserId DEMO',
       name: name,
+      nickName: nickName,
       email: email,
       phoneNumber: phoneNumber,
       paymentInfo: paymentInfo

@@ -97,6 +97,7 @@ class ApiServer extends AbstractServerService {
   Future<User> createUser(
       {PaymentInfo? paymentInfo,
       required String name,
+      required String nickName,
       required String email,
       required String phoneNumber}) {
     // TODO: implement createUser

@@ -97,12 +97,14 @@ class ServerService {
   Future<ExecutionResult> createUser(
       {PaymentInfo? paymentInfo,
         required String name,
+        required String nickName,
         required String email,
         required String phoneNumber}) async {
     return await performOperation(
             (serverService) => serverService.createUser(
             paymentInfo: paymentInfo,
             name: name,
+            nickName: nickName,
             email: email,
             phoneNumber: phoneNumber),
         'createUser');
@@ -149,9 +151,9 @@ class ServerService {
             (serverService) => serverService.getStatus(), 'getStatus');
   }
 
-  Future<ExecutionResult> login(String userName, String password) async {
+  Future<ExecutionResult> login(String userNickName, String password) async {
     return await performOperation(
-            (serverService) => serverService.login(userName, password), 'login');
+            (serverService) => serverService.login(userNickName, password), 'login');
   }
 
   Future<ExecutionResult> savePaymentProcess(
