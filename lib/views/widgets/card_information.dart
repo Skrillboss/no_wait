@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../model/shift.dart';
+import '../../features/shift/domain/entities/shift.dart';
 
 class CardInformation extends StatefulWidget {
   final Shift shift;

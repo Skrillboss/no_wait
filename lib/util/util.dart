@@ -1,8 +1,8 @@
-import 'package:todo_turno/model/shift.dart';
-import 'package:todo_turno/model/business.dart';
-import 'package:todo_turno/model/user.dart';
-import 'package:todo_turno/model/payment_info.dart';
-import 'package:todo_turno/model/item.dart'; // Importar el modelo Item
+import 'package:todo_turno/features/shift/domain/entities/shift.dart';
+import 'package:todo_turno/features/business/domain/entities/business.dart';
+import 'package:todo_turno/features/user/domain/entities/user.dart';
+import 'package:todo_turno/features/paymentInfo/domain/entities/payment_info.dart';
+import 'package:todo_turno/features/item/domain/entities/item.dart'; // Importar el modelo Item
 
 // TODO: EN EL MOMENTO QUE ESTE IMPLEMENTADO UNA VERSIÓN DEMO, ESTE UTIL DEBE DESAPARECER
 class Util {

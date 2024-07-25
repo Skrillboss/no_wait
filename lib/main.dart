@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'config/constants/providers_constants.dart';
 import 'config/constants/routes_constants.dart';
 import 'config/router/build_routes.dart';
+import 'core/server_locator/server_locator.dart';
 
 Future<void> main() async {
   // Asegúrate de que Flutter esté inicializado
@@ -18,14 +19,10 @@ Future<void> main() async {
     providers: ProvidersConstants.ALL_PROVIDERS,
     child: const MyApp(),
   ));
-
 }
 
 Future<void> configureServices() async {
-  // Aquí puedes inicializar cualquier servicio que necesites antes de correr la app
-  // Ejemplo: Inicializar una base de datos, servicios de logging, etc.
-  // await DatabaseService.init();
-  // await LoggingService.init();
+  setupServiceLocator();
 }
 
 class MyApp extends StatelessWidget {
@@ -48,37 +45,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-// Para el futuro, cuando necesites integrar Provider, descomenta la siguiente sección
-/*
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  static final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-
-  @override
-  Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        // Aquí defines los proveedores que vas a usar en tu aplicación
-        // Ejemplo: ChangeNotifierProvider(create: (_) => YourProvider()),
-      ],
-      child: _buildMaterialApp(),
-    );
-  }
-
-  MaterialApp _buildMaterialApp() {
-    return MaterialApp(
-      navigatorKey: navigatorKey,
-      debugShowCheckedModeBanner: false,
-      title: 'Your App Title',
-      theme: ThemeData(
-        brightness: Brightness.light,
-        primarySwatch: Colors.blue,
-      ),
-      initialRoute: RoutesConstants.home,
-      routes: buildRoutes(),
-    );
-  }
-}
-*/
