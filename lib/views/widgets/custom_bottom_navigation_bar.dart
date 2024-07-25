@@ -2,8 +2,7 @@ import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-
-import '../../provider/bottom_navigation_bar_provider/bottom_navigation_bar_provider.dart';
+import '../provider/bottom_navigation_bar_provider/bottom_navigation_bar_provider.dart';
 
 class CustomBottomNavigationBar extends StatefulWidget {
 

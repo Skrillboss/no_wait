@@ -6,7 +6,6 @@ import 'package:todo_turno/features/item/domain/entities/item.dart'; // Importar
 
 // TODO: EN EL MOMENTO QUE ESTE IMPLEMENTADO UNA VERSIÓN DEMO, ESTE UTIL DEBE DESAPARECER
 class Util {
-  // Método estático para obtener un modelo de prueba de Business
   static Business getSampleBusiness() {
     return Business(
       id: 'business001',
@@ -20,7 +19,6 @@ class Util {
     );
   }
 
-  // Método estático para obtener un modelo de prueba de PaymentInfo
   static PaymentInfo getSamplePaymentInfo() {
     return PaymentInfo(
       cardNumber: '1234567812345678',
@@ -31,7 +29,6 @@ class Util {
     );
   }
 
-  // Método estático para obtener un modelo de prueba de User
   static User getSampleUser() {
     return User(
       userId: 'user001',
@@ -43,7 +40,6 @@ class Util {
     );
   }
 
-  // Método estático para obtener un modelo de prueba de Item
   static Item getSampleItem() {
     return Item(
       id: 'I1',
@@ -54,7 +50,6 @@ class Util {
     );
   }
 
-  // Método estático para obtener un modelo de prueba de Shift
   static Shift getSampleShift() {
     return Shift(
       shiftId: 'shift001',
