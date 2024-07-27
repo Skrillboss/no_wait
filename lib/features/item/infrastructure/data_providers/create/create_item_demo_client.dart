@@ -1,5 +1,5 @@
-import '../../../business/domain/entities/business.dart';
-import '../../domain/entities/item.dart';
+import '../../../../business/domain/entities/business.dart';
+import '../../../domain/entities/item.dart';
 
 class CreateItemDemoClient {
   Future<Map<String, dynamic>> createItem(Business business, String itemName,

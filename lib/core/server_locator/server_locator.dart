@@ -1,11 +1,15 @@
 import 'package:get_it/get_it.dart';
 import 'package:todo_turno/core/network/jwt_token_manager.dart';
+import 'package:todo_turno/features/item/infrastructure/data_providers/read/read_item_api_client.dart';
 import 'package:todo_turno/features/user/application/use_cases/login_user.dart';
 import 'package:todo_turno/features/user/application/view_models/auth_view_model.dart';
 import '../../features/item/domain/repositories/create_item_repository.dart';
-import '../../features/item/infrastructure/data_providers/create_item_api_client.dart';
-import '../../features/item/infrastructure/data_providers/create_item_demo_client.dart';
+import '../../features/item/domain/repositories/read_item_repository.dart';
+import '../../features/item/infrastructure/data_providers/create/create_item_api_client.dart';
+import '../../features/item/infrastructure/data_providers/create/create_item_demo_client.dart';
+import '../../features/item/infrastructure/data_providers/read/read_item_demo_client.dart';
 import '../../features/item/infrastructure/repositories/create_item_repository_impl.dart';
+import '../../features/item/infrastructure/repositories/read_item_repository_impl.dart';
 import '../../features/user/domain/repositories/auth_repository.dart';
 import '../../features/user/infrastructure/data_providers/auth_api_client.dart';
 import '../../features/user/infrastructure/data_providers/auth_demo_client.dart';
@@ -39,6 +43,8 @@ void setupServiceLocator() {
   /* ********************************  Item  ******************************** */
   /* ************************************************************************ */
 
+  /* *****************  CREATE  *****************/
+
   // Registering the CreateItemDemoClient DEMO
   sl.registerLazySingleton<CreateItemDemoClient>(() => CreateItemDemoClient());
 
@@ -47,4 +53,15 @@ void setupServiceLocator() {
 
   // Registering the CreateItemRepository
   sl.registerLazySingleton<CreateItemRepository>(() => CreateItemRepositoryImpl(apiClient: sl<CreateItemDemoClient>()));
+
+  /* ******************  READ  ******************/
+
+  // Registering the ReadItemDemoClient DEMO
+  sl.registerLazySingleton<ReadItemDemoClient>(() => ReadItemDemoClient());
+
+  // Registering the ReadItemApiClient
+  sl.registerLazySingleton<ReadItemApiClient>(() => ReadItemApiClient(httpClient: sl<http.Client>()));
+
+  // Registering the ReadItemRepository
+  sl.registerLazySingleton<ReadItemRepository>(() => ReadItemRepositoryImpl(apiClient: sl<ReadItemDemoClient>()));
 }
