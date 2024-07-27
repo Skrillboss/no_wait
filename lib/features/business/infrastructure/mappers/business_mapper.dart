@@ -1,3 +1,4 @@
+import '../../../item/infrastructure/mappers/item_mapper.dart';
 import '../../domain/entities/business.dart';
 
 class BusinessMapper {
@@ -11,6 +12,7 @@ class BusinessMapper {
       address: json['address'],
       email: json['email'],
       createdAt: DateTime.parse(json['createdAt']),
+      item: ItemMapper.fromJson(json['item'])
     );
   }
 
@@ -24,6 +26,7 @@ class BusinessMapper {
       'address': business.address,
       'email': business.email,
       'createdAt': business.createdAt.toIso8601String(),
+      'item': ItemMapper.toJson(business.item)
     };
   }
 }

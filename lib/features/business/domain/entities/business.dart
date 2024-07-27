@@ -1,3 +1,5 @@
+import '../../../item/domain/entities/item.dart';
+
 class Business {
   final String id;
   final String cif;
@@ -7,6 +9,7 @@ class Business {
   final String address;
   final String email;
   final DateTime createdAt;
+  final Item item;
 
   Business(
       {required this.id,
@@ -16,5 +19,7 @@ class Business {
         required this.phone,
         required this.address,
         required this.email,
-        required this.createdAt});
+        required this.createdAt,
+        required this.item
+      });
 }
