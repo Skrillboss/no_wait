@@ -16,6 +16,7 @@ class Util {
       imageUrl: 'imagen.json or png or com',
       email: 'contact@samplebusiness.com',
       createdAt: DateTime.now(),
+      item: getSampleItem()
     );
   }
 
@@ -47,6 +48,7 @@ class Util {
       name: 'Sample Item',
       description: 'This is a description of the sample item.',
       imageUrl: 'https://example.com/sample-item.jpg',
+      duration: const Duration(minutes: 5),
       status: ItemStatus.active,
     );
   }
