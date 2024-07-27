@@ -6,10 +6,13 @@ class ReadItemApiClient {
 
   ReadItemApiClient({required this.httpClient});
 
-  Future<Map<String, dynamic>> getItem(String itemId) async {
+  Future<Map<String, dynamic>> getItem(String itemId, String token) async {
     final response = await httpClient.get(
       Uri.parse('https://api.example.com/items/$itemId'),
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
     );
 
     if (response.statusCode == 200) {

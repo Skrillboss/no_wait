@@ -10,17 +10,26 @@ class CreateItemApiClient {
 
   CreateItemApiClient({required this.httpClient});
 
-  Future<Map<String, dynamic>> createItem(Business business, String itemName,
-      String description, String imageUrl, ItemStatus status) async {
+  Future<Map<String, dynamic>> createItem(
+      Business business,
+      String itemName,
+      String description,
+      String imageUrl,
+      ItemStatus status,
+      String token) async {
     final response = await httpClient.post(
       Uri.parse('https://api.example.com/createItem'),
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
       body: jsonEncode({
         'business': BusinessMapper.toJson(business),
         'itemName': itemName,
         'description': description,
         'imageUrl': imageUrl,
-        'itemStatus': ItemMapper.statusToString(status), // Convertir el ItemStatus a String
+        'itemStatus': ItemMapper.statusToString(status),
+        // Convertir el ItemStatus a String
       }),
     );
     await Future.delayed(const Duration(seconds: 1));

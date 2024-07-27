@@ -1,5 +1,5 @@
 import '../entities/item.dart';
 
 abstract class ReadItemRepository {
-  Future<Item> read(String itemId);
+  Future<Item> read(String itemId, String token);
 }

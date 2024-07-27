@@ -3,5 +3,5 @@ import '../entities/item.dart';
 
 abstract class CreateItemRepository {
   Future<Item> create(Business business, String itemName, String description,
-      String imageUrl, ItemStatus status);
+      String imageUrl, ItemStatus status, String token);
 }
