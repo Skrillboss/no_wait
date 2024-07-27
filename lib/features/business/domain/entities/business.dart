@@ -17,14 +17,4 @@ class Business {
         required this.address,
         required this.email,
         required this.createdAt});
-
-  Business.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
-        cif = json['cif'],
-        name = json['name'],
-        imageUrl = json['imageUrl'],
-        phone = json['phone'],
-        address = json['address'],
-        email = json['email'],
-        createdAt = json['createdAt'];
 }

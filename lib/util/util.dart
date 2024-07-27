@@ -37,6 +37,7 @@ class Util {
       email: 'john.doe@example.com',
       phoneNumber: '+0987654321',
       paymentInfo: getSamplePaymentInfo(),
+      business: getSampleBusiness(),
     );
   }
 
