@@ -1,7 +1,11 @@
 import 'package:get_it/get_it.dart';
 import 'package:todo_turno/core/network/jwt_token_manager.dart';
+import 'package:todo_turno/features/item/domain/repositories/delete_item_repository.dart';
+import 'package:todo_turno/features/item/infrastructure/data_providers/delete/delete_item_api_client.dart';
+import 'package:todo_turno/features/item/infrastructure/data_providers/delete/delete_item_demo_client.dart';
 import 'package:todo_turno/features/item/infrastructure/data_providers/read/read_item_api_client.dart';
 import 'package:todo_turno/features/item/infrastructure/data_providers/update/update_item_api_client.dart';
+import 'package:todo_turno/features/item/infrastructure/repositories/delete_item_repository_impl.dart';
 import 'package:todo_turno/features/user/application/use_cases/login_user.dart';
 import 'package:todo_turno/features/user/application/view_models/auth_view_model.dart';
 import '../../features/item/domain/repositories/create_item_repository.dart';
@@ -79,4 +83,14 @@ void setupServiceLocator() {
 
   // Registering the UpdateItemRepository
   sl.registerLazySingleton<UpdateItemRepository>(() => UpdateItemRepositoryImpl(apiClient: sl<UpdateItemDemoClient>()));
+
+  /* *****************  DELETE  *****************/
+
+  // Registering the DeleteItemDemoClient DEMO
+  sl.registerLazySingleton<DeleteItemDemoClient>(() => DeleteItemDemoClient());
+
+  // Registering the DeleteItemApiClient API
+  sl.registerLazySingleton<DeleteItemApiClient>(() => DeleteItemApiClient(httpClient: sl<http.Client>()));
+
+  sl.registerLazySingleton<DeleteItemRepository>(() => DeleteItemRepositoryImpl(apiClient: sl<DeleteItemDemoClient>()));
 }
