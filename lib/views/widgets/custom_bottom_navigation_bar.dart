@@ -42,7 +42,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar>{
     return StyleProvider(
       style: Style(),
       child: ConvexAppBar(
-        backgroundColor: Color.fromRGBO(235, 235, 235, 1.0),
+        backgroundColor: const Color.fromRGBO(235, 235, 235, 1.0),
         initialActiveIndex: _index,
         activeColor: activeColor,
         color: notActiveColor,
