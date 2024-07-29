@@ -6,14 +6,12 @@ enum ItemStatus{
   unhandledError
 }
 
-//TODO: se le debe agregar un atributo que represente el tiempo
-//aproximado que tarda el negocio en poder brindar cada Item,
-//para asi poder calcular el shiftTime de Shift
 class Item {
   final String id;
   final String name;
   final String description;
   final String imageUrl;
+  final Duration duration;
   final ItemStatus status;
 
   Item({
@@ -21,28 +19,7 @@ class Item {
     required this.name,
     required this.description,
     required this.imageUrl,
+    required this.duration,
     required this.status,
   });
-
-
-  //TODO: SE DEBE MANEJAR LA ENTREGA DEL STATUS
-  //DE STRING A ItemStatus
-  factory Item.fromJson(Map<String, dynamic> json) {
-    return Item(
-      id: json['id'],
-      name: json['title'] as String,
-      description: json['description'] as String,
-      imageUrl: json['imageUrl'] as String,
-      status: json['status']
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'title': name,
-      'description': description,
-      'imageUrl': imageUrl,
-      'status': status
-    };
-  }
 }
