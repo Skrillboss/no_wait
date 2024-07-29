@@ -1,7 +1,7 @@
 import 'package:todo_turno/features/business/domain/entities/business.dart';
 import 'package:todo_turno/features/item/domain/entities/item.dart';
 import '../../domain/repositories/create_item_repository.dart';
-import '../data_providers/create/create_item_demo_client.dart';
+import '../data_providers/demo/create_item_demo_client.dart';
 import '../mappers/item_mapper.dart';
 
 class CreateItemRepositoryImpl implements CreateItemRepository {

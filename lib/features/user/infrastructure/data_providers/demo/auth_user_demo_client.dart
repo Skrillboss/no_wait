@@ -1,4 +1,4 @@
-class AuthDemoClient {
+class AuthUserDemoClient {
   Future<Map<String, dynamic>> login(String username, String password) async {
     final Map<String, dynamic> response = {
       'user': {

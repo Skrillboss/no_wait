@@ -1,12 +1,12 @@
-import '../../domain/auth_result.dart';
-import '../../domain/repositories/auth_repository.dart';
+import '../../domain/auth_user_result.dart';
+import '../../domain/repositories/auth_user_repository.dart';
 
 class LoginUser {
-  final AuthRepository repository;
+  final AuthUserRepository repository;
 
   LoginUser(this.repository);
 
-  Future<AuthResult> call(String username, String password) async {
+  Future<AuthUserResult> call(String username, String password) async {
     return await repository.authenticate(username, password);
   }
 }

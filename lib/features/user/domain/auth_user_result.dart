@@ -1,10 +1,10 @@
 import 'entities/user.dart';
 
-class AuthResult {
+class AuthUserResult {
   final User user;
   final String token;
 
-  AuthResult({
+  AuthUserResult({
     required this.user,
     required this.token,
   });
