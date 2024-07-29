@@ -1,7 +1,7 @@
 import 'package:todo_turno/features/item/domain/entities/item.dart';
 import 'package:todo_turno/features/item/domain/repositories/update_item_repository.dart';
 
-import '../data_providers/update/update_item_demo_client.dart';
+import '../data_providers/demo/update_item_demo_client.dart';
 import '../mappers/item_mapper.dart';
 
 class UpdateItemRepositoryImpl implements UpdateItemRepository {

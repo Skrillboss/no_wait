@@ -1,6 +1,6 @@
 import '../../domain/entities/item.dart';
 import '../../domain/repositories/read_item_repository.dart';
-import '../data_providers/read/read_item_demo_client.dart';
+import '../data_providers/demo/read_item_demo_client.dart';
 import '../mappers/item_mapper.dart';
 
 class ReadItemRepositoryImpl implements ReadItemRepository {
