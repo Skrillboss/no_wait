@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-class AuthApiClient {
+class AuthUserApiClient {
   final http.Client httpClient;
 
-  AuthApiClient({required this.httpClient});
+  AuthUserApiClient({required this.httpClient});
 
   Future<Map<String, dynamic>> login(String username, String password) async {
     final response = await httpClient.post(

@@ -8,6 +8,8 @@ import 'package:todo_turno/features/item/infrastructure/data_providers/api/updat
 import 'package:todo_turno/features/item/infrastructure/repositories/delete_item_repository_impl.dart';
 import 'package:todo_turno/features/user/application/use_cases/login_user.dart';
 import 'package:todo_turno/features/user/application/view_models/auth_view_model.dart';
+import 'package:todo_turno/features/user/domain/repositories/register_user_repository.dart';
+import 'package:todo_turno/features/user/infrastructure/repositories/register_repository_impl.dart';
 import '../../features/item/domain/repositories/create_item_repository.dart';
 import '../../features/item/domain/repositories/read_item_repository.dart';
 import '../../features/item/domain/repositories/update_item_repository.dart';
@@ -18,9 +20,11 @@ import '../../features/item/infrastructure/data_providers/demo/update_item_demo_
 import '../../features/item/infrastructure/repositories/create_item_repository_impl.dart';
 import '../../features/item/infrastructure/repositories/read_item_repository_impl.dart';
 import '../../features/item/infrastructure/repositories/update_item_repository_impl.dart';
-import '../../features/user/domain/repositories/auth_repository.dart';
-import '../../features/user/infrastructure/data_providers/api/auth_api_client.dart';
-import '../../features/user/infrastructure/data_providers/demo/auth_demo_client.dart';
+import '../../features/user/domain/repositories/auth_user_repository.dart';
+import '../../features/user/infrastructure/data_providers/api/auth_user_api_client.dart';
+import '../../features/user/infrastructure/data_providers/api/register_user_api_client.dart';
+import '../../features/user/infrastructure/data_providers/demo/auth_user_demo_client.dart';
+import '../../features/user/infrastructure/data_providers/demo/register_user_demo_client.dart';
 import '../../features/user/infrastructure/repositories/auth_repository_impl.dart';
 import 'package:http/http.dart' as http;
 
@@ -35,17 +39,30 @@ void setupServiceLocator() {
   /* ********************************  User  ******************************** */
   /* ************************************************************************ */
 
-  // Registering the AuthDemoClient DEMO
-  sl.registerLazySingleton<AuthDemoClient>(() => AuthDemoClient());
+  /* *****************  REGISTER  *****************/
 
-  // Registering the AuthApiClient API
-  sl.registerLazySingleton<AuthApiClient>(() => AuthApiClient(httpClient: sl<http.Client>()));
+  // Registering the AuthUserDemoClient DEMO
+  sl.registerLazySingleton<AuthUserDemoClient>(() => AuthUserDemoClient());
 
-  // Registering the AuthRepository
-  sl.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(apiClient: sl<AuthDemoClient>()));
+  // Registering the AuthUserApiClient API
+  sl.registerLazySingleton<AuthUserApiClient>(() => AuthUserApiClient(httpClient: sl<http.Client>()));
 
-  // Registering the AuthViewModel
+  // Registering the AuthUserRepository
+  sl.registerLazySingleton<AuthUserRepository>(() => AuthRepositoryImpl(apiClient: sl<AuthUserDemoClient>()));
+
+  // Registering the AuthUserViewModel
   sl.registerLazySingleton<AuthViewModel>(() => AuthViewModel(loginUser: sl<LoginUser>(), jwtTokenManager: sl<JwtTokenManager>()));
+
+  /* *****************  LOGIN  *****************/
+
+  // Registering the RegisterUserDemoClient DEMO
+  sl.registerLazySingleton<RegisterDemoClient>(() => RegisterDemoClient());
+
+  // Registering the RegisterUserApiClient API
+  sl.registerLazySingleton<RegisterUserApiClient>(() => RegisterUserApiClient(httpClient: sl<http.Client>()));
+
+  // Registering the RegisterUserRepository
+  sl.registerLazySingleton<RegisterUserRepository>(() => RegisterUserRepositoryImpl(apiClient: sl<RegisterDemoClient>()));
 
   /* ************************************************************************ */
   /* ********************************  Item  ******************************** */
