@@ -19,8 +19,8 @@ import '../../features/item/infrastructure/repositories/create_item_repository_i
 import '../../features/item/infrastructure/repositories/read_item_repository_impl.dart';
 import '../../features/item/infrastructure/repositories/update_item_repository_impl.dart';
 import '../../features/user/domain/repositories/auth_repository.dart';
-import '../../features/user/infrastructure/data_providers/auth_api_client.dart';
-import '../../features/user/infrastructure/data_providers/auth_demo_client.dart';
+import '../../features/user/infrastructure/data_providers/api/auth_api_client.dart';
+import '../../features/user/infrastructure/data_providers/demo/auth_demo_client.dart';
 import '../../features/user/infrastructure/repositories/auth_repository_impl.dart';
 import 'package:http/http.dart' as http;
 

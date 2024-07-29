@@ -1,7 +1,7 @@
 import '../../domain/auth_result.dart';
 import '../../domain/entities/user.dart';
 import '../../domain/repositories/auth_repository.dart';
-import '../data_providers/auth_demo_client.dart';
+import '../data_providers/demo/auth_demo_client.dart';
 import '../mappers/user_mapper.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
