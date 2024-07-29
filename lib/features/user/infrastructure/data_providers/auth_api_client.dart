@@ -12,7 +12,6 @@ class AuthApiClient {
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({'username': username, 'password': password}),
     );
-    await Future.delayed(const Duration(seconds: 1));
       return jsonDecode(response.body);
   }
 }
