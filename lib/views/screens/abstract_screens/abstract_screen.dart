@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../provider/language/language_service_provider.dart';
 import '../../widgets/custom_bottom_navigation_bar.dart';
 import '../../widgets/custom_appbar.dart';
 
@@ -10,8 +12,7 @@ abstract class AbstractScreenState<Page extends AbstractScreen>
     extends State<Page> {
   final FocusNode focusNode = FocusNode();
 
-  //TODO (issue 5): AQUI TENGO QUE IMPLEMENTAR EL languageProvider
-  // late LanguageServiceProvider languageProvider;
+  late LanguageServiceProvider languageProvider;
 
   double taxValue = 0;
   double maxWidth = 0;
@@ -28,6 +29,7 @@ abstract class AbstractScreenState<Page extends AbstractScreen>
 
   @override
   void didChangeDependencies() {
+    languageProvider = context.watch<LanguageServiceProvider>();
     super.didChangeDependencies();
   }
 
@@ -70,7 +72,7 @@ mixin AbstractScreenMixin<Page extends AbstractScreen>
         ),
       ],
       canGoToHome: false,
-      title: 'Home Screen',
+      title: '',
     );
   }
 
