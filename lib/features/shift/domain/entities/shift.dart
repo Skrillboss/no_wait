@@ -1,6 +1,5 @@
 import 'package:todo_turno/features/business/domain/entities/business.dart';
 import 'package:todo_turno/features/user/domain/entities/user.dart';
-
 import '../../../item/domain/entities/item.dart';
 
 enum ShiftStatus{
@@ -8,6 +7,7 @@ enum ShiftStatus{
   inactive,
   expired,
   postponed,
+  error
 }
 
 class Shift {

@@ -111,6 +111,8 @@ class _CardInformationState extends State<CardInformation> {
         return Icons.error;
       case ShiftStatus.postponed:
         return Icons.schedule;
+      case ShiftStatus.error:
+        return Icons.refresh;
     }
   }
 
@@ -124,6 +126,8 @@ class _CardInformationState extends State<CardInformation> {
         return Colors.red;
       case ShiftStatus.postponed:
         return Colors.blue;
+      case ShiftStatus.error:
+        return Colors.red;
     }
   }
 }
