@@ -4,7 +4,7 @@ import '../../../user/infrastructure/mappers/user_mapper.dart';
 import '../../domain/entities/shift.dart';
 
 class ShiftMapper {
-  static Map<String, dynamic> toMap(Shift shift) {
+  static Map<String, dynamic> toJson(Shift shift) {
     return {
       'shiftId': shift.shiftId,
       'shiftTime': shift.shiftTime.toIso8601String(),
@@ -20,7 +20,7 @@ class ShiftMapper {
     };
   }
 
-  static Shift fromMap(Map<String, dynamic> json) {
+  static Shift fromJson(Map<String, dynamic> json) {
     return Shift(
       shiftId: json['shiftId'],
       shiftTime: DateTime.parse(json['shiftTime']),
