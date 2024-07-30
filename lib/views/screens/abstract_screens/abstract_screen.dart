@@ -14,12 +14,11 @@ abstract class AbstractScreenState<Page extends AbstractScreen>
 
   late LanguageServiceProvider languageProvider;
 
-  double taxValue = 0;
-  double maxWidth = 0;
-  double maxHeight = 0;
-  double fontSize = 0;
-  double width = 0;
-  double height = 0;
+  double fontSizeTitle = 24;
+  double fontSizeSubTitle = 20;
+  double fontSizeText = 14;
+  double widthOfScreen = 0;
+  double heightOfScreen = 0;
 
   @override
   void initState() {
@@ -30,6 +29,10 @@ abstract class AbstractScreenState<Page extends AbstractScreen>
   @override
   void didChangeDependencies() {
     languageProvider = context.watch<LanguageServiceProvider>();
+    final size = MediaQuery.of(context).size;
+    widthOfScreen = size.width;
+    heightOfScreen = size.height;
+
     super.didChangeDependencies();
   }
 
@@ -40,7 +43,7 @@ abstract class AbstractScreenState<Page extends AbstractScreen>
 }
 
 mixin AbstractScreenMixin<Page extends AbstractScreen>
-    on AbstractScreenState<Page> {
+on AbstractScreenState<Page> {
   @override
   void initState() {
     super.initState();
@@ -80,7 +83,7 @@ mixin AbstractScreenMixin<Page extends AbstractScreen>
     return Container();
   }
 
-  CustomBottomNavigationBar bottomNavigationBarWidget(){
+  CustomBottomNavigationBar bottomNavigationBarWidget() {
     return const CustomBottomNavigationBar();
   }
 }
