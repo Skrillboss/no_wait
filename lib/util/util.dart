@@ -51,6 +51,7 @@ class Util {
       imageUrl: 'https://example.com/sample-item.jpg',
       duration: const Duration(minutes: 5),
       status: ItemStatus.active,
+      shifts: [getSampleShift(), getSampleShift(), getSampleShift()]
     );
   }
 

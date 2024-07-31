@@ -1,3 +1,4 @@
+import '../../../shift/infrastructure/mappers/shift_mapper.dart';
 import '../../domain/entities/item.dart';
 
 class ItemMapper {
@@ -9,6 +10,7 @@ class ItemMapper {
       'imageUrl': item.imageUrl,
       'duration': item.duration.inSeconds, // Guardar duración en segundos
       'status': statusToString(item.status), // Convertir enum a string
+      'shifts': ShiftMapper.listToJson(item.shifts)
     };
   }
 
@@ -18,8 +20,11 @@ class ItemMapper {
       name: json['name'],
       description: json['description'],
       imageUrl: json['imageUrl'],
-      duration: Duration(seconds: json['duration']), // Convertir segundos a Duration
-      status: stringToStatus(json['status']), // Convertir string a enum
+      duration: Duration(seconds: json['duration']),
+      // Convertir segundos a Duration
+      status: stringToStatus(json['status']),
+      // Convertir string a enum
+      shifts: ShiftMapper.listFromJson(json['shifts'] as List<dynamic>),
     );
   }
 
@@ -55,7 +60,7 @@ class ItemMapper {
     }
   }
 
-  static List<Map<String, dynamic>> listToJson(List<Item?> items){
+  static List<Map<String, dynamic>> listToJson(List<Item?> items) {
     return items
         .where((item) => item != null)
         .map((item) => toJson(item!))
@@ -63,6 +68,8 @@ class ItemMapper {
   }
 
   static List<Item> listFromJson(List<dynamic> jsonItem) {
-    return jsonItem.map((json) => fromJson(json as Map<String, dynamic>)).toList();
+    return jsonItem
+        .map((json) => fromJson(json as Map<String, dynamic>))
+        .toList();
   }
 }

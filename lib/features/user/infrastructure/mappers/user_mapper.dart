@@ -7,19 +7,20 @@ import '../../domain/entities/user.dart';
 class UserMapper {
   static User fromJson(Map<String, dynamic> json) {
     return User(
-        userId: json['userId'],
-        name: json['name'],
-        nickName: json['nickName'],
-        email: json['email'],
-        phoneNumber: json['phoneNumber'],
-        paymentInfo: json['paymentInfo'] != null
-            ? PaymentInfoMapper.fromJson(json['paymentInfo'])
-            : null,
-        business: json['business'] != null
-            ? BusinessMapper.fromJson(json['business'])
-            : null,
-        shifts: ShiftMapper.listFromJson(json['shifts'] as List<dynamic>));
-        }
+      userId: json['userId'],
+      name: json['name'],
+      nickName: json['nickName'],
+      email: json['email'],
+      phoneNumber: json['phoneNumber'],
+      paymentInfo: json['paymentInfo'] != null
+          ? PaymentInfoMapper.fromJson(json['paymentInfo'])
+          : null,
+      business: json['business'] != null
+          ? BusinessMapper.fromJson(json['business'])
+          : null,
+      shifts: ShiftMapper.listFromJson(json['shifts'] as List<dynamic>),
+    );
+  }
 
   static Map<String, dynamic> toJson(User user) {
     return {
