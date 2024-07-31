@@ -39,6 +39,7 @@ class Util {
       phoneNumber: '+0987654321',
       paymentInfo: getSamplePaymentInfo(),
       business: getSampleBusiness(),
+      shifts: [getSampleShift(), getSampleShift(), getSampleShift()]
     );
   }
 

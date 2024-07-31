@@ -50,4 +50,15 @@ class ShiftMapper {
         return ShiftStatus.error;
     }
   }
+
+  static List<Map<String, dynamic>> listToJson(List<Shift?> shifts) {
+    return shifts
+        .where((shift) => shift != null)
+        .map((shift) => toJson(shift!))
+        .toList();
+  }
+
+  static List<Shift> listFromJson(List<dynamic> jsonList) {
+    return jsonList.map((json) => fromJson(json as Map<String, dynamic>)).toList();
+  }
 }
