@@ -110,4 +110,17 @@ void setupServiceLocator() {
   sl.registerLazySingleton<DeleteItemApiClient>(() => DeleteItemApiClient(httpClient: sl<http.Client>()));
 
   sl.registerLazySingleton<DeleteItemRepository>(() => DeleteItemRepositoryImpl(apiClient: sl<DeleteItemDemoClient>()));
+
+  /* ************************************************************************ */
+  /* ********************************  Shift  ******************************* */
+  /* ************************************************************************ */
+
+  /* *****************  CREATE  *****************/
+
+//TODO: inyectar dependencias
+
+  /* ******************  READ  ******************/
+
+//TODO: inyectar dependencias
+
 }

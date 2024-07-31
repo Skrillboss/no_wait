@@ -1,18 +1,22 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-class ReadShiftsApiClient{
+class CreateShiftApiClient{
   final http.Client httpClient;
 
-  ReadShiftsApiClient({required this.httpClient});
+  CreateShiftApiClient({required this.httpClient});
 
-  Future<Map<String, dynamic>> getShifts(String userId, String token) async {
-    final response = await httpClient.get(
-      Uri.parse('https://api.example.com/shifts/$userId'),
+  Future<Map<String, dynamic>> createShift(String userId, String itemId, String token) async {
+    final response = await httpClient.post(
+      Uri.parse('https://api.example.com/creteShift'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
       },
+      body: jsonEncode({
+        'userId': userId,
+        'itemId': itemId
+      }),
     );
 
     if (response.statusCode == 200) {
