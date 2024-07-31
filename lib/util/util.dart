@@ -59,15 +59,12 @@ class Util {
     return Shift(
       shiftId: 'shift001',
       shiftTime: DateTime.now().add(const Duration(hours: 2)),
-      business: getSampleBusiness(),
       createAt: DateTime.now(),
       notifyTime: DateTime.now().add(const Duration(minutes: 85)),
       expirationTime: DateTime.now().add(const Duration(hours: 4)),
       estimatedArrivalTime: const Duration(minutes: 30),
-      user: getSampleUser(),
       status: ShiftStatus.active,
       shiftNumber: 1,
-      item: getSampleItem(), // Agregar la instancia de prueba del Item
     );
   }
 }

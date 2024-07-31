@@ -1,6 +1,3 @@
-import '../../../business/infrastructure/mappers/business_mapper.dart';
-import '../../../item/infrastructure/mappers/item_mapper.dart';
-import '../../../user/infrastructure/mappers/user_mapper.dart';
 import '../../domain/entities/shift.dart';
 
 class ShiftMapper {
@@ -8,13 +5,10 @@ class ShiftMapper {
     return {
       'shiftId': shift.shiftId,
       'shiftTime': shift.shiftTime.toIso8601String(),
-      'business': BusinessMapper.toJson(shift.business),
-      'item': ItemMapper.toJson(shift.item),
       'createAt': shift.createAt.toIso8601String(),
       'notifyTime': shift.notifyTime.toIso8601String(),
       'expirationTime': shift.expirationTime.toIso8601String(),
       'estimatedArrivalTime': shift.estimatedArrivalTime.inMinutes,
-      'user': UserMapper.toJson(shift.user),
       'status': shift.status.toString().split('.').last,
       'shiftNumber': shift.shiftNumber,
     };
@@ -24,13 +18,10 @@ class ShiftMapper {
     return Shift(
       shiftId: json['shiftId'],
       shiftTime: DateTime.parse(json['shiftTime']),
-      business: BusinessMapper.fromJson(json['business']),
-      item: ItemMapper.fromJson(json['item']),
       createAt: DateTime.parse(json['createAt']),
       notifyTime: DateTime.parse(json['notifyTime']),
       expirationTime: DateTime.parse(json['expirationTime']),
       estimatedArrivalTime: Duration(minutes: json['estimatedArrivalTime']),
-      user: UserMapper.fromJson(json['user']),
       status: stringToStatus(json['status']),
       shiftNumber: json['shiftNumber'],
     );
