@@ -16,7 +16,7 @@ class Util {
       imageUrl: 'imagen.json or png or com',
       email: 'contact@samplebusiness.com',
       createdAt: DateTime.now(),
-      item: getSampleItem()
+      items: [getSampleItem(), getSampleItem(), getSampleItem()]
     );
   }
 

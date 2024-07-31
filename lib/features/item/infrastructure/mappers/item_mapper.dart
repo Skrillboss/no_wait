@@ -54,4 +54,15 @@ class ItemMapper {
         throw ArgumentError('Invalid item status: $status');
     }
   }
+
+  static List<Map<String, dynamic>> listToJson(List<Item?> items){
+    return items
+        .where((item) => item != null)
+        .map((item) => toJson(item!))
+        .toList();
+  }
+
+  static List<Item> listFromJson(List<dynamic> jsonItem) {
+    return jsonItem.map((json) => fromJson(json as Map<String, dynamic>)).toList();
+  }
 }

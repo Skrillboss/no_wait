@@ -2,14 +2,14 @@ import '../../../item/domain/entities/item.dart';
 
 class Business {
   final String id;
-  final String cif;
-  final String name;
-  final String imageUrl;
-  final String phone;
-  final String address;
+  String cif;
+  String name;
+  String imageUrl;
+  String phone;
+  String address;
   final String email;
   final DateTime createdAt;
-  final Item item;
+  List<Item> items;
 
   Business(
       {required this.id,
@@ -20,6 +20,6 @@ class Business {
         required this.address,
         required this.email,
         required this.createdAt,
-        required this.item
+        required this.items
       });
 }
