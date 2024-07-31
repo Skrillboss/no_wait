@@ -29,14 +29,14 @@ class _CardInformationState extends State<CardInformation> {
                     _getIconForStatus(shift.status),
                     color: _getColorForStatus(shift.status),
                   ),
-                  title: Text(shift.business.name),
+                  title: Text('shift.business.name'),
                   subtitle: Column(
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           const Text('Servicio'),
-                          Text(shift.item.name),
+                          Text('shift.item.name'),
                         ],
                       ),
                       if (_isExpanded) ...[

@@ -1,3 +1,5 @@
+import '../../../shift/domain/entities/shift.dart';
+
 enum ItemStatus{
   active,
   inactive,
@@ -8,11 +10,12 @@ enum ItemStatus{
 
 class Item {
   final String id;
-  final String name;
-  final String description;
-  final String imageUrl;
-  final Duration duration;
-  final ItemStatus status;
+  String name;
+  String description;
+  String imageUrl;
+  Duration duration;
+  ItemStatus status;
+  List<Shift?> shifts;
 
   Item({
     required this.id,
@@ -21,5 +24,6 @@ class Item {
     required this.imageUrl,
     required this.duration,
     required this.status,
+    required this.shifts
   });
 }

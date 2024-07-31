@@ -16,7 +16,7 @@ class Util {
       imageUrl: 'imagen.json or png or com',
       email: 'contact@samplebusiness.com',
       createdAt: DateTime.now(),
-      item: getSampleItem()
+      items: [getSampleItem(), getSampleItem(), getSampleItem()]
     );
   }
 
@@ -39,6 +39,7 @@ class Util {
       phoneNumber: '+0987654321',
       paymentInfo: getSamplePaymentInfo(),
       business: getSampleBusiness(),
+      shifts: [getSampleShift(), getSampleShift(), getSampleShift()]
     );
   }
 
@@ -50,6 +51,7 @@ class Util {
       imageUrl: 'https://example.com/sample-item.jpg',
       duration: const Duration(minutes: 5),
       status: ItemStatus.active,
+      shifts: [getSampleShift(), getSampleShift(), getSampleShift()]
     );
   }
 
@@ -57,15 +59,12 @@ class Util {
     return Shift(
       shiftId: 'shift001',
       shiftTime: DateTime.now().add(const Duration(hours: 2)),
-      business: getSampleBusiness(),
       createAt: DateTime.now(),
       notifyTime: DateTime.now().add(const Duration(minutes: 85)),
       expirationTime: DateTime.now().add(const Duration(hours: 4)),
       estimatedArrivalTime: const Duration(minutes: 30),
-      user: getSampleUser(),
       status: ShiftStatus.active,
       shiftNumber: 1,
-      item: getSampleItem(), // Agregar la instancia de prueba del Item
     );
   }
 }
