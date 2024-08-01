@@ -6,6 +6,10 @@ import 'package:todo_turno/features/item/infrastructure/data_providers/demo/dele
 import 'package:todo_turno/features/item/infrastructure/data_providers/api/read_item_api_client.dart';
 import 'package:todo_turno/features/item/infrastructure/data_providers/api/update_item_api_client.dart';
 import 'package:todo_turno/features/item/infrastructure/repositories/delete_item_repository_impl.dart';
+import 'package:todo_turno/features/shift/domain/repositories/create_shift_repository.dart';
+import 'package:todo_turno/features/shift/infrastructure/data_providers/api/create_shift_api_client.dart';
+import 'package:todo_turno/features/shift/infrastructure/data_providers/demo/create_shift_demo_client.dart';
+import 'package:todo_turno/features/shift/infrastructure/repositories/create_shift_repository_impl.dart';
 import 'package:todo_turno/features/user/application/use_cases/login_user.dart';
 import 'package:todo_turno/features/user/application/view_models/auth_view_model.dart';
 import 'package:todo_turno/features/user/domain/repositories/register_user_repository.dart';
@@ -20,6 +24,10 @@ import '../../features/item/infrastructure/data_providers/demo/update_item_demo_
 import '../../features/item/infrastructure/repositories/create_item_repository_impl.dart';
 import '../../features/item/infrastructure/repositories/read_item_repository_impl.dart';
 import '../../features/item/infrastructure/repositories/update_item_repository_impl.dart';
+import '../../features/shift/domain/repositories/read_shifts_repository.dart';
+import '../../features/shift/infrastructure/data_providers/api/read_shifts_api_client.dart';
+import '../../features/shift/infrastructure/data_providers/demo/read_shifts_demo_client.dart';
+import '../../features/shift/infrastructure/repositories/read_shifts_repository_impl.dart';
 import '../../features/user/domain/repositories/auth_user_repository.dart';
 import '../../features/user/infrastructure/data_providers/api/auth_user_api_client.dart';
 import '../../features/user/infrastructure/data_providers/api/register_user_api_client.dart';
@@ -109,6 +117,7 @@ void setupServiceLocator() {
   // Registering the DeleteItemApiClient API
   sl.registerLazySingleton<DeleteItemApiClient>(() => DeleteItemApiClient(httpClient: sl<http.Client>()));
 
+  // Registering the DeleteItemRepository
   sl.registerLazySingleton<DeleteItemRepository>(() => DeleteItemRepositoryImpl(apiClient: sl<DeleteItemDemoClient>()));
 
   /* ************************************************************************ */
@@ -117,10 +126,23 @@ void setupServiceLocator() {
 
   /* *****************  CREATE  *****************/
 
-//TODO: inyectar dependencias
+  // Registering the CreateShiftDemoClient DEMO
+  sl.registerLazySingleton<CreateShiftDemoClient>(() => CreateShiftDemoClient());
+
+  // Registering the CreateShiftApiClient API
+  sl.registerLazySingleton<CreateShiftApiClient>(() => CreateShiftApiClient(httpClient: sl<http.Client>()));
+
+  // Registering the CreateShiftRepository
+  sl.registerLazySingleton<CreateShiftRepository>(() => CreateShiftRepositoryImpl(apiClient: sl<CreateShiftDemoClient>()));
 
   /* ******************  READ  ******************/
 
-//TODO: inyectar dependencias
+  // Registering the ReadShiftDemoClient DEMO
+  sl.registerLazySingleton<ReadShiftsDemoClient>(() => ReadShiftsDemoClient());
 
+  // Registering the ReadShiftsApiClient API
+  sl.registerLazySingleton<ReadShiftsApiClient>(() => ReadShiftsApiClient(httpClient: sl<http.Client>()));
+
+  // Registering the ReadShiftsRepository
+  sl.registerLazySingleton<ReadShiftsRepository>(() => ReadShiftsRepositoryImpl(apiClient: sl<ReadShiftsDemoClient>()));
 }
