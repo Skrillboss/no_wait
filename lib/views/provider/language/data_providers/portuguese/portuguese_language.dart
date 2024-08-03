@@ -24,5 +24,9 @@ class PortugueseLanguage implements Language{
   String PASSWORD = 'Senha';
   @override
   String REPEAR_PASSWORD = 'Repetir Senha';
+  @override
+  String LOGIN_BUTTON = 'Entrar';  // Iniciar sesión
+  @override
+  String LOGIN_APP_BAR = 'Entrar';  // Inicia sesión
 
 }

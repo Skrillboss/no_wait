@@ -24,5 +24,9 @@ class ChineseLanguage implements Language{
   String PASSWORD = '密码';
   @override
   String REPEAR_PASSWORD = '重复密码';
+  @override
+  String LOGIN_BUTTON = '登录';  // 登录
+  @override
+  String LOGIN_APP_BAR = '登录';  // 登录
 
 }

@@ -50,4 +50,6 @@ abstract class Language {
   late String REGISTER_APP_BAR;
   late String PASSWORD;
   late String REPEAR_PASSWORD;
+  late String LOGIN_BUTTON;
+  late String LOGIN_APP_BAR;
 }

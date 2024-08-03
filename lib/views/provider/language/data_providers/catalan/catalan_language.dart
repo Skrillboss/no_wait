@@ -23,5 +23,9 @@ class CatalanLanguage implements Language{
   String PASSWORD = 'Contrasenya';
   @override
   String REPEAR_PASSWORD = 'Repeteix contrasenya';
+  @override
+  String LOGIN_BUTTON = 'Iniciar sessió';
+  @override
+  String LOGIN_APP_BAR = 'Inicia sessió';
 
 }

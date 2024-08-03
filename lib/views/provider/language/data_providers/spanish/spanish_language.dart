@@ -24,5 +24,9 @@ class SpanishLanguage implements Language{
   String PASSWORD = 'Contraseña';
   @override
   String REPEAR_PASSWORD = 'Repetir Contraseña';
+  @override
+  String LOGIN_BUTTON = 'Iniciar sesión';  // Iniciar sesión
+  @override
+  String LOGIN_APP_BAR = 'Inicia sesión';  // Inicia sesión
 
 }

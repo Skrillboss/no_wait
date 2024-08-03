@@ -24,5 +24,9 @@ class EnglishLanguage implements Language{
   String PASSWORD = 'Password';
   @override
   String REPEAR_PASSWORD = 'Repeat Password';
+  @override
+  String LOGIN_BUTTON = 'Login';
+  @override
+  String LOGIN_APP_BAR = 'Log In';
 
 }

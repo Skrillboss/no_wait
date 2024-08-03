@@ -24,5 +24,9 @@ class RussianLanguage implements Language{
   String PASSWORD = 'Пароль';
   @override
   String REPEAR_PASSWORD = 'Повторите пароль';
+  @override
+  String LOGIN_BUTTON = 'Войти';  // Войти
+  @override
+  String LOGIN_APP_BAR = 'Войти';  // Войти
 
 }

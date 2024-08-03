@@ -24,5 +24,9 @@ class FrenchLanguage implements Language{
   String PASSWORD = 'Mot de passe';
   @override
   String REPEAR_PASSWORD = 'Répéter le mot de passe';
+  @override
+  String LOGIN_BUTTON = 'Se connecter';  // Iniciar sesión
+  @override
+  String LOGIN_APP_BAR = 'Se connecter';  // Inicia sesión
 
 }

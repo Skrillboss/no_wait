@@ -24,5 +24,9 @@ class GermanLanguage implements Language{
   String PASSWORD = 'Passwort';
   @override
   String REPEAR_PASSWORD = 'Passwort wiederholen';
+  @override
+  String LOGIN_BUTTON = 'Anmelden';  // Iniciar sesión
+  @override
+  String LOGIN_APP_BAR = 'Anmelden';  // Inicia sesión
 
 }

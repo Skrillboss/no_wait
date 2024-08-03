@@ -24,5 +24,9 @@ class JapaneseLanguage implements Language{
   String PASSWORD = 'パスワード';
   @override
   String REPEAR_PASSWORD = 'パスワードを再入力';
+  @override
+  String LOGIN_BUTTON = 'ログイン';  // ログイン
+  @override
+  String LOGIN_APP_BAR = 'ログイン';  // ログイン
 
 }
