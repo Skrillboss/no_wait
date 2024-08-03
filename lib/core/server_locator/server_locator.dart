@@ -11,7 +11,6 @@ import 'package:todo_turno/features/shift/infrastructure/data_providers/api/crea
 import 'package:todo_turno/features/shift/infrastructure/data_providers/demo/create_shift_demo_client.dart';
 import 'package:todo_turno/features/shift/infrastructure/repositories/create_shift_repository_impl.dart';
 import 'package:todo_turno/features/user/application/use_cases/login_user.dart';
-import 'package:todo_turno/features/user/application/view_models/auth_view_model.dart';
 import 'package:todo_turno/features/user/domain/repositories/register_user_repository.dart';
 import 'package:todo_turno/features/user/infrastructure/repositories/register_repository_impl.dart';
 import '../../features/item/domain/repositories/create_item_repository.dart';
@@ -28,6 +27,7 @@ import '../../features/shift/domain/repositories/read_shifts_repository.dart';
 import '../../features/shift/infrastructure/data_providers/api/read_shifts_api_client.dart';
 import '../../features/shift/infrastructure/data_providers/demo/read_shifts_demo_client.dart';
 import '../../features/shift/infrastructure/repositories/read_shifts_repository_impl.dart';
+import '../../features/user/application/use_cases/register_user.dart';
 import '../../features/user/domain/repositories/auth_user_repository.dart';
 import '../../features/user/infrastructure/data_providers/api/auth_user_api_client.dart';
 import '../../features/user/infrastructure/data_providers/api/register_user_api_client.dart';
@@ -47,7 +47,7 @@ void setupServiceLocator() {
   /* ********************************  User  ******************************** */
   /* ************************************************************************ */
 
-  /* *****************  REGISTER  *****************/
+  /* *****************  LOGIN  *****************/
 
   // Registering the AuthUserDemoClient DEMO
   sl.registerLazySingleton<AuthUserDemoClient>(() => AuthUserDemoClient());
@@ -56,12 +56,15 @@ void setupServiceLocator() {
   sl.registerLazySingleton<AuthUserApiClient>(() => AuthUserApiClient(httpClient: sl<http.Client>()));
 
   // Registering the AuthUserRepository
-  sl.registerLazySingleton<AuthUserRepository>(() => AuthRepositoryImpl(apiClient: sl<AuthUserDemoClient>()));
+  sl.registerLazySingleton<AuthUserRepository>(() => AuthUserRepositoryImpl(apiClient: sl<AuthUserDemoClient>()));
 
-  // Registering the AuthUserViewModel
-  sl.registerLazySingleton<AuthViewModel>(() => AuthViewModel(loginUser: sl<LoginUser>(), jwtTokenManager: sl<JwtTokenManager>()));
+  // Registering the JwtTokenManager
+  sl.registerLazySingleton<JwtTokenManager>(() => JwtTokenManager());
 
-  /* *****************  LOGIN  *****************/
+  /* ******** Registering the USE CASE ******** */
+  sl.registerLazySingleton<LoginUser>(() => LoginUser(sl<AuthUserRepository>(), sl<JwtTokenManager>()));
+
+  /* *****************  REGISTER  *****************/
 
   // Registering the RegisterUserDemoClient DEMO
   sl.registerLazySingleton<RegisterDemoClient>(() => RegisterDemoClient());
@@ -71,6 +74,9 @@ void setupServiceLocator() {
 
   // Registering the RegisterUserRepository
   sl.registerLazySingleton<RegisterUserRepository>(() => RegisterUserRepositoryImpl(apiClient: sl<RegisterDemoClient>()));
+
+  /* ******** Registering the USE CASE ******** */
+  sl.registerLazySingleton<RegisterUser>(() => RegisterUser(sl<RegisterUserRepository>()));
 
   /* ************************************************************************ */
   /* ********************************  Item  ******************************** */

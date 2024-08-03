@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_turno/views/screens/forms/register_uesr_form_screen.dart';
 
 // Importa las constantes de las rutas
 
@@ -11,5 +12,6 @@ Map<String, Widget Function(BuildContext)> buildRoutes() {
   return {
     // Define las rutas y sus pantallas correspondientes
     RoutesConstants.home: (BuildContext context) => const HomeScreen(),
+    RoutesConstants.registerUser: (BuildContext context) => const RegisterUserScreen()
   };
 }

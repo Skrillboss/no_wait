@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.light,
         primarySwatch: Colors.blue,
       ),
-      initialRoute: RoutesConstants.home,
+      initialRoute: RoutesConstants.registerUser,
       routes: buildRoutes(),
     );
   }
