@@ -8,7 +8,6 @@ abstract class RegisterUserRepository {
     required String nickName,
     required String email,
     required String phoneNumber,
-    required String password,
     PaymentInfo? paymentInfo,
     Business? business,
   });

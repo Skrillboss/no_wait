@@ -4,10 +4,10 @@ import '../../domain/repositories/auth_user_repository.dart';
 import '../data_providers/demo/auth_user_demo_client.dart';
 import '../mappers/user_mapper.dart';
 
-class AuthUserRepositoryImpl implements AuthUserRepository {
+class AuthRepositoryImpl implements AuthUserRepository {
   final AuthUserDemoClient apiClient;
 
-  AuthUserRepositoryImpl({required this.apiClient});
+  AuthRepositoryImpl({required this.apiClient});
 
   @override
   Future<AuthUserResult> authenticate(String username, String password) async {
