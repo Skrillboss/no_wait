@@ -66,16 +66,7 @@ on AbstractScreenState<Page> {
 
   CustomAppBar appbarWidget() {
     return CustomAppBar(
-      actions: [
-        IconButton(
-          icon: const Icon(Icons.add),
-          onPressed: () {
-            // Acción al presionar el botón de configuración
-          },
-        ),
-      ],
-      canGoToHome: false,
-      title: '',
+      actions: (){},
     );
   }
 
