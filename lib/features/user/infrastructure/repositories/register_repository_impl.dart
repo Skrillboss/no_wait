@@ -16,10 +16,11 @@ class RegisterUserRepositoryImpl implements RegisterUserRepository {
       required String nickName,
       required String email,
       required String phoneNumber,
+      required String password,
       PaymentInfo? paymentInfo,
       Business? business}) async {
     final Map<String, dynamic> data = await apiClient.registerUser(
-        name, nickName, email, phoneNumber, paymentInfo, business);
+        name, nickName, email, phoneNumber, password, paymentInfo, business);
     final User user = UserMapper.fromJson(data['user']);
     return user;
   }

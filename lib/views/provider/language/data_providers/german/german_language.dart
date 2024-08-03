@@ -6,4 +6,27 @@ class GermanLanguage implements Language{
 
   @override
   String SHIFT = 'Umschalten';
+
+  /************* HINT *************/
+  @override
+  String NAME_HINT = 'Nom';
+  @override
+  String NICKNAME_HINT = 'Surnom';
+  @override
+  String EMAIL_HINT = 'Email';
+  @override
+  String PHONE_HINT = 'Téléphone';
+  @override
+  String REGISTER_BUTTON = 'S\'inscrire';
+  @override
+  String REGISTER_APP_BAR = 'Registrieren';
+  @override
+  String PASSWORD = 'Passwort';
+  @override
+  String REPEAR_PASSWORD = 'Passwort wiederholen';
+  @override
+  String LOGIN_BUTTON = 'Anmelden';  // Iniciar sesión
+  @override
+  String LOGIN_APP_BAR = 'Anmelden';  // Inicia sesión
+
 }
