@@ -17,9 +17,7 @@ class UserMapper {
       business: json['business'] != null
           ? BusinessMapper.fromJson(json['business'])
           : null,
-      shifts: json['shifts'] != null
-      ? ShiftMapper.listFromJson(json['shifts'] as List<dynamic>)
-      : [],
+      shifts: ShiftMapper.listFromJson(json['shifts'] as List<dynamic>),
     );
   }
 

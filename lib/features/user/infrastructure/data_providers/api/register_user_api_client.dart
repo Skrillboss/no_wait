@@ -15,7 +15,6 @@ class RegisterUserApiClient {
     String nickName,
     String email,
     String phoneNumber,
-    String password,
     PaymentInfo? paymentInfo,
     Business? business,
   ) async {
@@ -27,7 +26,6 @@ class RegisterUserApiClient {
         'nickName': nickName,
         'email': email,
         'phoneNumber': phoneNumber,
-        'password': password,
         'paymentInfo': paymentInfo != null ? PaymentInfoMapper.toJson(paymentInfo) : null,
         'business': business != null ? BusinessMapper.toJson(business) : null,
       }),

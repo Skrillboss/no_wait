@@ -38,9 +38,9 @@ class MyApp extends StatelessWidget {
       title: 'Your App Title',
       theme: ThemeData(
         brightness: Brightness.light,
-        primarySwatch: Colors.green,
+        primarySwatch: Colors.blue,
       ),
-      initialRoute: RoutesConstants.loginUser,
+      initialRoute: RoutesConstants.home,
       routes: buildRoutes(),
     );
   }

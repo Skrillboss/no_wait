@@ -7,7 +7,6 @@ class RegisterDemoClient {
       String nickName,
       String email,
       String phoneNumber,
-      String password,
       PaymentInfo? paymentInfo,
       Business? business) async {
     final Map<String, dynamic> response = {
@@ -17,12 +16,12 @@ class RegisterDemoClient {
         'nickName': nickName,
         'email': email,
         'phoneNumber': phoneNumber,
-        if(paymentInfo != null)'paymentInfo': {
-          'cardNumber': paymentInfo.cardNumber,
-          'cardHolderName': paymentInfo.cardHolderName,
-          'expiryDate': paymentInfo.expiryDate,
-          'cardType': paymentInfo.cardType,
-          'cvv': paymentInfo.cvv,
+        'paymentInfo': {
+          'cardNumber': paymentInfo?.cardNumber,
+          'cardHolderName': paymentInfo?.cardHolderName,
+          'expiryDate': paymentInfo?.expiryDate,
+          'cardType': paymentInfo?.cardType,
+          'cvv': paymentInfo?.cvv,
         }
       },
     };
