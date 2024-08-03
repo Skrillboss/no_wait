@@ -3,8 +3,8 @@ class AuthUserDemoClient {
     final Map<String, dynamic> response = {
       'user': {
         'userId': '12345',
-        'name': 'John Doe',
-        'nickName': 'johnny',
+        'name': '$username (name)',
+        'nickName': '$username (name)',
         'email': 'john.doe@example.com',
         'phoneNumber': '+1234567890',
         'paymentInfo': {

@@ -29,7 +29,7 @@ class _LoginUserScreenState extends AbstractScreenState<LoginUserScreen>
     super.dispose();
   }
 
-  Future<void> _registerUser() async {
+  Future<void> _loginUser() async {
     if (_formKey.currentState!.validate()) {
       final user = await loginUser.call(
         username: _nameController.text,
@@ -96,7 +96,7 @@ class _LoginUserScreenState extends AbstractScreenState<LoginUserScreen>
         ),
         const SizedBox(height: 20), // Espacio antes del botón
         ElevatedButton(
-          onPressed: () => _registerUser(),
+          onPressed: () => _loginUser(),
           style: ElevatedButton.styleFrom(
             fixedSize: Size.fromWidth(widthOfScreen * 0.8),
             foregroundColor: Colors.white,
