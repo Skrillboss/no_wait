@@ -34,4 +34,20 @@ abstract class Language {
   String value = 'spanish';
 
   late String SHIFT;
+
+  /********************************/
+  /************* FROM *************/
+  /********************************/
+
+  /************* HINT *************/
+  late String NAME_HINT;
+  late String NICKNAME_HINT;
+  late String EMAIL_HINT;
+  late String PHONE_HINT;
+  late String REGISTER_BUTTON;
+
+  /************* OTHER ************/
+  late String REGISTER_APP_BAR;
+  late String PASSWORD;
+  late String REPEAR_PASSWORD;
 }

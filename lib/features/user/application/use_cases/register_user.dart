@@ -13,6 +13,7 @@ class RegisterUser {
     required String nickName,
     required String email,
     required String phoneNumber,
+
     PaymentInfo? paymentInfo,
     Business? business,
   }) async {
