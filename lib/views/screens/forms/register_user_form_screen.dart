@@ -50,6 +50,7 @@ class _RegisterUserScreenState extends AbstractScreenState<RegisterUserScreen>
         nickName: _nickNameController.text,
         email: _emailController.text,
         phoneNumber: _phoneNumberController.text,
+        password: _passwordController.text,
         paymentInfo: _paymentInfo,
         business: _business,
       );

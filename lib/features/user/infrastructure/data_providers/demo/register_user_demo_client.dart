@@ -7,6 +7,7 @@ class RegisterDemoClient {
       String nickName,
       String email,
       String phoneNumber,
+      String password,
       PaymentInfo? paymentInfo,
       Business? business) async {
     final Map<String, dynamic> response = {
