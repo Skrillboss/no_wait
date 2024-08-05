@@ -14,6 +14,6 @@ Map<String, Widget Function(BuildContext)> buildRoutes() {
     // Define las rutas y sus pantallas correspondientes
     RoutesConstants.home: (BuildContext context) => const HomeScreen(),
     RoutesConstants.registerUser: (BuildContext context) => const RegisterUserScreen(),
-    RoutesConstants.loginUser: (BuildContext context) => const LoginUserScreen(),
+    RoutesConstants.loginUser: (BuildContext context) => LoginUserScreen(),
   };
 }

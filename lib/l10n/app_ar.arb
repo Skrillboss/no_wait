@@ -1,0 +1,12 @@
+{
+  "nameHint": "اسم",
+  "nicknameHint": "اسم مستعار",
+  "emailHint": "البريد الإلكتروني",
+  "phoneHint": "الهاتف",
+  "registerButton": "تسجيل",
+  "registerAppBar": "تسجيل",
+  "passwordHint": "كلمة المرور",
+  "repeatPasswordHint": "أعد إدخال كلمة المرور",
+  "loginButton": "تسجيل الدخول",
+  "loginAppBar": "تسجيل الدخول"
+}

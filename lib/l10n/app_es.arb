@@ -1,0 +1,12 @@
+{
+  "nameHint": "Nombre",
+  "nicknameHint": "Apodo",
+  "emailHint": "Correo electrónico",
+  "phoneHint": "Teléfono",
+  "registerButton": "Registrarse",
+  "registerAppBar": "Registrarse",
+  "passwordHint": "Contraseña",
+  "repeatPasswordHint": "Repetir Contraseña",
+  "loginButton": "Iniciar sesión",
+  "loginAppBar": "Iniciar sesión"
+}

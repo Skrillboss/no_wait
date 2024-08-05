@@ -1,35 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:todo_turno/views/widgets/card_information.dart';
+import 'package:todo_turno/views/widgets/custom_appbar.dart';
 import '../../util/util.dart';
-import 'abstract_screens/abstract_screen.dart';
 
-class HomeScreen extends AbstractScreen {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends AbstractScreenState<HomeScreen>
-    with AbstractScreenMixin {
-
-  @override
-  Widget bodyWidget() {
-    return _shiftList();
+  Widget build(BuildContext context) {
+    return _shiftList(context);
   }
 
-  Widget _shiftList() {
+  Widget _shiftList(BuildContext context) {
     final statusDetails = [CardInformation(shift: Util.getSampleShift())];
 
-    return Center(
-      child: Container(
-        alignment: Alignment.topCenter,
-        width: widthOfScreen * 0.95,
-        margin: const EdgeInsets.only(top: 15),
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxHeight: double.infinity),
-          child: SingleChildScrollView(
-            child: Column(children: statusDetails),
+    return Scaffold(
+      appBar: CustomAppBar(
+        title: '',
+        actions: () {}, // Aquí también deberías colocar alguna acción o removerlo si no es necesario
+      ),
+      body: Center(
+        child: Container(
+          alignment: Alignment.topCenter,
+          margin: const EdgeInsets.only(top: 15),
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxHeight: double.infinity),
+            child: SingleChildScrollView(
+              child: Column(children: statusDetails),
+            ),
           ),
         ),
       ),

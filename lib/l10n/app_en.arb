@@ -1,0 +1,42 @@
+{
+  "nameHint": "Name",
+  "@nameHint": {
+    "description": "Hint for entering user's name"
+  },
+  "nicknameHint": "Nickname",
+  "@nicknameHint": {
+    "description": "Hint for entering user's nickname"
+  },
+  "emailHint": "Email",
+  "@emailHint": {
+    "description": "Hint for entering user's email address"
+  },
+  "phoneHint": "Phone",
+  "@phoneHint": {
+    "description": "Hint for entering user's phone number"
+  },
+  "registerButton": "Register",
+  "@registerButton": {
+    "description": "Text for register button"
+  },
+  "registerAppBar": "Register",
+  "@registerAppBar": {
+    "description": "Title of the register screen app bar"
+  },
+  "passwordHint": "Password",
+  "@passwordHint": {
+    "description": "Hint for entering user's password"
+  },
+  "repeatPasswordHint": "Repeat Password",
+  "@repeatPasswordHint": {
+    "description": "Hint for re-entering user's password"
+  },
+  "loginButton": "Login",
+  "@loginButton": {
+    "description": "Text for login button"
+  },
+  "loginAppBar": "Log In",
+  "@loginAppBar": {
+    "description": "Title of the login screen app bar"
+  }
+}

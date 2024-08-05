@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../../provider/language/language_service_provider.dart';
 import '../../widgets/custom_bottom_navigation_bar.dart';
 import '../../widgets/custom_appbar.dart';
 
@@ -12,7 +10,6 @@ abstract class AbstractScreenState<Page extends AbstractScreen>
     extends State<Page> {
   final FocusNode focusNode = FocusNode();
 
-  late LanguageServiceProvider languageProvider;
 
   double fontSizeTitle = 24;
   double fontSizeSubTitle = 20;
@@ -28,7 +25,6 @@ abstract class AbstractScreenState<Page extends AbstractScreen>
 
   @override
   void didChangeDependencies() {
-    languageProvider = context.watch<LanguageServiceProvider>();
     final size = MediaQuery.of(context).size;
     widthOfScreen = size.width;
     heightOfScreen = size.height;

@@ -1,0 +1,12 @@
+{
+  "nameHint": "Nom",
+  "nicknameHint": "Sobrenom",
+  "emailHint": "Correu electrònic",
+  "phoneHint": "Telèfon",
+  "registerButton": "Registrar-se",
+  "registerAppBar": "Registrar-se",
+  "passwordHint": "Contrasenya",
+  "repeatPasswordHint": "Repetir Contrasenya",
+  "loginButton": "Iniciar sessió",
+  "loginAppBar": "Iniciar sessió"
+}

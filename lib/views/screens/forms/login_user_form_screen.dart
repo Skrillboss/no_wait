@@ -3,17 +3,10 @@ import 'package:get_it/get_it.dart';
 import 'package:todo_turno/features/user/application/use_cases/login_user.dart';
 import 'package:todo_turno/views/widgets/custom_input_widget.dart';
 import '../../widgets/custom_appbar.dart';
-import '../abstract_screens/abstract_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class LoginUserScreen extends AbstractScreen {
-  const LoginUserScreen({super.key});
-
-  @override
-  State<LoginUserScreen> createState() => _LoginUserScreenState();
-}
-
-class _LoginUserScreenState extends AbstractScreenState<LoginUserScreen>
-    with AbstractScreenMixin {
+class LoginUserScreen extends StatelessWidget {
+  LoginUserScreen({super.key});
 
   final _formKey = GlobalKey<FormState>();
 
@@ -23,13 +16,7 @@ class _LoginUserScreenState extends AbstractScreenState<LoginUserScreen>
 
   LoginUser loginUser = GetIt.instance<LoginUser>();
 
-  @override
-  void dispose() {
-    _nameController.dispose();
-    super.dispose();
-  }
-
-  Future<void> _loginUser() async {
+  Future<void> _loginUser(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
       final user = await loginUser.call(
         username: _nameController.text,
@@ -46,33 +33,29 @@ class _LoginUserScreenState extends AbstractScreenState<LoginUserScreen>
   }
 
   @override
-  CustomAppBar appbarWidget() {
-    return CustomAppBar(
-      actions: (){},
-      title: languageProvider.languageSelected.LOGIN_APP_BAR,
-    );
-  }
-  @override
-  Widget bodyWidget() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
-      child: Form(
-          key: _formKey,
-          child: _buildColumnForm()
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: CustomAppBar(
+        actions: () {},
+        title: AppLocalizations.of(context)!.loginAppBar,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+        child: Form(key: _formKey, child: _buildColumnForm(context)),
       ),
     );
   }
 
-  Widget _buildColumnForm() {
+  Widget _buildColumnForm(BuildContext context) {
     List<Widget> inputs = [
       CustomInputWidget(
-        hintText: languageProvider.languageSelected.NAME_HINT,
+        hintText: AppLocalizations.of(context)!.nameHint,
         icon: Icons.person,
         controller: _nameController,
       ),
       CustomInputWidget(
         obscureText: true,
-        hintText: languageProvider.languageSelected.PASSWORD,
+        hintText: AppLocalizations.of(context)!.passwordHint,
         icon: Icons.password,
         keyboardType: TextInputType.visiblePassword,
         controller: _passwordController,
@@ -88,29 +71,30 @@ class _LoginUserScreenState extends AbstractScreenState<LoginUserScreen>
             return Column(
               children: [
                 inputs[index],
-                if (index < inputs.length - 1)
-                  const SizedBox(height: 20),
+                if (index < inputs.length - 1) const SizedBox(height: 20),
               ],
             );
           },
         ),
         const SizedBox(height: 20), // Espacio antes del botón
         ElevatedButton(
-          onPressed: () => _loginUser(),
+          onPressed: () => _loginUser(context),
           style: ElevatedButton.styleFrom(
-            fixedSize: Size.fromWidth(widthOfScreen * 0.8),
+            fixedSize: Size.fromWidth(500),
             foregroundColor: Colors.white,
-            backgroundColor: Theme.of(context).primaryColorDark, // Color del texto
+            backgroundColor: Theme.of(context).primaryColorDark,
+            // Color del texto
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12), // Bordes redondeados
             ),
-            padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 25), // Espaciado interno del botón
+            padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
+            // Espaciado interno del botón
             elevation: 5, // Sombra del botón
           ),
           child: Text(
-            languageProvider.languageSelected.LOGIN_BUTTON,
+            AppLocalizations.of(context)!.loginButton,
             style: TextStyle(
-              fontSize: fontSizeSubTitle,
+              fontSize: 24,
               fontWeight: FontWeight.bold,
               color: Colors.white,
             ),

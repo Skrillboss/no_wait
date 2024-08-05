@@ -1,0 +1,12 @@
+{
+  "nameHint": "姓名",
+  "nicknameHint": "昵称",
+  "emailHint": "电子邮件",
+  "phoneHint": "电话",
+  "registerButton": "注册",
+  "registerAppBar": "注册",
+  "passwordHint": "密码",
+  "repeatPasswordHint": "重复密码",
+  "loginButton": "登录",
+  "loginAppBar": "登录"
+}

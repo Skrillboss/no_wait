@@ -4,6 +4,7 @@ import 'package:todo_turno/views/widgets/custom_input_widget.dart';
 import '../../../features/user/application/use_cases/register_user.dart';
 import '../../widgets/custom_appbar.dart';
 import '../abstract_screens/abstract_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RegisterUserScreen extends AbstractScreen {
   const RegisterUserScreen({super.key});
@@ -49,6 +50,7 @@ class _RegisterUserScreenState extends AbstractScreenState<RegisterUserScreen>
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
+          //TODO: PASAR AL LANGUAGE
           content: Text('Bienvenido a NoWait ${user.nickName}'),
           duration: const Duration(seconds: 5),
         ),
@@ -60,7 +62,7 @@ class _RegisterUserScreenState extends AbstractScreenState<RegisterUserScreen>
   CustomAppBar appbarWidget() {
     return CustomAppBar(
       actions: () {},
-      title: languageProvider.languageSelected.REGISTER_APP_BAR,
+      title: AppLocalizations.of(context)!.registerAppBar,
     );
   }
 
@@ -75,37 +77,37 @@ class _RegisterUserScreenState extends AbstractScreenState<RegisterUserScreen>
   Widget _buildColumnForm() {
     List<Widget> inputs = [
       CustomInputWidget(
-        hintText: languageProvider.languageSelected.NAME_HINT,
+        hintText: AppLocalizations.of(context)!.nameHint,
         icon: Icons.person,
         controller: _nameController,
       ),
       CustomInputWidget(
-        hintText: languageProvider.languageSelected.NICKNAME_HINT,
+        hintText: AppLocalizations.of(context)!.nicknameHint,
         icon: Icons.tag_faces,
         controller: _nickNameController,
       ),
       CustomInputWidget(
-        hintText: languageProvider.languageSelected.PHONE_HINT,
+        hintText: AppLocalizations.of(context)!.phoneHint,
         icon: Icons.phone,
         keyboardType: TextInputType.phone,
         controller: _phoneNumberController,
       ),
       CustomInputWidget(
-        hintText: languageProvider.languageSelected.EMAIL_HINT,
+        hintText: AppLocalizations.of(context)!.emailHint,
         icon: Icons.email,
         keyboardType: TextInputType.emailAddress,
         controller: _emailController,
       ),
       CustomInputWidget(
         obscureText: true,
-        hintText: languageProvider.languageSelected.PASSWORD,
+        hintText: AppLocalizations.of(context)!.passwordHint,
         icon: Icons.password,
         keyboardType: TextInputType.visiblePassword,
         controller: _passwordController,
       ),
       CustomInputWidget(
         obscureText: true,
-        hintText: languageProvider.languageSelected.REPEAR_PASSWORD,
+        hintText: AppLocalizations.of(context)!.repeatPasswordHint,
         icon: Icons.password,
         keyboardType: TextInputType.visiblePassword,
         controller: _passwordRepeatController,
@@ -117,7 +119,7 @@ class _RegisterUserScreenState extends AbstractScreenState<RegisterUserScreen>
       children: [
         ...List.generate(
           inputs.length,
-          (index) {
+              (index) {
             return Column(
               children: [
                 inputs[index],
@@ -142,7 +144,7 @@ class _RegisterUserScreenState extends AbstractScreenState<RegisterUserScreen>
             elevation: 5, // Sombra del botón
           ),
           child: Text(
-            languageProvider.languageSelected.REGISTER_BUTTON,
+            AppLocalizations.of(context)!.registerButton,
             style: TextStyle(
               fontSize: fontSizeSubTitle,
               fontWeight: FontWeight.bold,

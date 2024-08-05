@@ -1,0 +1,12 @@
+{
+  "nameHint": "Имя",
+  "nicknameHint": "Псевдоним",
+  "emailHint": "Электронная почта",
+  "phoneHint": "Телефон",
+  "registerButton": "Зарегистрироваться",
+  "registerAppBar": "Зарегистрироваться",
+  "passwordHint": "Пароль",
+  "repeatPasswordHint": "Повторить пароль",
+  "loginButton": "Войти",
+  "loginAppBar": "Войти"
+}

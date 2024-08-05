@@ -46,7 +46,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar>{
         initialActiveIndex: _index,
         activeColor: activeColor,
         color: notActiveColor,
-        style: TabStyle.fixed,
+        style: TabStyle.react,
         items: [
           TabItem(
               icon: SvgPicture.asset(

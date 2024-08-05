@@ -1,0 +1,12 @@
+{
+  "nameHint": "名前",
+  "nicknameHint": "ニックネーム",
+  "emailHint": "メール",
+  "phoneHint": "電話",
+  "registerButton": "登録",
+  "registerAppBar": "登録",
+  "passwordHint": "パスワード",
+  "repeatPasswordHint": "パスワードを再入力",
+  "loginButton": "ログイン",
+  "loginAppBar": "ログイン"
+}
