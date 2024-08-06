@@ -8,5 +8,10 @@
   "passwordHint": "Пароль",
   "repeatPasswordHint": "Повторить пароль",
   "loginButton": "Войти",
-  "loginAppBar": "Войти"
+  "loginAppBar": "Войти",
+  "shifts": "Смены",
+  "profile": "Профиль",
+  "add": "Добавить",
+  "map": "Карта",
+  "settings": "Настройки"
 }

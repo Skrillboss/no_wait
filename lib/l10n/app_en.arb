@@ -38,5 +38,25 @@
   "loginAppBar": "Log In",
   "@loginAppBar": {
     "description": "Title of the login screen app bar"
+  },
+  "shifts": "Shifts",
+  "@shifts": {
+    "description": "Title of Shifts"
+  },
+  "profile": "Profile",
+  "@profile": {
+    "description": "Title of Profile"
+  },
+  "add": "Add",
+  "@add": {
+    "description": "Title of Adds new Shifts"
+  },
+  "map": "Map",
+  "@map": {
+    "description": "Title of Map"
+  },
+  "settings": "Settings",
+  "@settings": {
+    "description": "Title of Settings"
   }
 }

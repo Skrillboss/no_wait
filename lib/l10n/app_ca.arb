@@ -8,5 +8,10 @@
   "passwordHint": "Contrasenya",
   "repeatPasswordHint": "Repetir Contrasenya",
   "loginButton": "Iniciar sessió",
-  "loginAppBar": "Iniciar sessió"
+  "loginAppBar": "Iniciar sessió",
+  "shifts": "Torns",
+  "profile": "Perfil",
+  "add": "Afegir",
+  "map": "Mapa",
+  "settings": "Configuració"
 }

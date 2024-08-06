@@ -8,5 +8,10 @@
   "passwordHint": "Passwort",
   "repeatPasswordHint": "Passwort wiederholen",
   "loginButton": "Anmelden",
-  "loginAppBar": "Anmelden"
+  "loginAppBar": "Anmelden",
+  "shifts": "Schichten",
+  "profile": "Profil",
+  "add": "Hinzufügen",
+  "map": "Karte",
+  "settings": "Einstellungen"
 }

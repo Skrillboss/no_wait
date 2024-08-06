@@ -8,5 +8,10 @@
   "passwordHint": "パスワード",
   "repeatPasswordHint": "パスワードを再入力",
   "loginButton": "ログイン",
-  "loginAppBar": "ログイン"
+  "loginAppBar": "ログイン",
+  "shifts": "シフト",
+  "profile": "プロフィール",
+  "add": "追加",
+  "map": "地図",
+  "settings": "設定"
 }

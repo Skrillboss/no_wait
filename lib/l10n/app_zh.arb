@@ -8,5 +8,10 @@
   "passwordHint": "密码",
   "repeatPasswordHint": "重复密码",
   "loginButton": "登录",
-  "loginAppBar": "登录"
+  "loginAppBar": "登录",
+  "shifts": "班次",
+  "profile": "个人资料",
+  "add": "添加",
+  "map": "地图",
+  "settings": "设置"
 }

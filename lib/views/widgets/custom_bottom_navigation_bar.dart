@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import '../provider/bottom_navigation_bar_provider/bottom_navigation_bar_provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CustomBottomNavigationBar extends StatefulWidget {
 
@@ -52,34 +53,34 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar>{
                 'assets/svg/wallet-icon-black.svg',
               ),
               activeIcon: SvgPicture.asset('assets/svg/wallet-icon-fill.svg'),
-              title: 'prueba1'),
+              title: AppLocalizations.of(context)!.shifts),
           TabItem(
             icon: SvgPicture.asset(
               'assets/svg/user-icon-black.svg',
             ),
             activeIcon: SvgPicture.asset('assets/svg/user-icon-fill.svg'),
-            title: 'prueba2',
+            title: AppLocalizations.of(context)!.profile,
           ),
           TabItem(
             icon: SvgPicture.asset(
               'assets/svg/withdraw-icon-black.svg',
             ),
             activeIcon: SvgPicture.asset('assets/svg/withdraw-icon-fill.svg'),
-            title: 'prueba3',
+            title: AppLocalizations.of(context)!.add,
           ),
           TabItem(
             icon: SvgPicture.asset(
               'assets/svg/location-icon-black.svg',
             ),
             activeIcon: SvgPicture.asset('assets/svg/location-icon-fill.svg'),
-            title: 'prueba4',
+            title: AppLocalizations.of(context)!.map,
           ),
           TabItem(
             icon: SvgPicture.asset(
               'assets/svg/settings-icon-black.svg',
             ),
             activeIcon: SvgPicture.asset('assets/svg/settings-icon-fill.svg'),
-            title: 'prueba5',
+            title: AppLocalizations.of(context)!.settings,
           ),
         ],
         onTap: (value) {

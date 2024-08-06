@@ -8,5 +8,10 @@
   "passwordHint": "Mot de passe",
   "repeatPasswordHint": "Répéter le mot de passe",
   "loginButton": "Connexion",
-  "loginAppBar": "Connexion"
+  "loginAppBar": "Connexion",
+  "shifts": "Quarts de travail",
+  "profile": "Profil",
+  "add": "Ajouter",
+  "map": "Carte",
+  "settings": "Paramètres"
 }
