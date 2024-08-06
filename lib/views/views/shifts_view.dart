@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:todo_turno/views/widgets/card_information.dart';
 import 'package:todo_turno/views/widgets/custom_appbar.dart';
 import '../../util/util.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ShiftsView extends StatelessWidget {
   const ShiftsView({super.key});
@@ -16,7 +17,7 @@ class ShiftsView extends StatelessWidget {
 
     return Scaffold(
       appBar: CustomAppBar(
-        title: '',
+        title: AppLocalizations.of(context)!.shifts,
         actions: () {}, // Aquí también deberías colocar alguna acción o removerlo si no es necesario
       ),
       body: Center(
