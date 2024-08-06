@@ -5,7 +5,7 @@ import '../provider/bottom_navigation_bar_provider/bottom_navigation_bar_provide
 import '../widgets/custom_bottom_navigation_bar.dart';
 import 'forms/login_user_view.dart';
 import 'forms/register_user_view.dart';
-import 'home_view.dart';
+import 'shifts_view.dart';
 
 class MainMenuView extends StatefulWidget {
 
@@ -41,7 +41,7 @@ class _MainMenuView extends State<MainMenuView> {
   }
 
   final List<Widget> _childrens = [
-    const HomeView(),
+    const ShiftsView(),
     LoginUserView(),
     RegisterUserView()
   ];
