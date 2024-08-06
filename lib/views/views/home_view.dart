@@ -3,8 +3,8 @@ import 'package:todo_turno/views/widgets/card_information.dart';
 import 'package:todo_turno/views/widgets/custom_appbar.dart';
 import '../../util/util.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class HomeView extends StatelessWidget {
+  const HomeView({super.key});
 
   @override
   Widget build(BuildContext context) {
