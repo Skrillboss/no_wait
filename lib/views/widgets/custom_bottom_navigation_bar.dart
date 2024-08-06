@@ -16,7 +16,6 @@ class CustomBottomNavigationBar extends StatefulWidget {
 
 class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar>{
 
-  int _index = 0;
   Color notActiveColor = const Color.fromRGBO(90, 90, 90, 1.0);
   Color activeColor = Colors.black;
   List<Color> menuColors = [];
@@ -32,18 +31,18 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar>{
     ];
 
     //initDialog();
-    _index = context.read<BottomNavigationBarProvider>().getPos;
     super.initState();
   }
 
 
   @override
   Widget build(BuildContext context) {
+    final bottomNavProvider = Provider.of<BottomNavigationBarProvider>(context);
     return StyleProvider(
       style: Style(),
       child: ConvexAppBar(
         backgroundColor: const Color.fromRGBO(235, 235, 235, 1.0),
-        initialActiveIndex: _index,
+        initialActiveIndex: bottomNavProvider.getPos,
         activeColor: activeColor,
         color: notActiveColor,
         style: TabStyle.react,
@@ -84,9 +83,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar>{
           ),
         ],
         onTap: (value) {
-          setState(() {
-            _index = value;
-          });
+          bottomNavProvider.setPos = value;
         },
       ),
     );

@@ -3,18 +3,11 @@ import 'package:get_it/get_it.dart';
 import 'package:todo_turno/views/widgets/custom_input_widget.dart';
 import '../../../features/user/application/use_cases/register_user.dart';
 import '../../widgets/custom_appbar.dart';
-import '../abstract_screens/abstract_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class RegisterUserScreen extends AbstractScreen {
-  const RegisterUserScreen({super.key});
+class RegisterUserScreen extends StatelessWidget {
+  RegisterUserScreen({super.key});
 
-  @override
-  State<RegisterUserScreen> createState() => _RegisterUserScreenState();
-}
-
-class _RegisterUserScreenState extends AbstractScreenState<RegisterUserScreen>
-    with AbstractScreenMixin {
   final _formKey = GlobalKey<FormState>();
 
   // Controllers para los campos de texto
@@ -25,20 +18,9 @@ class _RegisterUserScreenState extends AbstractScreenState<RegisterUserScreen>
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _passwordRepeatController = TextEditingController();
 
-  RegisterUser registerUser = GetIt.instance<RegisterUser>();
+  final RegisterUser registerUser = GetIt.instance<RegisterUser>();
 
-  @override
-  void dispose() {
-    _nameController.dispose();
-    _nickNameController.dispose();
-    _emailController.dispose();
-    _phoneNumberController.dispose();
-    _passwordController.dispose();
-    _passwordRepeatController.dispose();
-    super.dispose();
-  }
-
-  Future<void> _registerUser() async {
+  Future<void> _registerUser(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
       final user = await registerUser.call(
         name: _nameController.text,
@@ -50,7 +32,6 @@ class _RegisterUserScreenState extends AbstractScreenState<RegisterUserScreen>
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          //TODO: PASAR AL LANGUAGE
           content: Text('Bienvenido a NoWait ${user.nickName}'),
           duration: const Duration(seconds: 5),
         ),
@@ -59,22 +40,20 @@ class _RegisterUserScreenState extends AbstractScreenState<RegisterUserScreen>
   }
 
   @override
-  CustomAppBar appbarWidget() {
-    return CustomAppBar(
-      actions: () {},
-      title: AppLocalizations.of(context)!.registerAppBar,
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: CustomAppBar(
+        actions: () {},
+        title: AppLocalizations.of(context)!.registerAppBar,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+        child: Form(key: _formKey, child: _buildColumnForm(context)),
+      ),
     );
   }
 
-  @override
-  Widget bodyWidget() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
-      child: Form(key: _formKey, child: _buildColumnForm()),
-    );
-  }
-
-  Widget _buildColumnForm() {
+  Widget _buildColumnForm(BuildContext context) {
     List<Widget> inputs = [
       CustomInputWidget(
         hintText: AppLocalizations.of(context)!.nameHint,
@@ -130,23 +109,21 @@ class _RegisterUserScreenState extends AbstractScreenState<RegisterUserScreen>
         ),
         const SizedBox(height: 20), // Espacio antes del botón
         ElevatedButton(
-          onPressed: () => _registerUser(),
+          onPressed: () => _registerUser(context),
           style: ElevatedButton.styleFrom(
-            fixedSize: Size.fromWidth(widthOfScreen * 0.8),
+            fixedSize: Size.fromWidth(500),
             foregroundColor: Colors.white,
             backgroundColor: Theme.of(context).primaryColorDark,
-            // Color del texto
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12), // Bordes redondeados
+              borderRadius: BorderRadius.circular(12),
             ),
             padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
-            // Espaciado interno del botón
             elevation: 5, // Sombra del botón
           ),
           child: Text(
             AppLocalizations.of(context)!.registerButton,
             style: TextStyle(
-              fontSize: fontSizeSubTitle,
+              fontSize: 24,
               fontWeight: FontWeight.bold,
               color: Colors.white,
             ),

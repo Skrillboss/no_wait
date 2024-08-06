@@ -6,15 +6,15 @@ import '../../widgets/custom_appbar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginUserScreen extends StatelessWidget {
-  LoginUserScreen({super.key});
 
   final _formKey = GlobalKey<FormState>();
-
   // Controllers para los campos de texto
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  LoginUser loginUser = GetIt.instance<LoginUser>();
+  final LoginUser loginUser = GetIt.instance<LoginUser>();
+
+  LoginUserScreen({super.key});
 
   Future<void> _loginUser(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
@@ -23,6 +23,7 @@ class LoginUserScreen extends StatelessWidget {
         password: _passwordController.text,
       );
 
+      //TODO: Cuando tengamos una pantalla correspondiente para el exito o no del login, se debe quitar el shiwSnackBar
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Hola ${user.nickName}'),
@@ -93,7 +94,7 @@ class LoginUserScreen extends StatelessWidget {
           ),
           child: Text(
             AppLocalizations.of(context)!.loginButton,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
               color: Colors.white,
