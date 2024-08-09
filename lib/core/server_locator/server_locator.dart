@@ -53,7 +53,7 @@ void setupServiceLocator() {
   sl.registerLazySingleton<AuthUserDemoClient>(() => AuthUserDemoClient());
 
   // Registering the AuthUserApiClient API
-  sl.registerLazySingleton<AuthUserApiClient>(() => AuthUserApiClient(httpClient: sl<http.Client>()));
+  sl.registerLazySingleton<AuthUserApiClient>(() => AuthUserApiClient());
 
   // Registering the AuthUserRepository
   sl.registerLazySingleton<AuthUserRepository>(() => AuthUserRepositoryImpl(apiClient: sl<AuthUserDemoClient>()));
@@ -70,7 +70,7 @@ void setupServiceLocator() {
   sl.registerLazySingleton<RegisterDemoClient>(() => RegisterDemoClient());
 
   // Registering the RegisterUserApiClient API
-  sl.registerLazySingleton<RegisterUserApiClient>(() => RegisterUserApiClient(httpClient: sl<http.Client>()));
+  sl.registerLazySingleton<RegisterUserApiClient>(() => RegisterUserApiClient());
 
   // Registering the RegisterUserRepository
   sl.registerLazySingleton<RegisterUserRepository>(() => RegisterUserRepositoryImpl(apiClient: sl<RegisterDemoClient>()));
@@ -88,7 +88,7 @@ void setupServiceLocator() {
   sl.registerLazySingleton<CreateItemDemoClient>(() => CreateItemDemoClient());
 
   // Registering the CreateApiDemoClient API
-  sl.registerLazySingleton<CreateItemApiClient>(() => CreateItemApiClient(httpClient: sl<http.Client>()));
+  sl.registerLazySingleton<CreateItemApiClient>(() => CreateItemApiClient());
 
   // Registering the CreateItemRepository
   sl.registerLazySingleton<CreateItemRepository>(() => CreateItemRepositoryImpl(apiClient: sl<CreateItemDemoClient>()));
@@ -99,7 +99,7 @@ void setupServiceLocator() {
   sl.registerLazySingleton<ReadItemDemoClient>(() => ReadItemDemoClient());
 
   // Registering the ReadItemApiClient
-  sl.registerLazySingleton<ReadItemApiClient>(() => ReadItemApiClient(httpClient: sl<http.Client>()));
+  sl.registerLazySingleton<ReadItemApiClient>(() => ReadItemApiClient());
 
   // Registering the ReadItemRepository
   sl.registerLazySingleton<ReadItemRepository>(() => ReadItemRepositoryImpl(apiClient: sl<ReadItemDemoClient>()));
@@ -110,7 +110,7 @@ void setupServiceLocator() {
   sl.registerLazySingleton<UpdateItemDemoClient>(() => UpdateItemDemoClient());
 
   // Registering the UpdateItemApiClient API
-  sl.registerLazySingleton<UpdateItemApiClient>(() => UpdateItemApiClient(httpClient: sl<http.Client>()));
+  sl.registerLazySingleton<UpdateItemApiClient>(() => UpdateItemApiClient());
 
   // Registering the UpdateItemRepository
   sl.registerLazySingleton<UpdateItemRepository>(() => UpdateItemRepositoryImpl(apiClient: sl<UpdateItemDemoClient>()));
@@ -136,7 +136,7 @@ void setupServiceLocator() {
   sl.registerLazySingleton<CreateShiftDemoClient>(() => CreateShiftDemoClient());
 
   // Registering the CreateShiftApiClient API
-  sl.registerLazySingleton<CreateShiftApiClient>(() => CreateShiftApiClient(httpClient: sl<http.Client>()));
+  sl.registerLazySingleton<CreateShiftApiClient>(() => CreateShiftApiClient());
 
   // Registering the CreateShiftRepository
   sl.registerLazySingleton<CreateShiftRepository>(() => CreateShiftRepositoryImpl(apiClient: sl<CreateShiftDemoClient>()));
@@ -147,7 +147,7 @@ void setupServiceLocator() {
   sl.registerLazySingleton<ReadShiftsDemoClient>(() => ReadShiftsDemoClient());
 
   // Registering the ReadShiftsApiClient API
-  sl.registerLazySingleton<ReadShiftsApiClient>(() => ReadShiftsApiClient(httpClient: sl<http.Client>()));
+  sl.registerLazySingleton<ReadShiftsApiClient>(() => ReadShiftsApiClient());
 
   // Registering the ReadShiftsRepository
   sl.registerLazySingleton<ReadShiftsRepository>(() => ReadShiftsRepositoryImpl(apiClient: sl<ReadShiftsDemoClient>()));

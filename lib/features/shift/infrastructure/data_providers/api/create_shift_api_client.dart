@@ -1,28 +1,20 @@
 import 'dart:convert';
-import 'package:http/http.dart' as http;
+import 'package:todo_turno/core/custom_exception/custom_exception.dart';
+import 'package:todo_turno/core/request_handler_service/request_handler.dart';
 
-class CreateShiftApiClient{
-  final http.Client httpClient;
+class CreateShiftApiClient {
+  final RequestHandler requestHandler = RequestHandler();
 
-  CreateShiftApiClient({required this.httpClient});
-
-  Future<Map<String, dynamic>> createShift(String userId, String itemId, String token) async {
-    final response = await httpClient.post(
-      Uri.parse('https://api.example.com/creteShift'),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer $token',
-      },
-      body: jsonEncode({
-        'userId': userId,
-        'itemId': itemId
-      }),
-    );
-
-    if (response.statusCode == 200) {
+  Future<Map<String, dynamic>> createShift(
+      String userId, String itemId, String token) async {
+    try {
+      final response = await requestHandler.postRequest(
+          endPoint: '/creteShift',
+          dataDecode: {'userId': userId, 'itemId': itemId},
+          errorCode: 2000);
       return jsonDecode(response.body);
-    } else {
-      throw Exception('Failed to load item');
+    } on CustomException {
+      rethrow;
     }
   }
 }

@@ -6,6 +6,15 @@ import 'package:todo_turno/core/custom_exception/custom_exception.dart';
 import 'package:todo_turno/core/network/jwt_token_manager.dart';
 
 class RequestHandler {
+  static final RequestHandler _requestHandlerInstance = RequestHandler._internal();
+
+  factory RequestHandler(){
+    return _requestHandlerInstance;
+  }
+
+  RequestHandler._internal();
+
+
   final http.Client httpClient = GetIt.instance<http.Client>();
   final String baseApiUrl = 'https://example.app';
   final JwtTokenManager _tokenManager = JwtTokenManager();

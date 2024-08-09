@@ -1,14 +1,13 @@
 import 'dart:convert';
-import 'package:http/http.dart' as http;
+import 'package:todo_turno/core/custom_exception/custom_exception.dart';
+import 'package:todo_turno/core/request_handler_service/request_handler.dart';
 import 'package:todo_turno/features/item/infrastructure/mappers/item_mapper.dart';
 import '../../../../business/domain/entities/business.dart';
 import '../../../../business/infrastructure/mappers/business_mapper.dart';
 import '../../../domain/entities/item.dart';
 
 class CreateItemApiClient {
-  final http.Client httpClient;
-
-  CreateItemApiClient({required this.httpClient});
+  final RequestHandler requestHandler = RequestHandler();
 
   Future<Map<String, dynamic>> createItem(
       Business business,
@@ -17,22 +16,20 @@ class CreateItemApiClient {
       String imageUrl,
       ItemStatus status,
       String token) async {
-    final response = await httpClient.post(
-      Uri.parse('https://api.example.com/createItem'),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer $token',
-      },
-      body: jsonEncode({
-        'business': BusinessMapper.toJson(business),
-        'itemName': itemName,
-        'description': description,
-        'imageUrl': imageUrl,
-        'itemStatus': ItemMapper.statusToString(status),
-        // Convertir el ItemStatus a String
-      }),
-    );
-    await Future.delayed(const Duration(seconds: 1));
-    return jsonDecode(response.body);
+    try {
+      final response = await requestHandler.postRequest(
+          endPoint: 'createItem',
+          dataDecode: {
+            'business': BusinessMapper.toJson(business),
+            'itemName': itemName,
+            'description': description,
+            'imageUrl': imageUrl,
+            'itemStatus': ItemMapper.statusToString(status),
+          },
+          errorCode: 2000);
+      return jsonDecode(response.body);
+    } on CustomException {
+      rethrow;
+    }
   }
 }
