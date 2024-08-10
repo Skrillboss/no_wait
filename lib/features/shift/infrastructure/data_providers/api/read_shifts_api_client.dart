@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:todo_turno/core/custom_exception/custom_exception.dart';
-import 'package:todo_turno/core/request_handler_service/request_handler.dart';
+import '../../../../../core/request_handler/request_handler.dart';
 
 class ReadShiftsApiClient {
   final RequestHandler requestHandler = RequestHandler();
