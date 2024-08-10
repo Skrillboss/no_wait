@@ -1,5 +1,5 @@
 class ReadShiftsDemoClient {
-  Future<Map<String, dynamic>> getShifts(String userId, String token) async {
+  Future<Map<String, dynamic>> getShifts(String userId) async {
     final Map<String, dynamic> response = {
       "shifts": [
         {

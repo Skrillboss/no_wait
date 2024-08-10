@@ -8,8 +8,8 @@ class DeleteItemRepositoryImpl implements DeleteItemRepository{
   DeleteItemRepositoryImpl({required this.apiClient});
 
   @override
-  Future<void> delete(String itemId, String token) async {
-    await apiClient.deleteItem(itemId, token);
+  Future<void> delete(String itemId) async {
+    await apiClient.deleteItem(itemId);
   }
 
 }

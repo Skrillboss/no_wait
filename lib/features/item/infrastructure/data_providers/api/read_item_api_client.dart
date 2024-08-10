@@ -5,7 +5,7 @@ import '../../../../../core/request_handler/request_handler.dart';
 class ReadItemApiClient {
   final RequestHandler requestHandler = RequestHandler();
 
-  Future<Map<String, dynamic>> getItem(String itemId, String token) async {
+  Future<Map<String, dynamic>> getItem(String itemId) async {
     try {
       final response = await requestHandler.getRequest(
           endPoint: '/items/$itemId', errorCode: 2000);

@@ -9,8 +9,8 @@ class CreateShiftRepositoryImpl implements CreateShiftRepository{
   CreateShiftRepositoryImpl({required this.apiClient});
 
   @override
-  Future<Shift> create(String userId, String itemId, String token) async {
-    final Map<String, dynamic> data = await apiClient.createShift(userId, itemId, token);
+  Future<Shift> create(String userId, String itemId) async {
+    final Map<String, dynamic> data = await apiClient.createShift(userId, itemId);
     final Shift shift = ShiftMapper.fromJson(data['shift']);
     return shift;
   }

@@ -1,7 +1,7 @@
 import '../../../domain/entities/item.dart';
 
 class UpdateItemDemoClient {
-  Future<Map<String, dynamic>> updateItem(Item item, String token) async {
+  Future<Map<String, dynamic>> updateItem(Item item) async {
     final Map<String, dynamic> response = {
       'item': {
         'id': 'generated-item-id',

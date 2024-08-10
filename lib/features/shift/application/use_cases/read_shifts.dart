@@ -6,7 +6,7 @@ class ReadShifts {
 
   ReadShifts(this.repository);
 
-  Future<List<Shift>> call({required String userId, required String token}) async {
-    return await repository.read(userId, token);
+  Future<List<Shift>> call({required String userId}) async {
+    return await repository.read(userId);
   }
 }

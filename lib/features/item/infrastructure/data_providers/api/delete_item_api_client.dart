@@ -7,6 +7,7 @@ class DeleteItemApiClient {
 
   DeleteItemApiClient({required this.httpClient});
 
+  //TODO: Delete the String token parameter, for that, I have to add a new requestHandler with the delete petition
   Future<void> deleteItem(String itemId, String token) async {
     await httpClient.delete(
       Uri.parse('https://api.example.com/deleteItem'),

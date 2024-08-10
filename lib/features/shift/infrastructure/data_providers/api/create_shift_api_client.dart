@@ -6,7 +6,7 @@ class CreateShiftApiClient {
   final RequestHandler requestHandler = RequestHandler();
 
   Future<Map<String, dynamic>> createShift(
-      String userId, String itemId, String token) async {
+      String userId, String itemId) async {
     try {
       final response = await requestHandler.postRequest(
           endPoint: '/creteShift',

@@ -6,7 +6,7 @@ class UpdateItem {
 
   UpdateItem(this.repository);
 
-  Future<Item> call({required Item item, required String token}) async {
-    return await repository.update(item, token);
+  Future<Item> call({required Item item}) async {
+    return await repository.update(item);
   }
 }

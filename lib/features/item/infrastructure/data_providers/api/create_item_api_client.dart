@@ -14,8 +14,7 @@ class CreateItemApiClient {
       String itemName,
       String description,
       String imageUrl,
-      ItemStatus status,
-      String token) async {
+      ItemStatus status) async {
     try {
       final response = await requestHandler.postRequest(
           endPoint: 'createItem',

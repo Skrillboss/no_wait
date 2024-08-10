@@ -7,7 +7,7 @@ import '../../../domain/entities/item.dart';
 class UpdateItemApiClient {
   final RequestHandler requestHandler = RequestHandler();
 
-  Future<Map<String, dynamic>> updateItem(Item item, String token) async {
+  Future<Map<String, dynamic>> updateItem(Item item) async {
     try{
       final response = await requestHandler.postRequest(
           endPoint: '/createItem',

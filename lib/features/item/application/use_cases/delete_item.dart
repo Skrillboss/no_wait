@@ -5,7 +5,7 @@ class DeleteItem {
 
   DeleteItem(this.repository);
 
-  Future<void> call({required String itemId, required String token}) async {
-    return await repository.delete(itemId, token);
+  Future<void> call({required String itemId}) async {
+    return await repository.delete(itemId);
   }
 }

@@ -5,7 +5,7 @@ import '../../../../../core/request_handler/request_handler.dart';
 class ReadShiftsApiClient {
   final RequestHandler requestHandler = RequestHandler();
 
-  Future<Map<String, dynamic>> getShifts(String userId, String token) async {
+  Future<Map<String, dynamic>> getShifts(String userId) async {
     try {
       final response = await requestHandler.getRequest(
           endPoint: '/shifts/$userId', errorCode: 2000);

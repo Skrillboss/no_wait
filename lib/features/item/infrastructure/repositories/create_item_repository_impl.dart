@@ -11,8 +11,8 @@ class CreateItemRepositoryImpl implements CreateItemRepository {
 
   @override
   Future<Item> create(Business business, String itemName, String description,
-      String imageUrl, ItemStatus status, String token) async {
-    final Map<String, dynamic> data = await apiClient.createItem(business, itemName, description, imageUrl, status, token);
+      String imageUrl, ItemStatus status) async {
+    final Map<String, dynamic> data = await apiClient.createItem(business, itemName, description, imageUrl, status);
     final Item item = ItemMapper.fromJson(data['item']);
     return item;
   }
