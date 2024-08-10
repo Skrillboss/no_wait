@@ -10,8 +10,8 @@ class UpdateItemRepositoryImpl implements UpdateItemRepository {
   UpdateItemRepositoryImpl({required this.apiClient});
 
   @override
-  Future<Item> update(Item item, String token) async {
-    final Map<String, dynamic> data = await apiClient.updateItem(item, token);
+  Future<Item> update(Item item) async {
+    final Map<String, dynamic> data = await apiClient.updateItem(item);
     return ItemMapper.fromJson(data['item']);
   }
 }

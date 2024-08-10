@@ -3,7 +3,7 @@ import '../../../domain/entities/item.dart';
 
 class CreateItemDemoClient {
   Future<Map<String, dynamic>> createItem(Business business, String itemName,
-      String description, String imageUrl, ItemStatus status, String token) async {
+      String description, String imageUrl, ItemStatus status) async {
     final Map<String, dynamic> response = {
       'item': {
         'id': 'generated-item-id',

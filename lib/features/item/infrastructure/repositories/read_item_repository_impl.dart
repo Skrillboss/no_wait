@@ -9,8 +9,8 @@ class ReadItemRepositoryImpl implements ReadItemRepository {
   ReadItemRepositoryImpl({required this.apiClient});
 
   @override
-  Future<Item> read(String itemId, String token) async {
-    final Map<String, dynamic> data = await apiClient.getItem(itemId, token);
+  Future<Item> read(String itemId) async {
+    final Map<String, dynamic> data = await apiClient.getItem(itemId);
     final Item item = ItemMapper.fromJson(data['item']);
     return item;
   }

@@ -1,24 +1,17 @@
 import 'dart:convert';
-import 'package:http/http.dart' as http;
+import 'package:todo_turno/core/custom_exception/custom_exception.dart';
+import '../../../../../core/request_handler/request_handler.dart';
 
-class ReadShiftsApiClient{
-  final http.Client httpClient;
+class ReadShiftsApiClient {
+  final RequestHandler requestHandler = RequestHandler();
 
-  ReadShiftsApiClient({required this.httpClient});
-
-  Future<Map<String, dynamic>> getShifts(String userId, String token) async {
-    final response = await httpClient.get(
-      Uri.parse('https://api.example.com/shifts/$userId'),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer $token',
-      },
-    );
-
-    if (response.statusCode == 200) {
+  Future<Map<String, dynamic>> getShifts(String userId) async {
+    try {
+      final response = await requestHandler.getRequest(
+          endPoint: '/shifts/$userId', errorCode: 2000);
       return jsonDecode(response.body);
-    } else {
-      throw Exception('Failed to load item');
+    } on CustomException {
+      rethrow;
     }
   }
 }

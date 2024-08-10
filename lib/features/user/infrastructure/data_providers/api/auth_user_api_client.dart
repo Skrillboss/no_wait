@@ -1,17 +1,19 @@
 import 'dart:convert';
-import 'package:http/http.dart' as http;
+import 'package:todo_turno/core/custom_exception/custom_exception.dart';
+import '../../../../../core/request_handler/request_handler.dart';
 
 class AuthUserApiClient {
-  final http.Client httpClient;
-
-  AuthUserApiClient({required this.httpClient});
+  final RequestHandler requestHandler = RequestHandler();
 
   Future<Map<String, dynamic>> login(String username, String password) async {
-    final response = await httpClient.post(
-      Uri.parse('https://api.example.com/login'),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({'username': username, 'password': password}),
-    );
+    try{
+      final response = await requestHandler.postRequest(
+          endPoint: '/login',
+          dataDecode: {'username': username, 'password': password},
+          errorCode: 2000);
       return jsonDecode(response.body);
+    } on CustomException{
+      rethrow;
+    }
   }
 }

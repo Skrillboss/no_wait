@@ -1,3 +1,3 @@
 abstract class DeleteItemRepository {
-  Future<void> delete(String itemId, String token);
+  Future<void> delete(String itemId);
 }

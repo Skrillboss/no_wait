@@ -6,7 +6,7 @@ class ReadItem {
 
   ReadItem(this.repository);
 
-  Future<Item> call({required String itemId, required String token}) async {
-    return await repository.read(itemId, token);
+  Future<Item> call({required String itemId}) async {
+    return await repository.read(itemId);
   }
 }

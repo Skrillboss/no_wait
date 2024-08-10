@@ -1,5 +1,5 @@
 class ReadItemDemoClient {
-  Future<Map<String, dynamic>> getItem(String itemId, String token) async {
+  Future<Map<String, dynamic>> getItem(String itemId) async {
     final Map<String, dynamic> response = {
       'item': {
         'id': itemId,
