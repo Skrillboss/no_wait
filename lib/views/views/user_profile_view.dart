@@ -41,27 +41,28 @@ class UserProfileView extends StatelessWidget {
               ),
             ),
             Container(
-                height: (heightFromScreen * 0.35),
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black),
-                    borderRadius: const BorderRadius.all(Radius.circular(30))),
-                child: Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Column(
-                    children: [
-                      Container(
-                        height: 50,
-                        alignment: Alignment.topRight,
-                        child: IconButton(
-                          icon: const Icon(Icons.settings),
-                          onPressed: () {},
-                        ),
+              height: (heightFromScreen * 0.35),
+              width: double.infinity,
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black),
+                  borderRadius: const BorderRadius.all(Radius.circular(30))),
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  children: [
+                    Container(
+                      height: 50,
+                      alignment: Alignment.topRight,
+                      child: IconButton(
+                        icon: const Icon(Icons.settings),
+                        onPressed: () {},
                       ),
-                      _buildColumnUserInformation(context)
-                    ],
-                  ),
-                )),
+                    ),
+                    _buildColumnUserInformation(context)
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -93,7 +94,7 @@ class UserProfileView extends StatelessWidget {
         children: [
           Text(
             AppLocalizations.of(context)!.name,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
           Text(
             user.name,
@@ -122,12 +123,12 @@ class UserProfileView extends StatelessWidget {
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
           SizedBox(
-            width: 160,
+              width: 160,
               child: Text(
                 overflow: TextOverflow.ellipsis,
-            user.email,
-            style: const TextStyle(color: Colors.indigo, fontSize: 16),
-          ))
+                user.email,
+                style: const TextStyle(color: Colors.indigo, fontSize: 16),
+              ))
         ],
       ),
       Row(
