@@ -15,21 +15,15 @@ class UserProfileView extends StatelessWidget {
     return Scaffold(
       appBar: CustomAppBar(
         title: AppLocalizations.of(context)!.profile,
-        actions: (){},
+        actions: () {},
       ),
       body: _buildContent(context),
     );
   }
 
   Widget _buildContent(BuildContext context) {
-    double widthFromScreen = MediaQuery
-        .of(context)
-        .size
-        .width;
-    double heightFromScreen = MediaQuery
-        .of(context)
-        .size
-        .height;
+    double widthFromScreen = MediaQuery.of(context).size.width;
+    double heightFromScreen = MediaQuery.of(context).size.height;
 
     return Center(
       child: SizedBox(
@@ -64,10 +58,10 @@ class UserProfileView extends StatelessWidget {
                           onPressed: () {},
                         ),
                       ),
-                      _buildColumnUserInformation(context)],
+                      _buildColumnUserInformation(context)
+                    ],
                   ),
-                )
-            ),
+                )),
           ],
         ),
       ),
@@ -127,10 +121,13 @@ class UserProfileView extends StatelessWidget {
             AppLocalizations.of(context)!.email,
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
-          Text(
+          SizedBox(
+            width: 160,
+              child: Text(
+                overflow: TextOverflow.ellipsis,
             user.email,
             style: const TextStyle(color: Colors.indigo, fontSize: 16),
-          )
+          ))
         ],
       ),
       Row(
