@@ -1,6 +1,7 @@
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_turno/views/views/user_profile_view.dart';
 import '../provider/bottom_navigation_bar_provider/bottom_navigation_bar_provider.dart';
 import '../widgets/custom_bottom_navigation_bar.dart';
 import 'forms/login_user_view.dart';
@@ -42,6 +43,7 @@ class _MainMenuView extends State<MainMenuView> {
 
   final List<Widget> _childrens = [
     const ShiftsView(),
+    UserProfileView(),
     LoginUserView(),
     RegisterUserView()
   ];
