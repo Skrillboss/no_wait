@@ -1,8 +1,8 @@
 {
-  "nameHint": "Nombre",
-  "nicknameHint": "Apodo",
-  "emailHint": "Correo electrónico",
-  "phoneHint": "Teléfono",
+  "name": "Nombre",
+  "nickname": "Apodo",
+  "email": "Correo electrónico",
+  "phone": "Teléfono",
   "registerButton": "Registrarse",
   "registerAppBar": "Registrarse",
   "passwordHint": "Contraseña",
@@ -13,5 +13,7 @@
   "profile": "Perfil",
   "add": "Agregar",
   "map": "Mapa",
-  "settings": "Ajustes"
+  "settings": "Ajustes",
+  "cardNumber": "Número de tarjeta",
+  "business": "Negocio"
 }

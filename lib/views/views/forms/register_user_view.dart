@@ -56,23 +56,23 @@ class RegisterUserView extends StatelessWidget {
   Widget _buildColumnForm(BuildContext context) {
     List<Widget> inputs = [
       CustomInputWidget(
-        hintText: AppLocalizations.of(context)!.nameHint,
+        hintText: AppLocalizations.of(context)!.name,
         icon: Icons.person,
         controller: _nameController,
       ),
       CustomInputWidget(
-        hintText: AppLocalizations.of(context)!.nicknameHint,
+        hintText: AppLocalizations.of(context)!.nickname,
         icon: Icons.tag_faces,
         controller: _nickNameController,
       ),
       CustomInputWidget(
-        hintText: AppLocalizations.of(context)!.phoneHint,
+        hintText: AppLocalizations.of(context)!.phone,
         icon: Icons.phone,
         keyboardType: TextInputType.phone,
         controller: _phoneNumberController,
       ),
       CustomInputWidget(
-        hintText: AppLocalizations.of(context)!.emailHint,
+        hintText: AppLocalizations.of(context)!.email,
         icon: Icons.email,
         keyboardType: TextInputType.emailAddress,
         controller: _emailController,

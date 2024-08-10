@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:todo_turno/views/widgets/custom_appbar.dart';
 import '../../features/user/domain/entities/user.dart';
 import '../../util/util.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class UserProfileView extends StatelessWidget {
   UserProfileView({super.key});
@@ -13,7 +14,7 @@ class UserProfileView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: 'Profile',
+        title: AppLocalizations.of(context)!.profile,
         actions: (){},
       ),
       body: _buildContent(context),
@@ -74,7 +75,7 @@ class UserProfileView extends StatelessWidget {
   }
 
   Column _buildColumnUserInformation(BuildContext context) {
-    final List<Widget> rowsUserInfo = _buildRowUserInformation();
+    final List<Widget> rowsUserInfo = _buildRowUserInformation(context);
 
     final List<Widget> spacedRowsUserInfo = [];
 
@@ -91,13 +92,13 @@ class UserProfileView extends StatelessWidget {
     );
   }
 
-  List<Widget> _buildRowUserInformation() {
+  List<Widget> _buildRowUserInformation(BuildContext context) {
     return [
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Text(
-            'Name',
+          Text(
+            AppLocalizations.of(context)!.name,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
           Text(
@@ -109,9 +110,9 @@ class UserProfileView extends StatelessWidget {
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Text(
-            'Nick name',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          Text(
+            AppLocalizations.of(context)!.nickname,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
           Text(
             user.nickName,
@@ -122,9 +123,9 @@ class UserProfileView extends StatelessWidget {
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Text(
-            'Email',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          Text(
+            AppLocalizations.of(context)!.email,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
           Text(
             user.email,
@@ -135,9 +136,9 @@ class UserProfileView extends StatelessWidget {
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Text(
-            'Phone number',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          Text(
+            AppLocalizations.of(context)!.phone,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
           Text(
             user.phoneNumber,
@@ -149,9 +150,9 @@ class UserProfileView extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text(
-              'Card number',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            Text(
+              AppLocalizations.of(context)!.cardNumber,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
             Text(
               user.paymentInfo!.cardNumber,
@@ -163,9 +164,9 @@ class UserProfileView extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text(
-              'Business',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            Text(
+              AppLocalizations.of(context)!.business,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
             Text(
               user.business!.name,

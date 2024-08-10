@@ -1,8 +1,8 @@
 {
-  "nameHint": "姓名",
-  "nicknameHint": "昵称",
-  "emailHint": "电子邮件",
-  "phoneHint": "电话",
+  "name": "姓名",
+  "nickname": "昵称",
+  "email": "电子邮件",
+  "phone": "电话",
   "registerButton": "注册",
   "registerAppBar": "注册",
   "passwordHint": "密码",
@@ -13,5 +13,7 @@
   "profile": "个人资料",
   "add": "添加",
   "map": "地图",
-  "settings": "设置"
+  "settings": "设置",
+  "cardNumber": "卡号",
+  "business": "业务"
 }

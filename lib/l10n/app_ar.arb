@@ -1,8 +1,8 @@
 {
-  "nameHint": "اسم",
-  "nicknameHint": "اسم مستعار",
-  "emailHint": "البريد الإلكتروني",
-  "phoneHint": "الهاتف",
+  "name": "اسم",
+  "nickname": "اسم مستعار",
+  "email": "البريد الإلكتروني",
+  "phone": "الهاتف",
   "registerButton": "تسجيل",
   "registerAppBar": "تسجيل",
   "passwordHint": "كلمة المرور",
@@ -13,5 +13,7 @@
   "profile": "الملف الشخصي",
   "add": "إضافة",
   "map": "خريطة",
-  "settings": "الإعدادات"
+  "settings": "الإعدادات",
+  "cardNumber": "رقم البطاقة",
+  "business": "عمل"
 }

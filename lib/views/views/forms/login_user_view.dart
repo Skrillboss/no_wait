@@ -50,7 +50,7 @@ class LoginUserView extends StatelessWidget {
   Widget _buildColumnForm(BuildContext context) {
     List<Widget> inputs = [
       CustomInputWidget(
-        hintText: AppLocalizations.of(context)!.nameHint,
+        hintText: AppLocalizations.of(context)!.name,
         icon: Icons.person,
         controller: _nameController,
       ),
