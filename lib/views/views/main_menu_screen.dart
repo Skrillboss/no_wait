@@ -9,17 +9,12 @@ import 'forms/register_user_view.dart';
 import 'shifts_view.dart';
 
 class MainMenuScreen extends StatefulWidget {
-
-  // final int pos;
-
   const MainMenuScreen({
     super.key,
   });
 
   @override
-  State<StatefulWidget> createState() {
-    return _MainMenuScreen();
-  }
+  State<StatefulWidget> createState() => _MainMenuScreen();
 }
 
 class _MainMenuScreen extends State<MainMenuScreen> {
@@ -41,23 +36,24 @@ class _MainMenuScreen extends State<MainMenuScreen> {
     super.initState();
   }
 
-  final List<Widget> _childrens = [
-    const ShiftsView(),
-    UserProfileView(),
-    LoginUserView(),
-    RegisterUserView()
-  ];
-
-
   @override
   Widget build(BuildContext context) {
+    final List<Widget> _childrens = [
+      const ShiftsView(),
+      LoginUserView(),
+      RegisterUserView(),
+      UserProfileView(),
+    ];
+
     return Scaffold(
       body: Consumer<BottomNavigationBarProvider>(
         builder: (context, bottomNavProvider, child) {
-          return IndexedStack(index: context.read<BottomNavigationBarProvider>().getPos, children: _childrens);
+          return IndexedStack(
+              index: context.read<BottomNavigationBarProvider>().getPos,
+              children: _childrens);
         },
       ),
-        bottomNavigationBar: const CustomBottomNavigationBar()
+      bottomNavigationBar: const CustomBottomNavigationBar(),
     );
   }
 }
