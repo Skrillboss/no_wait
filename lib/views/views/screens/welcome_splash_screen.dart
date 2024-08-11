@@ -18,6 +18,7 @@ class WelcomeSplashScreen extends StatefulWidget {
 
 class _WelcomeSplashScreenState extends State<WelcomeSplashScreen>
     with SingleTickerProviderStateMixin {
+
   @override
   void initState() {
     super.initState();

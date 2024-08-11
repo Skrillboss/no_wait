@@ -2,10 +2,10 @@ import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_turno/views/views/user_profile_view.dart';
+import '../../features/user/application/provider/user_provider.dart';
 import '../provider/bottom_navigation_bar_provider/bottom_navigation_bar_provider.dart';
 import '../widgets/custom_bottom_navigation_bar.dart';
 import 'forms/login_user_view.dart';
-import 'forms/register_user_view.dart';
 import 'shifts_view.dart';
 
 class MainMenuScreen extends StatefulWidget {
@@ -40,9 +40,14 @@ class _MainMenuScreen extends State<MainMenuScreen> {
   Widget build(BuildContext context) {
     final List<Widget> _childrens = [
       const ShiftsView(),
-      LoginUserView(),
-      RegisterUserView(),
-      UserProfileView(),
+      Consumer<UserProvider>(
+        builder:
+            (BuildContext context, UserProvider userProvider, Widget? child) {
+          return userProvider.getUser == null
+              ? LoginUserView()
+              : UserProfileView();
+        },
+      )
     ];
 
     return Scaffold(
