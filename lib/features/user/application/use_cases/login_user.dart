@@ -12,6 +12,7 @@ class LoginUser {
   Future<User> call({required String username, required String password}) async {
     AuthUserResult authUserResult = await repository.authenticate(username, password);
     await jwtTokenManager.saveToken(authUserResult.token);
+    await jwtTokenManager.saveRefreshToken(authUserResult.refreshToken);
     return authUserResult.user;
   }
 }

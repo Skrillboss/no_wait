@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.light,
         primarySwatch: Colors.green,
       ),
-      initialRoute: RoutesConstants.mainMenu,
+      initialRoute: RoutesConstants.welcomeSplash,
       routes: buildRoutes(),
     );
   }
