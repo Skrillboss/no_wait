@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_turno/views/widgets/custom_appbar.dart';
-import '../../features/user/domain/entities/user.dart';
-import '../../util/util.dart';
+import '../../features/user/application/provider/user_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class UserProfileView extends StatelessWidget {
   UserProfileView({super.key});
-
-  final User user = Util.getSampleUser();
 
   @override
   Widget build(BuildContext context) {
@@ -88,6 +86,7 @@ class UserProfileView extends StatelessWidget {
   }
 
   List<Widget> _buildRowUserInformation(BuildContext context) {
+    final UserProvider userProvider = Provider.of<UserProvider>(context);
     return [
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -97,7 +96,7 @@ class UserProfileView extends StatelessWidget {
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
           Text(
-            user.name,
+            userProvider.getUser!.name,
             style: const TextStyle(color: Colors.indigo, fontSize: 16),
           )
         ],
@@ -110,7 +109,7 @@ class UserProfileView extends StatelessWidget {
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
           Text(
-            user.nickName,
+            userProvider.getUser!.nickName,
             style: const TextStyle(color: Colors.indigo, fontSize: 16),
           )
         ],
@@ -126,7 +125,7 @@ class UserProfileView extends StatelessWidget {
               width: 160,
               child: Text(
                 overflow: TextOverflow.ellipsis,
-                user.email,
+                userProvider.getUser!.email,
                 style: const TextStyle(color: Colors.indigo, fontSize: 16),
               ))
         ],
@@ -139,12 +138,12 @@ class UserProfileView extends StatelessWidget {
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
           Text(
-            user.phoneNumber,
+            userProvider.getUser!.phoneNumber,
             style: const TextStyle(color: Colors.indigo, fontSize: 16),
           )
         ],
       ),
-      if (user.paymentInfo != null)
+      if (userProvider.getUser!.paymentInfo != null)
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -153,12 +152,12 @@ class UserProfileView extends StatelessWidget {
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
             Text(
-              user.paymentInfo!.cardNumber,
+              userProvider.getUser!.paymentInfo!.cardNumber,
               style: const TextStyle(color: Colors.indigo, fontSize: 16),
             )
           ],
         ),
-      if (user.business != null)
+      if (userProvider.getUser!.business != null)
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -167,7 +166,7 @@ class UserProfileView extends StatelessWidget {
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
             Text(
-              user.business!.name,
+              userProvider.getUser!.business!.name,
               style: const TextStyle(color: Colors.indigo, fontSize: 16),
             )
           ],

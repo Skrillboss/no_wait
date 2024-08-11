@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_turno/features/user/application/use_cases/login_user.dart';
 import 'package:todo_turno/views/widgets/custom_input_widget.dart';
+import '../../../features/user/application/provider/user_provider.dart';
 import '../../widgets/custom_appbar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -18,17 +20,10 @@ class LoginUserView extends StatelessWidget {
 
   Future<void> _loginUser(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
-      final user = await loginUser.call(
+      final UserProvider userProvider = Provider.of<UserProvider>(context, listen: false);
+      userProvider.setUser = await loginUser.call(
         username: _nameController.text,
         password: _passwordController.text,
-      );
-
-      //TODO: Cuando tengamos una pantalla correspondiente para el exito o no del login, se debe quitar el shiwSnackBar
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Hola ${user.nickName}'),
-          duration: const Duration(seconds: 5),
-        ),
       );
     }
   }
