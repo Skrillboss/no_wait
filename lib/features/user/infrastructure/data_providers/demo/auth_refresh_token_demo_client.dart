@@ -3,8 +3,8 @@ class AuthRefreshTokenDemoClient {
     final Map<String, dynamic> response = {
       'user': {
         'userId': '12345',
-        'name': 'John Doe',
-        'nickName': 'johnny',
+        'name': 'Luis',
+        'nickName': 'Luisillo',
         'email': 'john.doe@example.com',
         'phoneNumber': '+1234567890',
         'paymentInfo': {

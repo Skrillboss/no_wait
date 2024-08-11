@@ -3,8 +3,8 @@ class AuthUserDemoClient {
     final Map<String, dynamic> response = {
       'user': {
         'userId': '12345',
-        'name': 'John Doe',
-        'nickName': 'johnny',
+        'name': username,
+        'nickName': username,
         'email': 'john.doe@example.com',
         'phoneNumber': '+1234567890',
         'paymentInfo': {
@@ -13,6 +13,45 @@ class AuthUserDemoClient {
           'expiryDate': '2025-12-31T23:59:59Z',
           'cardType': 'VISA',
           'cvv': '123',
+        },
+        'business': {
+          'id': 'idBusinessDemo',
+          'cif': 'B12345678',
+          'name': 'Demo Business',
+          'imageUrl': 'https://example.com/image.png',
+          'phone': '+0987654321',
+          'address': '123 Demo Street, Demo City, DC',
+          'email': 'contact@demobusiness.com',
+          'createdAt': '2024-08-11T00:00:00Z',
+          'items': [
+            {
+              'id': 'item1',
+              'name': 'Item One',
+              'description': 'Description for item one.',
+              'imageUrl': 'https://example.com/item1.png',
+              'duration': 120,
+              'status': 'active',
+              'shifts': []
+            },
+            {
+              'id': 'item2',
+              'name': 'Item Two',
+              'description': 'Description for item two.',
+              'imageUrl': 'https://example.com/item2.png',
+              'duration': 120,
+              'status': 'inactive',
+              'shifts': []
+            },
+            {
+              'id': 'item3',
+              'name': 'Item Three',
+              'description': 'Description for item three.',
+              'imageUrl': 'https://example.com/item3.png',
+              'duration': 120,
+              'status': 'noStock',
+              'shifts': []
+            }
+          ]
         }
       },
       'token':
