@@ -19,15 +19,11 @@ class _WelcomeSplashScreenState extends State<WelcomeSplashScreen>
   void initState() {
     super.initState();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
-
-
-
     Future.delayed(const Duration(seconds: 5), () {
-      Navigator.of(context).pushReplacementNamed(RoutesConstants.mainMenu);
+      Navigator.of(context).pushReplacementNamed(
+        RoutesConstants.mainMenu
+      );
     });
-
-
-
   }
 
   @override

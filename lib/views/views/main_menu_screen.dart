@@ -8,21 +8,21 @@ import 'forms/login_user_view.dart';
 import 'forms/register_user_view.dart';
 import 'shifts_view.dart';
 
-class MainMenuView extends StatefulWidget {
+class MainMenuScreen extends StatefulWidget {
 
   // final int pos;
 
-  const MainMenuView({
+  const MainMenuScreen({
     super.key,
   });
 
   @override
   State<StatefulWidget> createState() {
-    return _MainMenuView();
+    return _MainMenuScreen();
   }
 }
 
-class _MainMenuView extends State<MainMenuView> {
+class _MainMenuScreen extends State<MainMenuScreen> {
   Color notActiveColor = const Color.fromRGBO(90, 90, 90, 1.0);
   Color activeColor = Colors.black;
   List<Color> menuColors = [];

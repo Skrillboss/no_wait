@@ -9,7 +9,7 @@ import '../constants/routes_constants.dart';
 Map<String, Widget Function(BuildContext)> buildRoutes() {
   return {
     RoutesConstants.welcomeSplash: (BuildContext context) => const WelcomeSplashScreen(),
-    RoutesConstants.mainMenu: (BuildContext context) => const MainMenuView(),
+    RoutesConstants.mainMenu: (BuildContext context) => const MainMenuScreen(),
     RoutesConstants.home: (BuildContext context) => const ShiftsView(),
     RoutesConstants.registerUser: (BuildContext context) => RegisterUserView(),
     RoutesConstants.loginUser: (BuildContext context) => LoginUserView(),
