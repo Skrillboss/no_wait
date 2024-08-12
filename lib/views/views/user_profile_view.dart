@@ -1,20 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_turno/views/widgets/custom_appbar.dart';
 import '../../features/user/application/provider/user_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class UserProfileView extends StatelessWidget {
-  UserProfileView({super.key});
+  const UserProfileView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
-        title: AppLocalizations.of(context)!.profile,
-        actions: () {},
-      ),
       body: _buildContent(context),
     );
   }
@@ -22,8 +17,16 @@ class UserProfileView extends StatelessWidget {
   Widget _buildContent(BuildContext context) {
     double widthFromScreen = MediaQuery.of(context).size.width;
     double heightFromScreen = MediaQuery.of(context).size.height;
+    final UserProvider userProvider = Provider.of<UserProvider>(context);
 
-    return Center(
+    return Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+            colors: [Colors.green, Colors.blue],
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft),
+      ),
+      alignment: Alignment.center,
       child: SizedBox(
         height: (heightFromScreen * 0.65),
         width: (widthFromScreen * 0.9),
@@ -49,26 +52,31 @@ class UserProfileView extends StatelessWidget {
                 child: Column(
                   children: [
                     Container(
-                      height: 50,
                       alignment: Alignment.topRight,
                       child: IconButton(
                         icon: const Icon(Icons.settings),
                         onPressed: () {},
                       ),
                     ),
-                    _buildColumnUserInformation(context)
+                    _buildColumnUserInformation(context, userProvider),
                   ],
                 ),
               ),
             ),
+            IconButton(
+              onPressed: () => userProvider.logOut,
+              icon: const Icon(Icons.logout),
+            )
           ],
         ),
       ),
     );
   }
 
-  Column _buildColumnUserInformation(BuildContext context) {
-    final List<Widget> rowsUserInfo = _buildRowUserInformation(context);
+  Column _buildColumnUserInformation(
+      BuildContext context, UserProvider userProvider) {
+    final List<Widget> rowsUserInfo =
+        _buildRowUserInformation(context, userProvider);
 
     final List<Widget> spacedRowsUserInfo = [];
 
@@ -85,8 +93,8 @@ class UserProfileView extends StatelessWidget {
     );
   }
 
-  List<Widget> _buildRowUserInformation(BuildContext context) {
-    final UserProvider userProvider = Provider.of<UserProvider>(context);
+  List<Widget> _buildRowUserInformation(
+      BuildContext context, UserProvider userProvider) {
     return [
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
