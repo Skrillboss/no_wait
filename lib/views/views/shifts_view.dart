@@ -22,7 +22,6 @@ class ShiftsView extends StatelessWidget {
               end: Alignment.bottomLeft),
         ),
         alignment: Alignment.topCenter,
-        margin: const EdgeInsets.only(top: 15),
         child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 60),
             child: ConstrainedBox(
