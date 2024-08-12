@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_turno/views/widgets/custom_input_widget.dart';
 import '../../../features/user/application/use_cases/register_user.dart';
-import '../../widgets/custom_appbar.dart';
+import '../../provider/views_list_provider/views_list_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class RegisterUserView extends StatelessWidget {
-  RegisterUserView({super.key});
+import 'login_user_view.dart';
 
-  final _formKey = GlobalKey<FormState>();
+class RegisterUserView extends StatelessWidget {
+  final _registerFormKey = GlobalKey<FormState>();
 
   // Controllers para los campos de texto
   final TextEditingController _nameController = TextEditingController();
@@ -16,12 +17,21 @@ class RegisterUserView extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _passwordRepeatController = TextEditingController();
+  final TextEditingController _passwordRepeatController =
+      TextEditingController();
 
   final RegisterUser registerUser = GetIt.instance<RegisterUser>();
 
+  RegisterUserView({super.key});
+
+  void changeView(BuildContext context, Widget view) {
+    final ViewsListProvider viewsListProvider =
+        Provider.of<ViewsListProvider>(context, listen: false);
+    viewsListProvider.setProfileView = view;
+  }
+
   Future<void> _registerUser(BuildContext context) async {
-    if (_formKey.currentState!.validate()) {
+    if (_registerFormKey.currentState!.validate()) {
       final user = await registerUser.call(
         name: _nameController.text,
         nickName: _nickNameController.text,
@@ -42,13 +52,17 @@ class RegisterUserView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
-        actions: () {},
-        title: AppLocalizations.of(context)!.registerAppBar,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
-        child: Form(key: _formKey, child: _buildColumnForm(context)),
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+              colors: [Colors.green, Colors.blue],
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+          child: Form(key: _registerFormKey, child: _buildColumnForm(context)),
+        ),
       ),
     );
   }
@@ -94,40 +108,63 @@ class RegisterUserView extends StatelessWidget {
     ];
 
     return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        ...List.generate(
-          inputs.length,
-              (index) {
-            return Column(
-              children: [
-                inputs[index],
-                if (index < inputs.length - 1) const SizedBox(height: 20),
-              ],
-            );
-          },
+        const Text(
+          'AQUI DEBE HABER UNA IMAGEN\nBONITA DE UN SAPITO QUE\nREACCIONE AL TAP DEL USUARIO\nde Luis para Luis\n:)',
+          textAlign: TextAlign.center,
         ),
-        const SizedBox(height: 20), // Espacio antes del botón
-        ElevatedButton(
-          onPressed: () => _registerUser(context),
-          style: ElevatedButton.styleFrom(
-            fixedSize: Size.fromWidth(500),
-            foregroundColor: Colors.white,
-            backgroundColor: Theme.of(context).primaryColorDark,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            ...List.generate(
+              inputs.length,
+              (index) {
+                return Column(
+                  children: [
+                    inputs[index],
+                    if (index < inputs.length - 1) const SizedBox(height: 20),
+                  ],
+                );
+              },
             ),
-            padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
-            elevation: 5, // Sombra del botón
-          ),
-          child: Text(
-            AppLocalizations.of(context)!.registerButton,
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
+            const SizedBox(height: 20), // Espacio antes del botón
+            ElevatedButton(
+              onPressed: () => _registerUser(context),
+              style: ElevatedButton.styleFrom(
+                fixedSize: const Size.fromWidth(500),
+                foregroundColor: Colors.white,
+                backgroundColor: Theme.of(context).primaryColorDark,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
+                elevation: 5, // Sombra del botón
+              ),
+              child: Text(
+                AppLocalizations.of(context)!.registerButton,
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
             ),
-          ),
+            const SizedBox(height: 10),
+            const Text(
+              'Ya tienes una cuenta?',
+              textAlign: TextAlign.center,
+            ),
+            TextButton(
+              onPressed: () {
+                changeView(context, LoginUserView());
+              },
+              child: const Text('INICIA SESION!',
+                  style: TextStyle(color: Colors.white, fontSize: 16)),
+            )
+          ],
         )
       ],
     );

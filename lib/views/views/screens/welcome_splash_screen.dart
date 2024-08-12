@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_turno/config/constants/routes_constants.dart';
 import 'package:todo_turno/core/network/jwt_token_manager.dart';
 import 'package:todo_turno/features/user/application/use_cases/login_user_token.dart';
+import 'package:todo_turno/views/views/main_menu_screen.dart';
 import '../../../features/user/application/provider/user_provider.dart';
 
 class WelcomeSplashScreen extends StatefulWidget {
@@ -18,13 +18,15 @@ class WelcomeSplashScreen extends StatefulWidget {
 
 class _WelcomeSplashScreenState extends State<WelcomeSplashScreen>
     with SingleTickerProviderStateMixin {
-
   @override
   void initState() {
     super.initState();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     Future.delayed(const Duration(seconds: 5), () {
-      Navigator.of(context).pushReplacementNamed(RoutesConstants.mainMenu);
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (BuildContext context) => const MainMenuScreen()));
     });
   }
 

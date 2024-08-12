@@ -1,12 +1,9 @@
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_turno/views/views/user_profile_view.dart';
-import '../../features/user/application/provider/user_provider.dart';
+import 'package:todo_turno/views/provider/views_list_provider/views_list_provider.dart';
 import '../provider/bottom_navigation_bar_provider/bottom_navigation_bar_provider.dart';
 import '../widgets/custom_bottom_navigation_bar.dart';
-import 'forms/login_user_view.dart';
-import 'shifts_view.dart';
 
 class MainMenuScreen extends StatefulWidget {
   const MainMenuScreen({
@@ -38,24 +35,21 @@ class _MainMenuScreen extends State<MainMenuScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> _childrens = [
-      const ShiftsView(),
-      Consumer<UserProvider>(
-        builder:
-            (BuildContext context, UserProvider userProvider, Widget? child) {
-          return userProvider.getUser == null
-              ? LoginUserView()
-              : UserProfileView();
-        },
-      )
-    ];
-
     return Scaffold(
       body: Consumer<BottomNavigationBarProvider>(
         builder: (context, bottomNavProvider, child) {
-          return IndexedStack(
-              index: context.read<BottomNavigationBarProvider>().getPos,
-              children: _childrens);
+          return Consumer<ViewsListProvider>(
+            builder: (BuildContext context, ViewsListProvider viewsListProvider,
+                Widget? child) {
+              return IndexedStack(
+                index: bottomNavProvider.getPos,
+                children: [
+                  viewsListProvider.getProfileView,
+                  viewsListProvider.getShiftView,
+                ],
+              );
+            },
+          );
         },
       ),
       bottomNavigationBar: const CustomBottomNavigationBar(),

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_turno/views/views/screens/welcome_splash_screen.dart';
 import 'config/constants/providers_constants.dart';
-import 'config/constants/routes_constants.dart';
-import 'config/router/build_routes.dart';
 import 'core/server_locator/server_locator.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -51,8 +50,7 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.light,
         primarySwatch: Colors.green,
       ),
-      initialRoute: RoutesConstants.welcomeSplash,
-      routes: buildRoutes(),
+      home: const WelcomeSplashScreen(),
     );
   }
 }
