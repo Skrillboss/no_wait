@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class BottomNavigationBarProvider with ChangeNotifier {
-  int _pos = 1;
-  get getPos => _pos;
+  int _pos = 0;
+  int get getPos => _pos;
 
   set setPos(int pos) {
     _pos = pos;

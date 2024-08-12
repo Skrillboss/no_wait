@@ -14,7 +14,8 @@ class AuthUserRepositoryImpl implements AuthUserRepository {
     final Map<String, dynamic> data = await apiClient.login(username, password);
     final User user = UserMapper.fromJson(data['user']);
     final String token = data['token'];
-    AuthUserResult authResult = AuthUserResult(user: user, token: token);
+    final String refreshToken = data['refreshToken'];
+    final AuthUserResult authResult = AuthUserResult(user: user, token: token, refreshToken: refreshToken);
     return authResult;
   }
 }

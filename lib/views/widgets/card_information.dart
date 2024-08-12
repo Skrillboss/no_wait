@@ -7,10 +7,10 @@ class CardInformation extends StatefulWidget {
   const CardInformation({super.key, required this.shift});
 
   @override
-  _CardInformationState createState() => _CardInformationState();
+  CardInformationState createState() => CardInformationState();
 }
 
-class _CardInformationState extends State<CardInformation> {
+class CardInformationState extends State<CardInformation> {
   bool _isExpanded = false;
 
   @override
@@ -29,13 +29,13 @@ class _CardInformationState extends State<CardInformation> {
                     _getIconForStatus(shift.status),
                     color: _getColorForStatus(shift.status),
                   ),
-                  title: Text('shift.business.name'),
+                  title: const Text('shift.business.name'),
                   subtitle: Column(
                     children: [
-                      Row(
+                      const Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text('Servicio'),
+                          Text('Servicio'),
                           Text('shift.item.name'),
                         ],
                       ),

@@ -1,18 +1,18 @@
 {
-  "nameHint": "Name",
-  "@nameHint": {
-    "description": "Hint for entering user's name"
+  "name": "Name",
+  "@name": {
+    "description": "user's name"
   },
-  "nicknameHint": "Nickname",
-  "@nicknameHint": {
-    "description": "Hint for entering user's nickname"
+  "nickname": "Nickname",
+  "@nickname": {
+    "description": "user's nickname"
   },
-  "emailHint": "Email",
-  "@emailHint": {
+  "email": "Email",
+  "@email": {
     "description": "Hint for entering user's email address"
   },
-  "phoneHint": "Phone",
-  "@phoneHint": {
+  "phone": "Phone",
+  "@phone": {
     "description": "Hint for entering user's phone number"
   },
   "registerButton": "Register",
@@ -58,5 +58,13 @@
   "settings": "Settings",
   "@settings": {
     "description": "Title of Settings"
+  },
+  "cardNumber": "Card number",
+  "@cardNumber": {
+    "description": "user`s card number"
+  },
+  "business": "Business",
+  "@business": {
+    "description": "business"
   }
 }

@@ -1,8 +1,8 @@
 {
-  "nameHint": "Nom",
-  "nicknameHint": "Surnom",
-  "emailHint": "E-mail",
-  "phoneHint": "Téléphone",
+  "name": "Nom",
+  "nickname": "Surnom",
+  "email": "E-mail",
+  "phone": "Téléphone",
   "registerButton": "S'inscrire",
   "registerAppBar": "S'inscrire",
   "passwordHint": "Mot de passe",
@@ -13,5 +13,7 @@
   "profile": "Profil",
   "add": "Ajouter",
   "map": "Carte",
-  "settings": "Paramètres"
+  "settings": "Paramètres",
+  "cardNumber": "Numéro de carte",
+  "business": "Affaires"
 }

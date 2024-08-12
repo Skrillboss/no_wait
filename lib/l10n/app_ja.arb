@@ -1,8 +1,8 @@
 {
-  "nameHint": "名前",
-  "nicknameHint": "ニックネーム",
-  "emailHint": "メール",
-  "phoneHint": "電話",
+  "name": "名前",
+  "nickname": "ニックネーム",
+  "email": "メール",
+  "phone": "電話",
   "registerButton": "登録",
   "registerAppBar": "登録",
   "passwordHint": "パスワード",
@@ -13,5 +13,7 @@
   "profile": "プロフィール",
   "add": "追加",
   "map": "地図",
-  "settings": "設定"
+  "settings": "設定",
+  "cardNumber": "カード番号",
+  "business": "ビジネス"
 }

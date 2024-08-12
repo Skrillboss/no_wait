@@ -1,8 +1,8 @@
 {
-  "nameHint": "Имя",
-  "nicknameHint": "Псевдоним",
-  "emailHint": "Электронная почта",
-  "phoneHint": "Телефон",
+  "name": "Имя",
+  "nickname": "Псевдоним",
+  "email": "Электронная почта",
+  "phone": "Телефон",
   "registerButton": "Зарегистрироваться",
   "registerAppBar": "Зарегистрироваться",
   "passwordHint": "Пароль",
@@ -13,5 +13,7 @@
   "profile": "Профиль",
   "add": "Добавить",
   "map": "Карта",
-  "settings": "Настройки"
+  "settings": "Настройки",
+  "cardNumber": "Номер карты",
+  "business": "Бизнес"
 }

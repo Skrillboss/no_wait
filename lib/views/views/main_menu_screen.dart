@@ -1,27 +1,20 @@
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_turno/views/provider/views_list_provider/views_list_provider.dart';
 import '../provider/bottom_navigation_bar_provider/bottom_navigation_bar_provider.dart';
 import '../widgets/custom_bottom_navigation_bar.dart';
-import 'forms/login_user_view.dart';
-import 'forms/register_user_view.dart';
-import 'shifts_view.dart';
 
-class MainMenuView extends StatefulWidget {
-
-  // final int pos;
-
-  const MainMenuView({
+class MainMenuScreen extends StatefulWidget {
+  const MainMenuScreen({
     super.key,
   });
 
   @override
-  State<StatefulWidget> createState() {
-    return _MainMenuView();
-  }
+  State<StatefulWidget> createState() => _MainMenuScreen();
 }
 
-class _MainMenuView extends State<MainMenuView> {
+class _MainMenuScreen extends State<MainMenuScreen> {
   Color notActiveColor = const Color.fromRGBO(90, 90, 90, 1.0);
   Color activeColor = Colors.black;
   List<Color> menuColors = [];
@@ -40,22 +33,26 @@ class _MainMenuView extends State<MainMenuView> {
     super.initState();
   }
 
-  final List<Widget> _childrens = [
-    const ShiftsView(),
-    LoginUserView(),
-    RegisterUserView()
-  ];
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Consumer<BottomNavigationBarProvider>(
         builder: (context, bottomNavProvider, child) {
-          return IndexedStack(index: context.read<BottomNavigationBarProvider>().getPos, children: _childrens);
+          return Consumer<ViewsListProvider>(
+            builder: (BuildContext context, ViewsListProvider viewsListProvider,
+                Widget? child) {
+              return IndexedStack(
+                index: bottomNavProvider.getPos,
+                children: [
+                  viewsListProvider.getProfileView,
+                  viewsListProvider.getShiftView,
+                ],
+              );
+            },
+          );
         },
       ),
-        bottomNavigationBar: const CustomBottomNavigationBar()
+      bottomNavigationBar: const CustomBottomNavigationBar(),
     );
   }
 }

@@ -1,8 +1,8 @@
 {
-  "nameHint": "Nom",
-  "nicknameHint": "Sobrenom",
-  "emailHint": "Correu electrònic",
-  "phoneHint": "Telèfon",
+  "name": "Nom",
+  "nickname": "Sobrenom",
+  "email": "Correu electrònic",
+  "phone": "Telèfon",
   "registerButton": "Registrar-se",
   "registerAppBar": "Registrar-se",
   "passwordHint": "Contrasenya",
@@ -13,5 +13,7 @@
   "profile": "Perfil",
   "add": "Afegir",
   "map": "Mapa",
-  "settings": "Configuració"
+  "settings": "Configuració",
+  "cardNumber": "Número de targeta",
+  "business": "Negoci"
 }
