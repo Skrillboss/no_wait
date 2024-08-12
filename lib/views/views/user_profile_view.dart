@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_turno/views/provider/views_list_provider/views_list_provider.dart';
+import 'package:todo_turno/views/views/forms/login_user_view.dart';
 import '../../features/user/application/provider/user_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -18,6 +20,7 @@ class UserProfileView extends StatelessWidget {
     double widthFromScreen = MediaQuery.of(context).size.width;
     double heightFromScreen = MediaQuery.of(context).size.height;
     final UserProvider userProvider = Provider.of<UserProvider>(context);
+    final ViewsListProvider viewsListProvider = Provider.of<ViewsListProvider>(context);
 
     return Container(
       decoration: const BoxDecoration(
@@ -64,7 +67,10 @@ class UserProfileView extends StatelessWidget {
               ),
             ),
             IconButton(
-              onPressed: () => userProvider.logOut,
+              onPressed: () {
+                userProvider.logOut.call();
+                viewsListProvider.setProfileView = LoginUserView();
+              },
               icon: const Icon(Icons.logout),
             )
           ],

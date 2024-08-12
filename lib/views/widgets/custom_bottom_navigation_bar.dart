@@ -39,31 +39,31 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
   Widget build(BuildContext context) {
     final BottomNavigationBarProvider bottomNavProvider =
         Provider.of<BottomNavigationBarProvider>(context);
-    return StyleProvider(
-      style: Style(),
-      child: Consumer<UserProvider>(
-        builder:
-            (BuildContext context, UserProvider userProvider, Widget? child) {
-          return ConvexAppBar(
+    return Consumer<UserProvider>(
+      builder:
+          (BuildContext context, UserProvider userProvider, Widget? child) {
+        return StyleProvider(
+          style: Style(),
+          child: ConvexAppBar(
             backgroundColor: const Color.fromRGBO(235, 235, 235, 1.0),
             initialActiveIndex: bottomNavProvider.getPos,
             activeColor: activeColor,
             color: notActiveColor,
-            style: TabStyle.react,
+            style: TabStyle.fixed,
             items: getTabItems(userProvider.getIsLogged),
             onTap: (value) {
               if (userProvider.getIsLogged) {
                 bottomNavProvider.setPos = value;
               }
             },
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 
-  List<TabItem> getTabItems(bool isLogged){
-    if(isLogged){
+  List<TabItem> getTabItems(bool isLogged) {
+    if (isLogged) {
       return [
         TabItem(
           icon: SvgPicture.asset(
@@ -76,35 +76,31 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
             icon: SvgPicture.asset(
               'assets/svg/wallet-icon-black.svg',
             ),
-            activeIcon:
-            SvgPicture.asset('assets/svg/wallet-icon-fill.svg'),
+            activeIcon: SvgPicture.asset('assets/svg/wallet-icon-fill.svg'),
             title: AppLocalizations.of(context)!.shifts),
         TabItem(
           icon: SvgPicture.asset(
             'assets/svg/withdraw-icon-black.svg',
           ),
-          activeIcon:
-          SvgPicture.asset('assets/svg/withdraw-icon-fill.svg'),
+          activeIcon: SvgPicture.asset('assets/svg/withdraw-icon-fill.svg'),
           title: AppLocalizations.of(context)!.add,
         ),
         TabItem(
           icon: SvgPicture.asset(
             'assets/svg/location-icon-black.svg',
           ),
-          activeIcon:
-          SvgPicture.asset('assets/svg/location-icon-fill.svg'),
+          activeIcon: SvgPicture.asset('assets/svg/location-icon-fill.svg'),
           title: AppLocalizations.of(context)!.map,
         ),
         TabItem(
           icon: SvgPicture.asset(
             'assets/svg/settings-icon-black.svg',
           ),
-          activeIcon:
-          SvgPicture.asset('assets/svg/settings-icon-fill.svg'),
+          activeIcon: SvgPicture.asset('assets/svg/settings-icon-fill.svg'),
           title: AppLocalizations.of(context)!.settings,
         ),
       ];
-    }else{
+    } else {
       return [
         TabItem(
           icon: SvgPicture.asset(
@@ -116,7 +112,6 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
       ];
     }
   }
-
 }
 
 class Style extends StyleHook {

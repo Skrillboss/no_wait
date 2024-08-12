@@ -35,7 +35,7 @@ class LoginUserView extends StatelessWidget {
         password: _passwordController.text,
       );
       if (userProvider.getIsLogged) {
-        changeView(context, UserProfileView());
+        changeView(context, const UserProfileView());
       }
     }
   }
