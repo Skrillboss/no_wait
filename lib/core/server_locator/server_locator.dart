@@ -12,6 +12,7 @@ import 'package:todo_turno/features/shift/infrastructure/data_providers/demo/cre
 import 'package:todo_turno/features/shift/infrastructure/repositories/create_shift_repository_impl.dart';
 import 'package:todo_turno/features/user/application/use_cases/login_user.dart';
 import 'package:todo_turno/features/user/application/use_cases/login_user_token.dart';
+import 'package:todo_turno/features/user/application/use_cases/logout_user.dart';
 import 'package:todo_turno/features/user/domain/repositories/auth_refresh_token_repository.dart';
 import 'package:todo_turno/features/user/domain/repositories/register_user_repository.dart';
 import 'package:todo_turno/features/user/infrastructure/data_providers/demo/auth_refresh_token_demo_client.dart';
@@ -81,6 +82,10 @@ void setupServiceLocator() {
 
   // Registering the AuthRefreshTokenRepository
   sl.registerLazySingleton<AuthRefreshTokenRepository>(() => AuthRefreshTokenRepositoryImpl(apiClient: sl<AuthRefreshTokenDemoClient>()));
+
+  /* ***************  LOGOUT USER  ***************/
+  /* ******** USE CASE ******** */
+  sl.registerLazySingleton<LogoutUser>(() => LogoutUser(sl<JwtTokenManager>()));
 
   /* *****************  REGISTER  *****************/
   /* ******** USE CASE ******** */

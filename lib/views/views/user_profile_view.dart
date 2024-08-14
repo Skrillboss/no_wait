@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_turno/views/provider/views_list_provider/views_list_provider.dart';
 import 'package:todo_turno/views/views/forms/login_user_view.dart';
 import '../../features/user/application/provider/user_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../features/user/application/use_cases/logout_user.dart';
 
 class UserProfileView extends StatelessWidget {
-  const UserProfileView({super.key});
+  UserProfileView({super.key});
+
+  final LogoutUser logoutUser = GetIt.instance<LogoutUser>();
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +24,8 @@ class UserProfileView extends StatelessWidget {
     double widthFromScreen = MediaQuery.of(context).size.width;
     double heightFromScreen = MediaQuery.of(context).size.height;
     final UserProvider userProvider = Provider.of<UserProvider>(context);
-    final ViewsListProvider viewsListProvider = Provider.of<ViewsListProvider>(context);
+    final ViewsListProvider viewsListProvider =
+        Provider.of<ViewsListProvider>(context);
 
     return Container(
       decoration: const BoxDecoration(
@@ -69,6 +74,7 @@ class UserProfileView extends StatelessWidget {
             IconButton(
               onPressed: () {
                 userProvider.logOut.call();
+                logoutUser.call();
                 viewsListProvider.setProfileView = LoginUserView();
               },
               icon: const Icon(Icons.logout),
@@ -111,7 +117,7 @@ class UserProfileView extends StatelessWidget {
           ),
           Text(
             userProvider.getUser!.name,
-            style: const TextStyle(color: Colors.indigo, fontSize: 16),
+            style: const TextStyle(fontSize: 16),
           )
         ],
       ),
@@ -124,7 +130,7 @@ class UserProfileView extends StatelessWidget {
           ),
           Text(
             userProvider.getUser!.nickName,
-            style: const TextStyle(color: Colors.indigo, fontSize: 16),
+            style: const TextStyle(fontSize: 16),
           )
         ],
       ),
@@ -140,7 +146,7 @@ class UserProfileView extends StatelessWidget {
               child: Text(
                 overflow: TextOverflow.ellipsis,
                 userProvider.getUser!.email,
-                style: const TextStyle(color: Colors.indigo, fontSize: 16),
+                style: const TextStyle(fontSize: 16),
               ))
         ],
       ),
@@ -153,7 +159,7 @@ class UserProfileView extends StatelessWidget {
           ),
           Text(
             userProvider.getUser!.phoneNumber,
-            style: const TextStyle(color: Colors.indigo, fontSize: 16),
+            style: const TextStyle(fontSize: 16),
           )
         ],
       ),
@@ -167,7 +173,7 @@ class UserProfileView extends StatelessWidget {
             ),
             Text(
               userProvider.getUser!.paymentInfo!.cardNumber,
-              style: const TextStyle(color: Colors.indigo, fontSize: 16),
+              style: const TextStyle(fontSize: 16),
             )
           ],
         ),
@@ -181,7 +187,7 @@ class UserProfileView extends StatelessWidget {
             ),
             Text(
               userProvider.getUser!.business!.name,
-              style: const TextStyle(color: Colors.indigo, fontSize: 16),
+              style: const TextStyle(fontSize: 16),
             )
           ],
         ),

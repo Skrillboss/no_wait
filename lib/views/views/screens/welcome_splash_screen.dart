@@ -44,7 +44,7 @@ class _WelcomeSplashScreenState extends State<WelcomeSplashScreen>
         userProvider.setUser =
             await loginUserFromToken.call(refreshToken: refreshToken);
         if(userProvider.getIsLogged){
-          viewsListProvider.setProfileView = const UserProfileView();
+          viewsListProvider.setProfileView = UserProfileView();
         }
       }
     });
