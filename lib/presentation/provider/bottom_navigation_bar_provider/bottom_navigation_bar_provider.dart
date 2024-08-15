@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class BottomNavigationBarProvider with ChangeNotifier {
+class BottomNavigationBarProvider extends ChangeNotifier {
   int _pos = 0;
   int get getPos => _pos;
 

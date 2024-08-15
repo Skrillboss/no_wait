@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_turno/views/provider/views_list_provider/views_list_provider.dart';
-import 'package:todo_turno/views/views/forms/login_user_view.dart';
 import '../../features/user/application/provider/user_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../features/user/application/use_cases/logout_user.dart';
+import '../provider/views_list_provider/views_list_provider.dart';
+import 'forms/login_user_view.dart';
 
 class UserProfileView extends StatelessWidget {
   UserProfileView({super.key});

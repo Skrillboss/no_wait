@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:todo_turno/views/widgets/card_information.dart';
 import '../../util/util.dart';
+import '../widgets/card_information.dart';
 
 class ShiftsView extends StatelessWidget {
   const ShiftsView({super.key});

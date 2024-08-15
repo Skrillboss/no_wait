@@ -4,10 +4,10 @@ import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_turno/core/network/jwt_token_manager.dart';
 import 'package:todo_turno/features/user/application/use_cases/login_user_token.dart';
-import 'package:todo_turno/views/provider/views_list_provider/views_list_provider.dart';
-import 'package:todo_turno/views/views/main_menu_screen.dart';
-import 'package:todo_turno/views/views/user_profile_view.dart';
 import '../../../features/user/application/provider/user_provider.dart';
+import '../provider/views_list_provider/views_list_provider.dart';
+import '../views/main_menu_screen.dart';
+import '../views/user_profile_view.dart';
 
 class WelcomeSplashScreen extends StatefulWidget {
   const WelcomeSplashScreen({

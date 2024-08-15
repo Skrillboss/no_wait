@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:todo_turno/views/views/forms/login_user_view.dart';
-import 'package:todo_turno/views/views/shifts_view.dart';
+import '../../views/forms/login_user_view.dart';
+import '../../views/shifts_view.dart';
 
 class ViewsListProvider extends ChangeNotifier{
 
