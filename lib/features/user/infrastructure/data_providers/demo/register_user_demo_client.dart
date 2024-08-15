@@ -17,16 +17,17 @@ class RegisterDemoClient {
         'nickName': nickName,
         'email': email,
         'phoneNumber': phoneNumber,
-        if(paymentInfo != null)'paymentInfo': {
-          'cardNumber': paymentInfo.cardNumber,
-          'cardHolderName': paymentInfo.cardHolderName,
-          'expiryDate': paymentInfo.expiryDate,
-          'cardType': paymentInfo.cardType,
-          'cvv': paymentInfo.cvv,
-        }
+        if (paymentInfo != null)
+          'paymentInfo': {
+            'cardNumber': paymentInfo.cardNumber,
+            'cardHolderName': paymentInfo.cardHolderName,
+            'expiryDate': paymentInfo.expiryDate,
+            'cardType': paymentInfo.cardType,
+            'cvv': paymentInfo.cvv,
+          }
       },
     };
-
+    await Future.delayed(const Duration(seconds: 1));
     return response;
   }
 }
