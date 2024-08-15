@@ -49,6 +49,7 @@ class _MainMenuScreen extends State<MainMenuScreen> {
             children: [
               viewsListProvider.getProfileView,
               viewsListProvider.getShiftView,
+              viewsListProvider.getSettingsView
             ],
           );
         },
