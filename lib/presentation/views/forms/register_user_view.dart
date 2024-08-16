@@ -73,20 +73,25 @@ class _RegisterUserViewState extends State<RegisterUserView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: AbsorbPointer(
-        absorbing: isLoading,
-        child: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-                colors: [Colors.green, Colors.blue],
-                begin: Alignment.topRight,
-                end: Alignment.bottomLeft),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
-            child:
-                Form(key: _registerFormKey, child: _buildColumnForm(context)),
+    return SingleChildScrollView(
+      child: SizedBox(
+        height: 800,
+        child: Scaffold(
+          body: AbsorbPointer(
+            absorbing: isLoading,
+            child: Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                    colors: [Colors.green, Colors.blue],
+                    begin: Alignment.topRight,
+                    end: Alignment.bottomLeft),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+                child: Form(
+                    key: _registerFormKey, child: _buildColumnForm(context)),
+              ),
+            ),
           ),
         ),
       ),
@@ -198,6 +203,9 @@ class _RegisterUserViewState extends State<RegisterUserView> {
           }
           if (!RegExp(r'[!@#&*~`%^()_=+{};:.,"]').hasMatch(value)) {
             return 'Falta un carácter especial';
+          }
+          if (value != _passwordController.text) {
+            return 'Las constraseñas no coinciden';
           }
           return null;
         },
