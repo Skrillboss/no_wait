@@ -74,15 +74,15 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
         ),
         TabItem(
             icon: SvgPicture.asset(
-              'assets/svg/wallet-icon-black.svg',
+              'assets/svg/shift-icon-black.svg',
             ),
-            activeIcon: SvgPicture.asset('assets/svg/wallet-icon-fill.svg'),
+            activeIcon: SvgPicture.asset('assets/svg/shift-icon-white.svg'),
             title: AppLocalizations.of(context)!.shifts),
         TabItem(
           icon: SvgPicture.asset(
-            'assets/svg/withdraw-icon-black.svg',
+            'assets/svg/camera-icon-white.svg',
           ),
-          activeIcon: SvgPicture.asset('assets/svg/withdraw-icon-fill.svg'),
+          activeIcon: SvgPicture.asset('assets/svg/camera-icon-blue.svg'),
           title: AppLocalizations.of(context)!.add,
         ),
         TabItem(
