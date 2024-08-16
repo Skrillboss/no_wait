@@ -76,7 +76,7 @@ class UserProfileView extends StatelessWidget {
               onPressed: () {
                 userProvider.logOut.call();
                 logoutUser.call();
-                viewsListProvider.setProfileView = LoginUserView();
+                viewsListProvider.setProfileView = const LoginUserView();
               },
               icon: const Icon(Icons.logout),
             )

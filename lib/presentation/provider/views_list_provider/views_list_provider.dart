@@ -6,9 +6,9 @@ import '../../views/shifts_view.dart';
 
 class ViewsListProvider extends ChangeNotifier {
   Widget _shiftView = const ShiftsView();
-  Widget _profileView = LoginUserView();
+  Widget _profileView = const LoginUserView();
   Widget _settingsView = const SettingsView();
-  Widget _qrScannerView = QrScannerView();
+  Widget _qrScannerView = const QrScannerView();
 
   Widget get getShiftView => _shiftView;
 

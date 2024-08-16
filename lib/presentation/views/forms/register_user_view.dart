@@ -8,7 +8,14 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../widgets/custom_input_widget.dart';
 import 'login_user_view.dart';
 
-class RegisterUserView extends StatelessWidget {
+class RegisterUserView extends StatefulWidget {
+  const RegisterUserView({super.key});
+
+  @override
+  _RegisterUserViewState createState() => _RegisterUserViewState();
+}
+
+class _RegisterUserViewState extends State<RegisterUserView> {
   final _registerFormKey = GlobalKey<FormState>();
 
   // Controllers para los campos de texto
@@ -21,8 +28,7 @@ class RegisterUserView extends StatelessWidget {
       TextEditingController();
 
   final RegisterUser registerUser = GetIt.instance<RegisterUser>();
-
-  RegisterUserView({super.key});
+  bool isLoading = false;
 
   void changeView(BuildContext context, Widget view) {
     final ViewsListProvider viewsListProvider =
@@ -32,6 +38,9 @@ class RegisterUserView extends StatelessWidget {
 
   Future<void> _registerUser(BuildContext context) async {
     if (_registerFormKey.currentState!.validate()) {
+      setState(() {
+        isLoading = true;
+      });
       final user = await registerUser.call(
         name: _nameController.text,
         nickName: _nickNameController.text,
@@ -39,7 +48,9 @@ class RegisterUserView extends StatelessWidget {
         phoneNumber: _phoneNumberController.text,
         password: _passwordController.text,
       );
-
+      setState(() {
+        isLoading = false;
+      });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Bienvenido a NoWait ${user.nickName}'),
@@ -50,18 +61,33 @@ class RegisterUserView extends StatelessWidget {
   }
 
   @override
+  void dispose() {
+    _nameController.dispose();
+    _nickNameController.dispose();
+    _emailController.dispose();
+    _phoneNumberController.dispose();
+    _passwordController.dispose();
+    _passwordRepeatController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-              colors: [Colors.green, Colors.blue],
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
-          child: Form(key: _registerFormKey, child: _buildColumnForm(context)),
+      body: AbsorbPointer(
+        absorbing: isLoading,
+        child: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+                colors: [Colors.green, Colors.blue],
+                begin: Alignment.topRight,
+                end: Alignment.bottomLeft),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+            child:
+                Form(key: _registerFormKey, child: _buildColumnForm(context)),
+          ),
         ),
       ),
     );
@@ -75,9 +101,9 @@ class RegisterUserView extends StatelessWidget {
         controller: _nameController,
         validator: (value) {
           if (value == null || value.isEmpty) {
-            return 'El campo no puede estas vacio';
+            return 'El campo no puede estar vacío';
           } else if (value.length < 5) {
-            return 'El campo debe tener como minimo 5 caracteres';
+            return 'El campo debe tener como mínimo 5 caracteres';
           }
           return null;
         },
@@ -88,9 +114,9 @@ class RegisterUserView extends StatelessWidget {
         controller: _nickNameController,
         validator: (value) {
           if (value == null || value.isEmpty) {
-            return 'El campo no puede estas vacio';
+            return 'El campo no puede estar vacío';
           } else if (value.length < 5) {
-            return 'El campo debe tener como minimo 5 caracteres';
+            return 'El campo debe tener como mínimo 5 caracteres';
           }
           return null;
         },
@@ -104,14 +130,15 @@ class RegisterUserView extends StatelessWidget {
           if (value == null || value.isEmpty) {
             return 'El número telefónico es obligatorio';
           }
-          if (value.length != 10) { // Puedes cambiar 10 por el número de dígitos requerido
+          if (value.length != 10) {
+            // Puedes cambiar 10 por el número de dígitos requerido
             return 'El número debe tener 10 dígitos';
           }
           if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
             return 'El número debe contener solo dígitos';
           }
           return null;
-        }
+        },
       ),
       CustomInputWidget(
         hintText: AppLocalizations.of(context)!.email,
@@ -213,14 +240,16 @@ class RegisterUserView extends StatelessWidget {
                     const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
                 elevation: 5, // Sombra del botón
               ),
-              child: Text(
-                AppLocalizations.of(context)!.registerButton,
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
+              child: isLoading
+                  ? const CircularProgressIndicator()
+                  : Text(
+                      AppLocalizations.of(context)!.registerButton,
+                      style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
             ),
             const SizedBox(height: 10),
             const Text(
@@ -229,7 +258,7 @@ class RegisterUserView extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-                changeView(context, LoginUserView());
+                changeView(context, const LoginUserView());
               },
               child: const Text('INICIA SESION!',
                   style: TextStyle(color: Colors.white, fontSize: 16)),

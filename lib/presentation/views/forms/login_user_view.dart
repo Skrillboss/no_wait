@@ -9,7 +9,14 @@ import '../../provider/views_list_provider/views_list_provider.dart';
 import '../../widgets/custom_input_widget.dart';
 import '../user_profile_view.dart';
 
-class LoginUserView extends StatelessWidget {
+class LoginUserView extends StatefulWidget {
+  const LoginUserView({super.key});
+
+  @override
+  _LoginUserViewState createState() => _LoginUserViewState();
+}
+
+class _LoginUserViewState extends State<LoginUserView> {
   final _loginFormKey = GlobalKey<FormState>();
 
   // Controllers para los campos de texto
@@ -17,8 +24,7 @@ class LoginUserView extends StatelessWidget {
   final TextEditingController _passwordController = TextEditingController();
 
   final LoginUser loginUser = GetIt.instance<LoginUser>();
-
-  LoginUserView({super.key});
+  bool isLoading = false;
 
   void changeView(BuildContext context, Widget view) {
     final ViewsListProvider viewsListProvider =
@@ -28,31 +34,50 @@ class LoginUserView extends StatelessWidget {
 
   Future<void> _loginUser(BuildContext context) async {
     if (_loginFormKey.currentState!.validate()) {
+      setState(() {
+        isLoading = true;
+      });
+
       final UserProvider userProvider =
           Provider.of<UserProvider>(context, listen: false);
       userProvider.setUser = await loginUser.call(
         username: _nameController.text,
         password: _passwordController.text,
       );
+
       if (userProvider.getIsLogged) {
         changeView(context, UserProfileView());
       }
+
+      setState(() {
+        isLoading = false;
+      });
     }
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _passwordController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-              colors: [Colors.green, Colors.blue],
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
-          child: Form(key: _loginFormKey, child: _buildColumnForm(context)),
+      body: AbsorbPointer(
+        absorbing: isLoading,
+        child: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+                colors: [Colors.green, Colors.blue],
+                begin: Alignment.topRight,
+                end: Alignment.bottomLeft),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+            child: Form(key: _loginFormKey, child: _buildColumnForm(context)),
+          ),
         ),
       ),
     );
@@ -67,7 +92,7 @@ class LoginUserView extends StatelessWidget {
         validator: (value) {
           if (value == null || value.isEmpty) {
             return 'El campo no puede estas vacio';
-          }else if(value.length < 5){
+          } else if (value.length < 5) {
             return 'El campo debe tener como minimo 5 caracteres';
           }
           return null;
@@ -128,23 +153,23 @@ class LoginUserView extends StatelessWidget {
                 fixedSize: const Size.fromWidth(500),
                 foregroundColor: Colors.white,
                 backgroundColor: Theme.of(context).primaryColorDark,
-                // Color del texto
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12), // Bordes redondeados
                 ),
                 padding:
                     const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
-                // Espaciado interno del botón
                 elevation: 5, // Sombra del botón
               ),
-              child: Text(
-                AppLocalizations.of(context)!.loginButton,
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
+              child: isLoading
+                  ? const CircularProgressIndicator()
+                  : Text(
+                      AppLocalizations.of(context)!.loginButton,
+                      style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
             ),
             const SizedBox(height: 10),
             const Text(
@@ -153,7 +178,7 @@ class LoginUserView extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-                changeView(context, RegisterUserView());
+                changeView(context, const RegisterUserView());
               },
               child: const Text('Registrate!',
                   style: TextStyle(color: Colors.white, fontSize: 16)),
