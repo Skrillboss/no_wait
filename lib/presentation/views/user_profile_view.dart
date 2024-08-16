@@ -53,8 +53,9 @@ class UserProfileView extends StatelessWidget {
               height: (heightFromScreen * 0.35),
               width: double.infinity,
               decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black),
-                  borderRadius: const BorderRadius.all(Radius.circular(30))),
+                border: Border.all(color: Colors.black),
+                borderRadius: const BorderRadius.all(Radius.circular(30)),
+              ),
               child: Padding(
                 padding: const EdgeInsets.all(10),
                 child: Column(

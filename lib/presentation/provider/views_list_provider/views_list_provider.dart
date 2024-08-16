@@ -6,7 +6,7 @@ import '../../views/shifts_view.dart';
 class ViewsListProvider extends ChangeNotifier {
   Widget _shiftView = const ShiftsView();
   Widget _profileView = LoginUserView();
-  Widget _settingsView = SettingsView();
+  Widget _settingsView = const SettingsView();
 
   Widget get getShiftView => _shiftView;
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_turno/presentation/screens/welcome_splash_screen.dart';
 import 'config/constants/providers_constants.dart';
@@ -14,6 +15,7 @@ Future<void> main() async {
 
   // Configura cualquier servicio o librería que necesites antes de iniciar la app
   await configureServices();
+  await Settings.init();
   await dotenv.load(fileName: '.env');
 
   // Corre la aplicación
