@@ -64,6 +64,14 @@ class LoginUserView extends StatelessWidget {
         hintText: AppLocalizations.of(context)!.name,
         icon: Icons.person,
         controller: _nameController,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'El campo no puede estas vacio';
+          }else if(value.length < 5){
+            return 'El campo debe tener como minimo 5 caracteres';
+          }
+          return null;
+        },
       ),
       CustomInputWidget(
         obscureText: true,
@@ -71,6 +79,24 @@ class LoginUserView extends StatelessWidget {
         icon: Icons.password,
         keyboardType: TextInputType.visiblePassword,
         controller: _passwordController,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'La contraseña es obligatoria';
+          }
+          if (value.length < 8) {
+            return 'La contraseña debe tener al menos 8 caracteres';
+          }
+          if (!RegExp(r'[A-Z]').hasMatch(value)) {
+            return 'Falta una mayúscula';
+          }
+          if (!RegExp(r'[0-9]').hasMatch(value)) {
+            return 'Falta un número';
+          }
+          if (!RegExp(r'[!@#&*~`%^()_=+{};:.,"]').hasMatch(value)) {
+            return 'Falta un carácter especial';
+          }
+          return null;
+        },
       ),
     ];
 

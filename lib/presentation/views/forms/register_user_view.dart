@@ -73,23 +73,57 @@ class RegisterUserView extends StatelessWidget {
         hintText: AppLocalizations.of(context)!.name,
         icon: Icons.person,
         controller: _nameController,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'El campo no puede estas vacio';
+          } else if (value.length < 5) {
+            return 'El campo debe tener como minimo 5 caracteres';
+          }
+          return null;
+        },
       ),
       CustomInputWidget(
         hintText: AppLocalizations.of(context)!.nickname,
         icon: Icons.tag_faces,
         controller: _nickNameController,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'El campo no puede estas vacio';
+          } else if (value.length < 5) {
+            return 'El campo debe tener como minimo 5 caracteres';
+          }
+          return null;
+        },
       ),
       CustomInputWidget(
         hintText: AppLocalizations.of(context)!.phone,
         icon: Icons.phone,
         keyboardType: TextInputType.phone,
         controller: _phoneNumberController,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'El número telefónico es obligatorio';
+          }
+          if (value.length != 10) { // Puedes cambiar 10 por el número de dígitos requerido
+            return 'El número debe tener 10 dígitos';
+          }
+          if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
+            return 'El número debe contener solo dígitos';
+          }
+          return null;
+        }
       ),
       CustomInputWidget(
         hintText: AppLocalizations.of(context)!.email,
         icon: Icons.email,
         keyboardType: TextInputType.emailAddress,
         controller: _emailController,
+        validator: (String? value) {
+          if (value == null || value.isEmpty) {
+            return 'El correo electrónico es obligatorio';
+          }
+          return null;
+        },
       ),
       CustomInputWidget(
         obscureText: true,
@@ -97,6 +131,24 @@ class RegisterUserView extends StatelessWidget {
         icon: Icons.password,
         keyboardType: TextInputType.visiblePassword,
         controller: _passwordController,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'La contraseña es obligatoria';
+          }
+          if (value.length < 8) {
+            return 'La contraseña debe tener al menos 8 caracteres';
+          }
+          if (!RegExp(r'[A-Z]').hasMatch(value)) {
+            return 'Falta una mayúscula';
+          }
+          if (!RegExp(r'[0-9]').hasMatch(value)) {
+            return 'Falta un número';
+          }
+          if (!RegExp(r'[!@#&*~`%^()_=+{};:.,"]').hasMatch(value)) {
+            return 'Falta un carácter especial';
+          }
+          return null;
+        },
       ),
       CustomInputWidget(
         obscureText: true,
@@ -104,6 +156,24 @@ class RegisterUserView extends StatelessWidget {
         icon: Icons.password,
         keyboardType: TextInputType.visiblePassword,
         controller: _passwordRepeatController,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'La contraseña es obligatoria';
+          }
+          if (value.length < 8) {
+            return 'La contraseña debe tener al menos 8 caracteres';
+          }
+          if (!RegExp(r'[A-Z]').hasMatch(value)) {
+            return 'Falta una mayúscula';
+          }
+          if (!RegExp(r'[0-9]').hasMatch(value)) {
+            return 'Falta un número';
+          }
+          if (!RegExp(r'[!@#&*~`%^()_=+{};:.,"]').hasMatch(value)) {
+            return 'Falta un carácter especial';
+          }
+          return null;
+        },
       ),
     ];
 

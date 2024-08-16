@@ -6,7 +6,7 @@ import 'package:todo_turno/core/network/jwt_token_manager.dart';
 import 'package:todo_turno/features/user/application/use_cases/login_user_token.dart';
 import '../../../features/user/application/provider/user_provider.dart';
 import '../provider/views_list_provider/views_list_provider.dart';
-import '../views/main_menu_screen.dart';
+import 'main_menu_screen.dart';
 import '../views/user_profile_view.dart';
 
 class WelcomeSplashScreen extends StatefulWidget {
