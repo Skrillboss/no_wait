@@ -14,7 +14,7 @@ class MapViewState extends State<MapView>{
   Completer<GoogleMapController>();
 
   static const CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
+    target: LatLng(40.41831, -3.70275),
     zoom: 14.4746,
   );
 
@@ -28,7 +28,7 @@ class MapViewState extends State<MapView>{
   Widget build(BuildContext context) {
     return Scaffold(
       body: GoogleMap(
-        myLocationEnabled: false,
+        myLocationEnabled: true,
         myLocationButtonEnabled: false,
         zoomControlsEnabled: false,
         mapType: MapType.hybrid,
