@@ -3,6 +3,8 @@
         android:label="todo_turno"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <meta-data android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAiDp-ndQm8dtUo7LqX2q5LRE3MC0a3VB8"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
