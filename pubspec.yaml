@@ -53,6 +53,8 @@ dependencies:
   flutter_settings_screens: ^0.3.4
   google_maps_flutter: ^2.9.0
   geolocator: ^13.0.1
+  mobile_scanner: ^4.0.1
+  pretty_qr_code: ^3.3.0
 
 dev_dependencies:
   flutter_test:
