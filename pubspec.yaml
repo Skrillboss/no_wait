@@ -51,7 +51,11 @@ dependencies:
   settings_ui: ^2.0.2
   flutter_settings_ui: ^3.0.1
   flutter_settings_screens: ^0.3.4
-  qr_code_scanner: ^1.0.1
+  google_maps_flutter: ^2.9.0
+  geolocator: ^13.0.1
+  mobile_scanner: ^4.0.1
+  pretty_qr_code: ^3.3.0
+  permission_handler: ^11.3.1
 
 dev_dependencies:
   flutter_test:

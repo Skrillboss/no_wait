@@ -50,6 +50,7 @@ class _MainMenuScreen extends State<MainMenuScreen> {
               viewsListProvider.getProfileView,
               viewsListProvider.getShiftView,
               viewsListProvider.getQrScannerView,
+              viewsListProvider.getMapView,
               viewsListProvider.getSettingsView
             ],
           );

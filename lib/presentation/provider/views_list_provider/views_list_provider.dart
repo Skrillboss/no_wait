@@ -3,18 +3,22 @@ import '../../views/forms/login_user_view.dart';
 import '../../views/qr_scanner_view.dart';
 import '../../views/settings_view.dart';
 import '../../views/shifts_view.dart';
+import '../../views/map_view.dart';
 
 class ViewsListProvider extends ChangeNotifier {
   Widget _shiftView = const ShiftsView();
   Widget _profileView = const LoginUserView();
   Widget _settingsView = const SettingsView();
   Widget _qrScannerView = const QrScannerView();
+  Widget _mapView = const MapView();
 
   Widget get getShiftView => _shiftView;
 
   Widget get getProfileView => _profileView;
 
   Widget get getQrScannerView => _qrScannerView;
+
+  Widget get getMapView => _mapView;
 
   Widget get getSettingsView => _settingsView;
 
@@ -30,6 +34,11 @@ class ViewsListProvider extends ChangeNotifier {
 
   set setQrScannerView(Widget qrScannerView) {
     _qrScannerView = qrScannerView;
+    notifyListeners();
+  }
+
+  set setMapView(Widget mapView){
+    _mapView = mapView;
     notifyListeners();
   }
 
