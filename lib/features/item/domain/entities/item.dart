@@ -12,6 +12,8 @@ class Item {
   final String id;
   String name;
   String description;
+  int numberPersonWaiting;
+  int numberShiftWaiting;
   String imageUrl;
   Duration duration;
   ItemStatus status;
@@ -21,6 +23,8 @@ class Item {
     required this.id,
     required this.name,
     required this.description,
+    required this.numberPersonWaiting,
+    required this.numberShiftWaiting,
     required this.imageUrl,
     required this.duration,
     required this.status,
