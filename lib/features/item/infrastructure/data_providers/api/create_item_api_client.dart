@@ -13,7 +13,7 @@ class CreateItemApiClient {
       Business business,
       String itemName,
       String description,
-      String imageUrl,
+      String mainImagePath,
       ItemStatus status) async {
     try {
       final response = await requestHandler.postRequest(
@@ -22,7 +22,7 @@ class CreateItemApiClient {
             'business': BusinessMapper.toJson(business),
             'itemName': itemName,
             'description': description,
-            'imageUrl': imageUrl,
+            'mainImagePath': mainImagePath,
             'itemStatus': ItemMapper.statusToString(status),
           },
           errorCode: 2000);

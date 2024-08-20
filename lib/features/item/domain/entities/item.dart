@@ -16,7 +16,7 @@ class Item {
   int clientsPerShift;
   int numberShiftsWaiting;
   double? rating;
-  String imageUrl;
+  String mainImagePath;
   Duration duration;
   ItemStatus status;
   List<Shift?> shifts;
@@ -29,7 +29,7 @@ class Item {
     required this.clientsPerShift,
     required this.numberShiftsWaiting,
     this.rating,
-    required this.imageUrl,
+    required this.mainImagePath,
     required this.duration,
     required this.status,
     required this.shifts

@@ -18,7 +18,7 @@ class AuthUserDemoClient {
           'id': 'idBusinessDemo',
           'cif': 'B12345678',
           'name': 'Demo Business',
-          'imageUrl': 'https://example.com/image.png',
+          'mainImagePath': 'https://example.com/image.png',
           'phone': '+0987654321',
           'address': '123 Demo Street, Demo City, DC',
           'email': 'contact@demobusiness.com',
@@ -28,7 +28,7 @@ class AuthUserDemoClient {
               'id': 'item1',
               'name': 'Item One',
               'description': 'Description for item one.',
-              'imageUrl': 'https://example.com/item1.png',
+              'mainImagePath': 'https://example.com/item1.png',
               'duration': 120,
               'status': 'active',
               'shifts': []
@@ -37,7 +37,7 @@ class AuthUserDemoClient {
               'id': 'item2',
               'name': 'Item Two',
               'description': 'Description for item two.',
-              'imageUrl': 'https://example.com/item2.png',
+              'mainImagePath': 'https://example.com/item2.png',
               'duration': 120,
               'status': 'inactive',
               'shifts': []
@@ -46,7 +46,7 @@ class AuthUserDemoClient {
               'id': 'item3',
               'name': 'Item Three',
               'description': 'Description for item three.',
-              'imageUrl': 'https://example.com/item3.png',
+              'mainImagePath': 'https://example.com/item3.png',
               'duration': 120,
               'status': 'noStock',
               'shifts': []

@@ -8,16 +8,15 @@ import 'package:todo_turno/features/item/domain/entities/item.dart'; // Importar
 class Util {
   static Business getSampleBusiness() {
     return Business(
-      id: 'business001',
-      cif: 'B12345678',
-      name: 'Sample Business',
-      phone: '+1234567890',
-      address: '123 Sample Street, Sample City',
-      imageUrl: 'imagen.json or png or com',
-      email: 'contact@samplebusiness.com',
-      createdAt: DateTime.now(),
-      items: [getSampleItem(), getSampleItem(), getSampleItem()]
-    );
+        id: 'business001',
+        cif: 'B12345678',
+        name: 'Sample Business',
+        phone: '+1234567890',
+        address: '123 Sample Street, Sample City',
+        imageUrl: 'imagen.json or png or com',
+        email: 'contact@samplebusiness.com',
+        createdAt: DateTime.now(),
+        items: [getSampleItem(), getSampleItem(), getSampleItem()]);
   }
 
   static PaymentInfo getSamplePaymentInfo() {
@@ -32,30 +31,28 @@ class Util {
 
   static User getSampleUser() {
     return User(
-      userId: 'user001',
-      name: 'John Doe',
-      nickName: 'JohnPradels_659',
-      email: 'john.doe@example.com',
-      phoneNumber: '+0987654321',
-      paymentInfo: getSamplePaymentInfo(),
-      business: getSampleBusiness(),
-      shifts: [getSampleShift(), getSampleShift(), getSampleShift()]
-    );
+        userId: 'user001',
+        name: 'John Doe',
+        nickName: 'JohnPradels_659',
+        email: 'john.doe@example.com',
+        phoneNumber: '+0987654321',
+        paymentInfo: getSamplePaymentInfo(),
+        business: getSampleBusiness(),
+        shifts: [getSampleShift(), getSampleShift(), getSampleShift()]);
   }
 
   static Item getSampleItem() {
     return Item(
-      id: 'I1',
-      name: 'Sample Item',
-      description: 'This is a description of the sample item.',
-      numberClientsWaiting: 6,
-      clientsPerShift: 2,
-      numberShiftsWaiting: 3,
-      imageUrl: 'https://example.com/sample-item.jpg',
-      duration: const Duration(minutes: 5),
-      status: ItemStatus.active,
-      shifts: [getSampleShift(), getSampleShift(), getSampleShift()]
-    );
+        id: 'I1',
+        name: 'Sample Item',
+        description: 'This is a description of the sample item.',
+        numberClientsWaiting: 6,
+        clientsPerShift: 2,
+        numberShiftsWaiting: 3,
+        mainImagePath: 'https://example.com/sample-item.jpg',
+        duration: const Duration(minutes: 5),
+        status: ItemStatus.active,
+        shifts: [getSampleShift(), getSampleShift(), getSampleShift()]);
   }
 
   static Shift getSampleShift() {

@@ -11,9 +11,9 @@ class CreateItem {
       {required Business business,
       required String itemName,
       required String description,
-      required String imageUrl,
+      required String mainImagePath,
       required ItemStatus status}) async {
     return await repository.create(
-        business, itemName, description, imageUrl, status);
+        business, itemName, description, mainImagePath, status);
   }
 }

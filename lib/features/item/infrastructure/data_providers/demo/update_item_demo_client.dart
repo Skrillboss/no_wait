@@ -7,7 +7,7 @@ class UpdateItemDemoClient {
         'id': 'generated-item-id',
         'name': item.name,
         'description': item.description,
-        'imageUrl': item.imageUrl,
+        'mainImagePath': item.mainImagePath,
         'duration': 3600, // 1 hour in seconds
         'status': item.status.toString().split('.').last,
       }
