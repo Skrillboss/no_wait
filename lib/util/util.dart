@@ -50,7 +50,8 @@ class Util {
         clientsPerShift: 2,
         numberShiftsWaiting: 3,
         mainImagePath: 'https://example.com/sample-item.jpg',
-        duration: const Duration(minutes: 5),
+        currentWaitingDuration: const Duration(minutes: 33, seconds: 48),
+        durationPerShifts: const Duration(minutes: 5),
         status: ItemStatus.active,
         shifts: [getSampleShift(), getSampleShift(), getSampleShift()]);
   }

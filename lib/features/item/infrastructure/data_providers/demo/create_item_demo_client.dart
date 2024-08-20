@@ -10,7 +10,7 @@ class CreateItemDemoClient {
         'name': itemName,
         'description': description,
         'mainImagePath': mainImagePath,
-        'duration': 3600, // 1 hour in seconds
+        'durationPerShifts': 3600, // 1 hour in seconds
         'status': status.toString().split('.').last, // Convert enum to string representation
       }
     };

@@ -11,8 +11,12 @@ class ItemMapper {
       'numberShiftWaiting': item.numberShiftsWaiting,
       'rating': item.rating,
       'mainImagePath': item.mainImagePath,
-      'duration': item.duration.inSeconds, // Guardar duración en segundos
-      'status': statusToString(item.status), // Convertir enum a string
+      'secondaryImagePath': item.secondaryImagePath,
+      'currentWaitingDuration': item.currentWaitingDuration,
+      'durationPerShifts': item.durationPerShifts.inSeconds,
+      // Guardar duración en segundos
+      'status': statusToString(item.status),
+      // Convertir enum a string
       'shifts': ShiftMapper.listToJson(item.shifts)
     };
   }
@@ -27,7 +31,9 @@ class ItemMapper {
       numberShiftsWaiting: json['numberShiftWaiting'],
       rating: json['rating'],
       mainImagePath: json['mainImagePath'],
-      duration: Duration(seconds: json['duration']),
+      secondaryImagePath: json['secondaryImagePath'],
+      currentWaitingDuration: Duration(seconds: json['currentWaitingDuration']),
+      durationPerShifts: Duration(seconds: json['durationPerShifts']),
       // Convertir segundos a Duration
       status: stringToStatus(json['status']),
       // Convertir string a enum

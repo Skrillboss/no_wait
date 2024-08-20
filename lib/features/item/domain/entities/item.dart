@@ -17,7 +17,9 @@ class Item {
   int numberShiftsWaiting;
   double? rating;
   String mainImagePath;
-  Duration duration;
+  String? secondaryImagePath;
+  Duration currentWaitingDuration;
+  Duration durationPerShifts;
   ItemStatus status;
   List<Shift?> shifts;
 
@@ -30,7 +32,9 @@ class Item {
     required this.numberShiftsWaiting,
     this.rating,
     required this.mainImagePath,
-    required this.duration,
+    this.secondaryImagePath,
+    required this.currentWaitingDuration,
+    required this.durationPerShifts,
     required this.status,
     required this.shifts
   });

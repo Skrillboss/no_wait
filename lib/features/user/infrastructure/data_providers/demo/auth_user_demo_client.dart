@@ -29,7 +29,7 @@ class AuthUserDemoClient {
               'name': 'Item One',
               'description': 'Description for item one.',
               'mainImagePath': 'https://example.com/item1.png',
-              'duration': 120,
+              'durationPerShifts': 120,
               'status': 'active',
               'shifts': []
             },
@@ -38,7 +38,7 @@ class AuthUserDemoClient {
               'name': 'Item Two',
               'description': 'Description for item two.',
               'mainImagePath': 'https://example.com/item2.png',
-              'duration': 120,
+              'durationPerShifts': 120,
               'status': 'inactive',
               'shifts': []
             },
@@ -47,7 +47,7 @@ class AuthUserDemoClient {
               'name': 'Item Three',
               'description': 'Description for item three.',
               'mainImagePath': 'https://example.com/item3.png',
-              'duration': 120,
+              'durationPerShifts': 120,
               'status': 'noStock',
               'shifts': []
             }

@@ -8,7 +8,7 @@ class UpdateItemDemoClient {
         'name': item.name,
         'description': item.description,
         'mainImagePath': item.mainImagePath,
-        'duration': 3600, // 1 hour in seconds
+        'durationPerShifts': 3600, // 1 hour in seconds
         'status': item.status.toString().split('.').last,
       }
     };
