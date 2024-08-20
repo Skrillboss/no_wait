@@ -9,6 +9,7 @@ class ReadItemDemoClient {
         'clientsPerShift': 2,
         'clientsPerShifts': 3,
         'numberShiftWaiting': 3,
+        'rating': 4.3,
         'imageUrl': 'https://example.com/demo-item.jpg',
         'duration': 3600, // 1 hour in seconds
         'status': 'active' // Usa el valor del enum como cadena

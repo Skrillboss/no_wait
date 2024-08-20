@@ -15,6 +15,7 @@ class Item {
   int numberClientsWaiting;
   int clientsPerShift;
   int numberShiftsWaiting;
+  double? rating;
   String imageUrl;
   Duration duration;
   ItemStatus status;
@@ -27,6 +28,7 @@ class Item {
     required this.numberClientsWaiting,
     required this.clientsPerShift,
     required this.numberShiftsWaiting,
+    this.rating,
     required this.imageUrl,
     required this.duration,
     required this.status,
