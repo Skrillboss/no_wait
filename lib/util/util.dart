@@ -48,6 +48,8 @@ class Util {
       id: 'I1',
       name: 'Sample Item',
       description: 'This is a description of the sample item.',
+      numberPersonWaiting: 6,
+      numberShiftWaiting: 3,
       imageUrl: 'https://example.com/sample-item.jpg',
       duration: const Duration(minutes: 5),
       status: ItemStatus.active,

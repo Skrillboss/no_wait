@@ -7,6 +7,8 @@ class ItemMapper {
       'id': item.id,
       'name': item.name,
       'description': item.description,
+      'numberPersonWaiting': item.numberPersonWaiting,
+      'numberShiftWaiting': item.numberShiftWaiting,
       'imageUrl': item.imageUrl,
       'duration': item.duration.inSeconds, // Guardar duración en segundos
       'status': statusToString(item.status), // Convertir enum a string
@@ -19,6 +21,8 @@ class ItemMapper {
       id: json['id'],
       name: json['name'],
       description: json['description'],
+      numberPersonWaiting: json['numberPersonWaiting'],
+      numberShiftWaiting: json['numberShiftWaiting'],
       imageUrl: json['imageUrl'],
       duration: Duration(seconds: json['duration']),
       // Convertir segundos a Duration

@@ -5,6 +5,8 @@ class ReadItemDemoClient {
         'id': itemId,
         'name': 'Demo Item',
         'description': 'This is a demo item description.',
+        'numberPersonWaiting': 6,
+        'numberShiftWaiting': 3,
         'imageUrl': 'https://example.com/demo-item.jpg',
         'duration': 3600, // 1 hour in seconds
         'status': 'active' // Usa el valor del enum como cadena
