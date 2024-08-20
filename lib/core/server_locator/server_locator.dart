@@ -18,6 +18,7 @@ import 'package:todo_turno/features/user/domain/repositories/register_user_repos
 import 'package:todo_turno/features/user/infrastructure/data_providers/demo/auth_refresh_token_demo_client.dart';
 import 'package:todo_turno/features/user/infrastructure/repositories/auth_refresh_token_repository_impl.dart';
 import 'package:todo_turno/features/user/infrastructure/repositories/register_repository_impl.dart';
+import '../../features/item/application/use_cases/read_item.dart';
 import '../../features/item/domain/repositories/create_item_repository.dart';
 import '../../features/item/domain/repositories/read_item_repository.dart';
 import '../../features/item/domain/repositories/update_item_repository.dart';
@@ -116,6 +117,8 @@ void setupServiceLocator() {
   sl.registerLazySingleton<CreateItemRepository>(() => CreateItemRepositoryImpl(apiClient: sl<CreateItemDemoClient>()));
 
   /* ******************  READ  ******************/
+  /* ******** USE CASE ******** */
+  sl.registerLazySingleton<ReadItem>(() => ReadItem(sl<ReadItemRepository>()));
 
   // Registering the ReadItemDemoClient DEMO
   sl.registerLazySingleton<ReadItemDemoClient>(() => ReadItemDemoClient());

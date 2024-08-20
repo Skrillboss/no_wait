@@ -2,6 +2,10 @@ import 'dart:async';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_turno/presentation/provider/views_list_provider/views_list_provider.dart';
+
+import 'item_view.dart';
 
 class QrScannerView extends StatefulWidget {
   const QrScannerView({super.key});
@@ -110,8 +114,13 @@ class _QrScannerViewState extends State<QrScannerView>
 
   void _handleBarcode(BarcodeCapture barCodeCapture) {
     final List<Barcode> barcodes = barCodeCapture.barcodes;
-    for (final barcode in barcodes) {
-      print('The information of this barcode is: ${barcode.rawValue}');
+    if(barcodes.first.rawValue != null){
+      final String itemId = barcodes.first.rawValue!;
+      final ViewsListProvider viewsListProvider = Provider.of<ViewsListProvider>(context, listen: false);
+      viewsListProvider.setQrScannerView = ItemView(itemId: itemId);
+    }else{
+      print('Error, el valor esperado por el scan de tipo string ha recibido un null');
     }
+
   }
 }
