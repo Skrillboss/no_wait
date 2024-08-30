@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:get_it/get_it.dart';
 import 'package:todo_turno/features/item/application/use_cases/read_item.dart';
-import '../../features/item/domain/entities/item.dart';
+import 'package:todo_turno/presentation/widgets/number_selection.dart';
+import '../../../features/item/domain/entities/item.dart';
 
 class ItemView extends StatefulWidget {
   final String itemId;
@@ -44,7 +45,7 @@ class _ItemViewState extends State<ItemView> {
           expandedHeight: size.height * 0.7,
           foregroundColor: Colors.white,
           leading: IconButton(
-            onPressed: (){},
+            onPressed: () {},
             icon: const Icon(Icons.arrow_back_outlined),
           ),
           flexibleSpace: FlexibleSpaceBar(
@@ -92,6 +93,7 @@ class _ItemDetails extends StatefulWidget {
 class _ItemDetailsState extends State<_ItemDetails> {
   bool isExpanded = false;
   bool isLoading = false;
+  int numPersons = 1;
   late Timer _timer;
   Duration _currentDuration = Duration.zero;
 
@@ -127,13 +129,35 @@ class _ItemDetailsState extends State<_ItemDetails> {
         children: [
           mainInformation(),
           const Divider(),
-          const Text('Tiempo de espera Aprox', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 24, color: Colors.green)),
-          Text(_formatDuration(_currentDuration), style: TextStyle(fontWeight: FontWeight.w900, fontSize: 26, color: Theme.of(context).primaryColorDark),),
-
+          const Text('Tiempo de espera Aprox',
+              style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 24,
+                  color: Colors.green)),
+          Text(
+            _formatDuration(_currentDuration),
+            style: TextStyle(
+                fontWeight: FontWeight.w900,
+                fontSize: 26,
+                color: Theme.of(context).primaryColorDark),
+          ),
           const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [const Text('Valoracion promedio'), RatingStars(value: widget.item.rating ?? 0)],
+            children: [
+              const Text('Valoracion promedio'),
+              RatingStars(value: widget.item.rating ?? 0)
+            ],
+          ),
+          const SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text('Personas'),
+              NumberSelection(
+                onChanged: (value) => numPersons = value,
+              )
+            ],
           ),
           const SizedBox(height: 20),
           ElevatedButton(
@@ -151,13 +175,13 @@ class _ItemDetailsState extends State<_ItemDetails> {
             child: isLoading
                 ? const CircularProgressIndicator()
                 : const Text(
-              'Agregar Turno!',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
-            ),
+                    'Agregar Turno!',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
           ),
         ],
       ),
@@ -216,12 +240,12 @@ class _ItemDetailsState extends State<_ItemDetails> {
       children: [
         isExpanded == false
             ? ClipRRect(
-          borderRadius: BorderRadius.circular(20),
-          child: Image.network(
-            widget.item.secondaryImagePath ?? widget.item.mainImagePath,
-            width: size.width * 0.3,
-          ),
-        )
+                borderRadius: BorderRadius.circular(20),
+                child: Image.network(
+                  widget.item.secondaryImagePath ?? widget.item.mainImagePath,
+                  width: size.width * 0.3,
+                ),
+              )
             : Container(),
         const SizedBox(width: 10),
         SizedBox(
