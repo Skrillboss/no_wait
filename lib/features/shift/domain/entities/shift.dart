@@ -1,13 +1,8 @@
-enum ShiftStatus{
-  active,
-  inactive,
-  expired,
-  postponed,
-  error
-}
+enum ShiftStatus { active, inactive, expired, postponed, error }
 
 class Shift {
   final String shiftId; // Identificador del turno
+  final String itemName;
   final DateTime shiftTime;
   final int peopleInShift;
   final DateTime createAt;
@@ -18,15 +13,15 @@ class Shift {
   final int shiftNumber;
 
   // Constructor de la clase Shift
-  Shift({
-    required this.shiftTime,
-    required this.createAt,
-    required this.peopleInShift,
-    required this.notifyTime,
-    required this.expirationTime,
-    required this.estimatedArrivalTime,
-    required this.shiftId,
-    required this.status,
-    required this.shiftNumber
-  });
+  Shift(
+      {required this.shiftTime,
+      required this.itemName,
+      required this.createAt,
+      required this.peopleInShift,
+      required this.notifyTime,
+      required this.expirationTime,
+      required this.estimatedArrivalTime,
+      required this.shiftId,
+      required this.status,
+      required this.shiftNumber});
 }

@@ -59,6 +59,7 @@ class Util {
   static Shift getSampleShift() {
     return Shift(
       shiftId: 'shift001',
+      itemName: 'Tifón',
       shiftTime: DateTime.now().add(const Duration(hours: 2)),
       peopleInShift: 2,
       createAt: DateTime.now(),

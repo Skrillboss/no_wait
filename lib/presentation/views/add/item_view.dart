@@ -34,14 +34,6 @@ class _ItemViewState extends State<ItemView> {
     }));
   }
 
-  Future<void> _createShift(
-      {required String userId,
-      required String itemId,
-      required int peopleInShift}) async {
-    final Shift? shift = await createShift.call(
-        userId: userId, itemId: itemId, peopleInShift: peopleInShift);
-  }
-
   @override
   Widget build(BuildContext context) {
     final UserProvider userProvider = Provider.of<UserProvider>(context);
@@ -89,10 +81,12 @@ class _ItemViewState extends State<ItemView> {
           delegate: SliverChildBuilderDelegate(
               (context, index) => _ItemDetails(
                     item: item!,
-                    onSubmit: (peopleInShift) => _createShift(
-                        userId: userProvider.getUser!.userId,
-                        itemId: item!.id,
-                        peopleInShift: peopleInShift),
+                    onSubmit: (peopleInShift) {
+                      createShift.call(
+                          userId: userProvider.getUser!.userId,
+                          itemId: item!.id,
+                          peopleInShift: peopleInShift).then((Shift shift) => userProvider.getUser!.shifts.add(shift));
+                    },
                   ),
               childCount: 1),
         )

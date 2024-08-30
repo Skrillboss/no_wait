@@ -4,6 +4,7 @@ class CreateShiftDemoClient {
     final Map<String, dynamic> response = {
       'shift': {
         "shiftId": "1",
+        'itemName': 'Tifón',
         "shiftTime": "2024-07-30T10:00:00Z",
         'peopleInShift': peopleInShift,
         "createAt": "2024-07-29T09:00:00Z",

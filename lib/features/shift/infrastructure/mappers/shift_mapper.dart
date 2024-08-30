@@ -4,6 +4,7 @@ class ShiftMapper {
   static Map<String, dynamic> toJson(Shift shift) {
     return {
       'shiftId': shift.shiftId,
+      'itemName': shift.itemName,
       'shiftTime': shift.shiftTime.toIso8601String(),
       'peopleInShift': shift.peopleInShift,
       'createAt': shift.createAt.toIso8601String(),
@@ -18,6 +19,7 @@ class ShiftMapper {
   static Shift fromJson(Map<String, dynamic> json) {
     return Shift(
       shiftId: json['shiftId'],
+      itemName: json['itemName'],
       shiftTime: DateTime.parse(json['shiftTime']),
       peopleInShift: json['peopleInShift'],
       createAt: DateTime.parse(json['createAt']),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../util/util.dart';
+import 'package:provider/provider.dart';
+import '../../features/shift/domain/entities/shift.dart';
+import '../../features/user/application/provider/user_provider.dart';
 import '../widgets/card_information.dart';
 
 class ShiftsView extends StatelessWidget {
@@ -11,7 +13,7 @@ class ShiftsView extends StatelessWidget {
   }
 
   Widget _shiftList(BuildContext context) {
-    final statusDetails = [CardInformation(shift: Util.getSampleShift())];
+    List<Shift?> statusDetails = [];
 
     return Scaffold(
       body: Container(
@@ -23,13 +25,27 @@ class ShiftsView extends StatelessWidget {
         ),
         alignment: Alignment.topCenter,
         child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 60),
-            child: ConstrainedBox(
-          constraints: const BoxConstraints(maxHeight: double.infinity),
-          child: SingleChildScrollView(
-            child: Column(children: statusDetails),
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 60),
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxHeight: double.infinity),
+            child: SingleChildScrollView(
+              child: Consumer<UserProvider>(
+                builder: (context, userProvider, child) {
+                  for (var i = 0;
+                      i < userProvider.getUser!.shifts.length;
+                      i++) {
+                    statusDetails.add(userProvider.getUser!.shifts[i]);
+                  }
+                  return Column(
+                    children: statusDetails
+                        .map((shift) => CardInformation(shift: shift!))
+                        .toList(),
+                  );
+                },
+              ),
+            ),
           ),
-        )),
+        ),
       ),
     );
   }
