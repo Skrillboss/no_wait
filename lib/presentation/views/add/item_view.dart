@@ -93,7 +93,7 @@ class _ItemDetails extends StatefulWidget {
 class _ItemDetailsState extends State<_ItemDetails> {
   bool isExpanded = false;
   bool isLoading = false;
-  int numPersons = 1;
+  int peopleInShift = 1;
   late Timer _timer;
   Duration _currentDuration = Duration.zero;
 
@@ -155,7 +155,7 @@ class _ItemDetailsState extends State<_ItemDetails> {
             children: [
               const Text('Personas'),
               NumberSelection(
-                onChanged: (value) => numPersons = value,
+                onChanged: (value) => peopleInShift = value,
               )
             ],
           ),
