@@ -5,6 +5,7 @@ class ShiftMapper {
     return {
       'shiftId': shift.shiftId,
       'shiftTime': shift.shiftTime.toIso8601String(),
+      'peopleInShift': shift.peopleInShift,
       'createAt': shift.createAt.toIso8601String(),
       'notifyTime': shift.notifyTime.toIso8601String(),
       'expirationTime': shift.expirationTime.toIso8601String(),
@@ -18,6 +19,7 @@ class ShiftMapper {
     return Shift(
       shiftId: json['shiftId'],
       shiftTime: DateTime.parse(json['shiftTime']),
+      peopleInShift: json['peopleInShift'],
       createAt: DateTime.parse(json['createAt']),
       notifyTime: DateTime.parse(json['notifyTime']),
       expirationTime: DateTime.parse(json['expirationTime']),
@@ -50,6 +52,8 @@ class ShiftMapper {
   }
 
   static List<Shift> listFromJson(List<dynamic> jsonList) {
-    return jsonList.map((json) => fromJson(json as Map<String, dynamic>)).toList();
+    return jsonList
+        .map((json) => fromJson(json as Map<String, dynamic>))
+        .toList();
   }
 }

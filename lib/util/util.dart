@@ -46,8 +46,8 @@ class Util {
         id: 'I1',
         name: 'Sample Item',
         description: 'This is a description of the sample item.',
-        numberClientsWaiting: 6,
-        clientsPerShift: 2,
+        numberPeopleWaiting: 6,
+        peoplePerShift: 2,
         numberShiftsWaiting: 3,
         mainImagePath: 'https://example.com/sample-item.jpg',
         currentWaitingDuration: const Duration(minutes: 33, seconds: 48),
@@ -60,6 +60,7 @@ class Util {
     return Shift(
       shiftId: 'shift001',
       shiftTime: DateTime.now().add(const Duration(hours: 2)),
+      peopleInShift: 2,
       createAt: DateTime.now(),
       notifyTime: DateTime.now().add(const Duration(minutes: 85)),
       expirationTime: DateTime.now().add(const Duration(hours: 4)),

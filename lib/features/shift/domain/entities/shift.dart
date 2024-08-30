@@ -9,6 +9,7 @@ enum ShiftStatus{
 class Shift {
   final String shiftId; // Identificador del turno
   final DateTime shiftTime;
+  final int peopleInShift;
   final DateTime createAt;
   final DateTime notifyTime; // Tiempo para notificar al usuario
   final DateTime expirationTime;
@@ -20,6 +21,7 @@ class Shift {
   Shift({
     required this.shiftTime,
     required this.createAt,
+    required this.peopleInShift,
     required this.notifyTime,
     required this.expirationTime,
     required this.estimatedArrivalTime,
