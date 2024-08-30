@@ -9,7 +9,7 @@ class CreateShiftDemoClient {
         "createAt": "2024-07-29T09:00:00Z",
         "notifyTime": "2024-07-29T10:00:00Z",
         "expirationTime": "2024-07-31T10:00:00Z",
-        "estimatedArrivalTime": "00:15:00",
+        "estimatedArrivalTime": 15,
         "status": "active",
         "shiftNumber": 1
       },

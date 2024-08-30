@@ -29,6 +29,7 @@ import '../../features/item/infrastructure/data_providers/demo/update_item_demo_
 import '../../features/item/infrastructure/repositories/create_item_repository_impl.dart';
 import '../../features/item/infrastructure/repositories/read_item_repository_impl.dart';
 import '../../features/item/infrastructure/repositories/update_item_repository_impl.dart';
+import '../../features/shift/application/use_cases/create_shift.dart';
 import '../../features/shift/domain/repositories/read_shifts_repository.dart';
 import '../../features/shift/infrastructure/data_providers/api/read_shifts_api_client.dart';
 import '../../features/shift/infrastructure/data_providers/demo/read_shifts_demo_client.dart';
@@ -156,6 +157,8 @@ void setupServiceLocator() {
   /* ************************************************************************ */
 
   /* *****************  CREATE  *****************/
+  /* ******** USE CASE ******** */
+  sl.registerLazySingleton<CreateShift>(() => CreateShift(sl<CreateShiftRepository>()));
 
   // Registering the CreateShiftDemoClient DEMO
   sl.registerLazySingleton<CreateShiftDemoClient>(() => CreateShiftDemoClient());

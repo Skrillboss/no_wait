@@ -2,9 +2,13 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:get_it/get_it.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_turno/features/item/application/use_cases/read_item.dart';
+import 'package:todo_turno/features/shift/application/use_cases/create_shift.dart';
 import 'package:todo_turno/presentation/widgets/number_selection.dart';
 import '../../../features/item/domain/entities/item.dart';
+import '../../../features/shift/domain/entities/shift.dart';
+import '../../../features/user/application/provider/user_provider.dart';
 
 class ItemView extends StatefulWidget {
   final String itemId;
@@ -17,6 +21,7 @@ class ItemView extends StatefulWidget {
 
 class _ItemViewState extends State<ItemView> {
   final ReadItem readItem = GetIt.instance<ReadItem>();
+  final CreateShift createShift = GetIt.instance<CreateShift>();
   Item? item;
 
   @override
@@ -29,8 +34,17 @@ class _ItemViewState extends State<ItemView> {
     }));
   }
 
+  Future<void> _createShift(
+      {required String userId,
+      required String itemId,
+      required int peopleInShift}) async {
+    final Shift? shift = await createShift.call(
+        userId: userId, itemId: itemId, peopleInShift: peopleInShift);
+  }
+
   @override
   Widget build(BuildContext context) {
+    final UserProvider userProvider = Provider.of<UserProvider>(context);
     if (item == null) {
       return const Scaffold(
           body: Center(child: CircularProgressIndicator(strokeWidth: 2)));
@@ -73,7 +87,13 @@ class _ItemViewState extends State<ItemView> {
         ),
         SliverList(
           delegate: SliverChildBuilderDelegate(
-              (context, index) => _ItemDetails(item: item!),
+              (context, index) => _ItemDetails(
+                    item: item!,
+                    onSubmit: (peopleInShift) => _createShift(
+                        userId: userProvider.getUser!.userId,
+                        itemId: item!.id,
+                        peopleInShift: peopleInShift),
+                  ),
               childCount: 1),
         )
       ],
@@ -83,8 +103,9 @@ class _ItemViewState extends State<ItemView> {
 
 class _ItemDetails extends StatefulWidget {
   final Item item;
+  final Function(int) onSubmit;
 
-  const _ItemDetails({required this.item});
+  const _ItemDetails({required this.item, required this.onSubmit});
 
   @override
   _ItemDetailsState createState() => _ItemDetailsState();
@@ -161,7 +182,7 @@ class _ItemDetailsState extends State<_ItemDetails> {
           ),
           const SizedBox(height: 20),
           ElevatedButton(
-            onPressed: () => {},
+            onPressed: () => widget.onSubmit.call(peopleInShift),
             style: ElevatedButton.styleFrom(
               fixedSize: const Size.fromWidth(500),
               foregroundColor: Colors.white,
