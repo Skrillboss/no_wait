@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_turno/features/item/application/use_cases/read_item.dart';
 import 'package:todo_turno/features/shift/application/use_cases/create_shift.dart';
+import 'package:todo_turno/presentation/provider/bottom_navigation_bar_provider/bottom_navigation_bar_provider.dart';
 import 'package:todo_turno/presentation/views/add/qr_scanner_view.dart';
 import 'package:todo_turno/presentation/widgets/number_selection.dart';
 import '../../../features/item/domain/entities/item.dart';
@@ -39,7 +40,9 @@ class _ItemViewState extends State<ItemView> {
   @override
   Widget build(BuildContext context) {
     final UserProvider userProvider = Provider.of<UserProvider>(context);
-    final ViewsListProvider viewsListProvider = Provider.of<ViewsListProvider>(context, listen: false);
+    final BottomNavigationBarProvider bottomNavigationBarProvider = Provider.of<BottomNavigationBarProvider>(context);
+    final ViewsListProvider viewsListProvider =
+        Provider.of<ViewsListProvider>(context, listen: false);
     if (item == null) {
       return const Scaffold(
           body: Center(child: CircularProgressIndicator(strokeWidth: 2)));
@@ -86,11 +89,19 @@ class _ItemViewState extends State<ItemView> {
           delegate: SliverChildBuilderDelegate(
               (context, index) => _ItemDetails(
                     item: item!,
-                    onSubmit: (peopleInShift) {
-                      createShift.call(
-                          userId: userProvider.getUser!.userId,
-                          itemId: item!.id,
-                          peopleInShift: peopleInShift).then((Shift shift) => userProvider.getUser!.shifts.add(shift));
+                    onSubmit: (peopleInShift) async {
+                      /**** Este bloque de codigo lo tengo que encapsular en un flujo de pantallas sincrona****/
+                      final Shift shiftCreated = await createShift
+                          .call(
+                              userId: userProvider.getUser!.userId,
+                              itemId: item!.id,
+                              peopleInShift: peopleInShift);
+
+                      userProvider.getUser!.shifts.add(shiftCreated);
+                      /**** En la que si el proceso es exitoso, mostrara una animacion de confirmacion en caso contrario mostrara una pantalla estatica de error ****/
+
+                      bottomNavigationBarProvider.setPos = 1;
+                      viewsListProvider.setQrScannerView = const QrScannerView();
                     },
                   ),
               childCount: 1),
