@@ -5,6 +5,7 @@ class ShiftMapper {
     return {
       'shiftId': shift.shiftId,
       'itemName': shift.itemName,
+      'businessName': shift.businessName,
       'shiftTime': shift.shiftTime.toIso8601String(),
       'peopleInShift': shift.peopleInShift,
       'createAt': shift.createAt.toIso8601String(),
@@ -20,10 +21,12 @@ class ShiftMapper {
     return Shift(
       shiftId: json['shiftId'],
       itemName: json['itemName'],
+      businessName: json['businessName'],
       shiftTime: DateTime.parse(json['shiftTime']),
       peopleInShift: json['peopleInShift'],
       createAt: DateTime.parse(json['createAt']),
       notifyTime: DateTime.parse(json['notifyTime']),
+      currentWaitingDuration: Duration(seconds: json['currentWaitingDuration']),
       expirationTime: DateTime.parse(json['expirationTime']),
       estimatedArrivalTime: Duration(minutes: json['estimatedArrivalTime']),
       status: stringToStatus(json['status']),

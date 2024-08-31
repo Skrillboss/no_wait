@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_turno/presentation/widgets/count_douwn_timer.dart';
 import '../../features/shift/domain/entities/shift.dart';
 
 class CardInformation extends StatefulWidget {
@@ -34,8 +35,14 @@ class CardInformationState extends State<CardInformation> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text('Servicio'),
-                          Text(widget.shift.itemName),
+                          CountdownTimer(
+                            initialDuration: widget.shift.currentWaitingDuration,
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Theme.of(context).primaryColorDark
+                            ),
+                          ),
+                          Text(widget.shift.businessName),
                         ],
                       ),
                       if (_isExpanded) ...[

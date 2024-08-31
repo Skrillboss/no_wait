@@ -12,6 +12,7 @@ import '../../../features/item/domain/entities/item.dart';
 import '../../../features/shift/domain/entities/shift.dart';
 import '../../../features/user/application/provider/user_provider.dart';
 import '../../provider/views_list_provider/views_list_provider.dart';
+import '../../widgets/count_douwn_timer.dart';
 
 class ItemView extends StatefulWidget {
   final String itemId;
@@ -42,7 +43,7 @@ class _ItemViewState extends State<ItemView> {
     final UserProvider userProvider = Provider.of<UserProvider>(context);
     final BottomNavigationBarProvider bottomNavigationBarProvider = Provider.of<BottomNavigationBarProvider>(context);
     final ViewsListProvider viewsListProvider =
-        Provider.of<ViewsListProvider>(context, listen: false);
+    Provider.of<ViewsListProvider>(context, listen: false);
     if (item == null) {
       return const Scaffold(
           body: Center(child: CircularProgressIndicator(strokeWidth: 2)));
@@ -64,7 +65,7 @@ class _ItemViewState extends State<ItemView> {
           ),
           flexibleSpace: FlexibleSpaceBar(
             titlePadding:
-                const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             background: Stack(
               children: [
                 SizedBox.expand(
@@ -87,23 +88,23 @@ class _ItemViewState extends State<ItemView> {
         ),
         SliverList(
           delegate: SliverChildBuilderDelegate(
-              (context, index) => _ItemDetails(
-                    item: item!,
-                    onSubmit: (peopleInShift) async {
-                      /**** Este bloque de codigo lo tengo que encapsular en un flujo de pantallas sincrona****/
-                      final Shift shiftCreated = await createShift
-                          .call(
-                              userId: userProvider.getUser!.userId,
-                              itemId: item!.id,
-                              peopleInShift: peopleInShift);
+                  (context, index) => _ItemDetails(
+                item: item!,
+                onSubmit: (peopleInShift) async {
+                  /**** Este bloque de codigo lo tengo que encapsular en un flujo de pantallas sincrona****/
+                  final Shift shiftCreated = await createShift
+                      .call(
+                      userId: userProvider.getUser!.userId,
+                      itemId: item!.id,
+                      peopleInShift: peopleInShift);
 
-                      userProvider.getUser!.shifts.add(shiftCreated);
-                      /**** En la que si el proceso es exitoso, mostrara una animacion de confirmacion en caso contrario mostrara una pantalla estatica de error ****/
+                  userProvider.getUser!.shifts.add(shiftCreated);
+                  /**** En la que si el proceso es exitoso, mostrara una animacion de confirmacion en caso contrario mostrara una pantalla estatica de error ****/
 
-                      bottomNavigationBarProvider.setPos = 1;
-                      viewsListProvider.setQrScannerView = const QrScannerView();
-                    },
-                  ),
+                  bottomNavigationBarProvider.setPos = 1;
+                  viewsListProvider.setQrScannerView = const QrScannerView();
+                },
+              ),
               childCount: 1),
         )
       ],
@@ -125,32 +126,6 @@ class _ItemDetailsState extends State<_ItemDetails> {
   bool isExpanded = false;
   bool isLoading = false;
   int peopleInShift = 1;
-  late Timer _timer;
-  Duration _currentDuration = Duration.zero;
-
-  @override
-  void initState() {
-    super.initState();
-    _currentDuration = widget.item.currentWaitingDuration;
-    _startTimer();
-  }
-
-  void _startTimer() {
-    _timer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
-      setState(() {
-        _currentDuration = _currentDuration - const Duration(seconds: 1);
-        if (_currentDuration.inSeconds <= 0) {
-          _timer.cancel();
-        }
-      });
-    });
-  }
-
-  @override
-  void dispose() {
-    _timer.cancel();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -165,12 +140,13 @@ class _ItemDetailsState extends State<_ItemDetails> {
                   fontWeight: FontWeight.w700,
                   fontSize: 24,
                   color: Colors.green)),
-          Text(
-            _formatDuration(_currentDuration),
+          CountdownTimer(
+            initialDuration: widget.item.currentWaitingDuration,
             style: TextStyle(
-                fontWeight: FontWeight.w900,
-                fontSize: 26,
-                color: Theme.of(context).primaryColorDark),
+              fontWeight: FontWeight.w900,
+              fontSize: 26,
+              color: Theme.of(context).primaryColorDark,
+            ),
           ),
           const SizedBox(height: 20),
           Row(
@@ -206,27 +182,18 @@ class _ItemDetailsState extends State<_ItemDetails> {
             child: isLoading
                 ? const CircularProgressIndicator()
                 : const Text(
-                    'Agregar Turno!',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
+              'Agregar Turno!',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
           ),
         ],
       ),
     );
   }
-
-  String _formatDuration(Duration duration) {
-    final int minutes = duration.inMinutes % 60;
-    final int hours = duration.inHours;
-    final int seconds = duration.inSeconds % 60;
-    return '${_twoDigits(hours)}:${_twoDigits(minutes)}:${_twoDigits(seconds)}';
-  }
-
-  String _twoDigits(int n) => n.toString().padLeft(2, '0');
 
   Widget mainInformation() {
     final Size size = MediaQuery.of(context).size;
@@ -271,12 +238,12 @@ class _ItemDetailsState extends State<_ItemDetails> {
       children: [
         isExpanded == false
             ? ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Image.network(
-                  widget.item.secondaryImagePath ?? widget.item.mainImagePath,
-                  width: size.width * 0.3,
-                ),
-              )
+          borderRadius: BorderRadius.circular(20),
+          child: Image.network(
+            widget.item.secondaryImagePath ?? widget.item.mainImagePath,
+            width: size.width * 0.3,
+          ),
+        )
             : Container(),
         const SizedBox(width: 10),
         SizedBox(
@@ -321,9 +288,9 @@ class _CustomGradient extends StatelessWidget {
 
   const _CustomGradient(
       {this.begin = Alignment.centerLeft,
-      this.end = Alignment.centerRight,
-      required this.stops,
-      required this.colors});
+        this.end = Alignment.centerRight,
+        required this.stops,
+        required this.colors});
 
   @override
   Widget build(BuildContext context) {
