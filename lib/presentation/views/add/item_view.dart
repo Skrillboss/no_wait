@@ -5,10 +5,12 @@ import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_turno/features/item/application/use_cases/read_item.dart';
 import 'package:todo_turno/features/shift/application/use_cases/create_shift.dart';
+import 'package:todo_turno/presentation/views/add/qr_scanner_view.dart';
 import 'package:todo_turno/presentation/widgets/number_selection.dart';
 import '../../../features/item/domain/entities/item.dart';
 import '../../../features/shift/domain/entities/shift.dart';
 import '../../../features/user/application/provider/user_provider.dart';
+import '../../provider/views_list_provider/views_list_provider.dart';
 
 class ItemView extends StatefulWidget {
   final String itemId;
@@ -37,6 +39,7 @@ class _ItemViewState extends State<ItemView> {
   @override
   Widget build(BuildContext context) {
     final UserProvider userProvider = Provider.of<UserProvider>(context);
+    final ViewsListProvider viewsListProvider = Provider.of<ViewsListProvider>(context, listen: false);
     if (item == null) {
       return const Scaffold(
           body: Center(child: CircularProgressIndicator(strokeWidth: 2)));
@@ -51,7 +54,9 @@ class _ItemViewState extends State<ItemView> {
           expandedHeight: size.height * 0.7,
           foregroundColor: Colors.white,
           leading: IconButton(
-            onPressed: () {},
+            onPressed: () {
+              viewsListProvider.setQrScannerView = const QrScannerView();
+            },
             icon: const Icon(Icons.arrow_back_outlined),
           ),
           flexibleSpace: FlexibleSpaceBar(
