@@ -16,7 +16,7 @@ class RequestHandler {
   RequestHandler._internal();
 
   final http.Client httpClient = GetIt.instance<http.Client>();
-  final String baseApiUrl = 'https://example.app';
+  final String baseApiUrl = 'https://fd19-85-61-254-238.ngrok-free.app';
   final JwtTokenManager _tokenManager = JwtTokenManager();
 
   /// ***************************************************************************
@@ -97,15 +97,21 @@ class RequestHandler {
     required String endPoint,
     required Object? dataDecode,
     required int errorCode,
+    bool useToken = true,
   }) async {
     try {
-      final String? token = await _tokenManager.getToken();
+      String? token;
+
+      if (useToken) {
+        token = await _tokenManager.getToken();
+      }
+
       return _sendRequestOrRefreshToken(() async {
         return await httpClient.post(
           Uri.parse('$baseApiUrl$endPoint'),
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer $token',
+            if (useToken && token != null) 'Authorization': 'Bearer $token',
           },
           body: jsonEncode(dataDecode),
         );

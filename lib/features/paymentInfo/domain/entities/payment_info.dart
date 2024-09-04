@@ -2,7 +2,7 @@ class PaymentInfo {
   final String cardNumber;
   final String cardHolderName;
   final DateTime expiryDate;
-  String cardType;
+  final String cardType;
   final String cvv;
 
   PaymentInfo({
