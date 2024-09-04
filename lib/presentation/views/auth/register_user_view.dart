@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import '../../../features/user/application/use_cases/register_user.dart';
 import '../../provider/views_list_provider/views_list_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 import '../../widgets/custom_input_widget.dart';
 import 'login_user_view.dart';
 
@@ -51,6 +50,7 @@ class _RegisterUserViewState extends State<RegisterUserView> {
       setState(() {
         isLoading = false;
       });
+      changeView(context, const LoginUserView());
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Bienvenido a NoWait ${user.nickName}'),
