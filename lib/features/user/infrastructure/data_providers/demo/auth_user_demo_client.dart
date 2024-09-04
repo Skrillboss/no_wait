@@ -2,7 +2,7 @@ class AuthUserDemoClient {
   Future<Map<String, dynamic>> login(String username, String password) async {
     final Map<String, dynamic> response = {
       'user': {
-        'userId': '12345',
+        'id': '12345',
         'name': username,
         'nickName': username,
         'email': 'heredialuis20@gmail.com',

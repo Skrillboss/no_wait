@@ -135,9 +135,8 @@ class _RegisterUserViewState extends State<RegisterUserView> {
           if (value == null || value.isEmpty) {
             return 'El número telefónico es obligatorio';
           }
-          if (value.length != 10) {
-            // Puedes cambiar 10 por el número de dígitos requerido
-            return 'El número debe tener 10 dígitos';
+          if (value.length != 9) {
+            return 'El número debe tener 9 dígitos';
           }
           if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
             return 'El número debe contener solo dígitos';
