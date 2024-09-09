@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import '../../../features/user/application/use_cases/register_user.dart';
 import '../../provider/views_list_provider/views_list_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 import '../../widgets/custom_input_widget.dart';
 import 'login_user_view.dart';
 
@@ -51,6 +50,7 @@ class _RegisterUserViewState extends State<RegisterUserView> {
       setState(() {
         isLoading = false;
       });
+      changeView(context, const LoginUserView());
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Bienvenido a NoWait ${user.nickName}'),
@@ -135,9 +135,8 @@ class _RegisterUserViewState extends State<RegisterUserView> {
           if (value == null || value.isEmpty) {
             return 'El número telefónico es obligatorio';
           }
-          if (value.length != 10) {
-            // Puedes cambiar 10 por el número de dígitos requerido
-            return 'El número debe tener 10 dígitos';
+          if (value.length != 9) {
+            return 'El número debe tener 9 dígitos';
           }
           if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
             return 'El número debe contener solo dígitos';

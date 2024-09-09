@@ -6,7 +6,7 @@ import '../../features/user/application/provider/user_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../features/user/application/use_cases/logout_user.dart';
 import '../provider/views_list_provider/views_list_provider.dart';
-import 'forms/login_user_view.dart';
+import 'auth/login_user_view.dart';
 
 class UserProfileView extends StatelessWidget {
   UserProfileView({super.key});

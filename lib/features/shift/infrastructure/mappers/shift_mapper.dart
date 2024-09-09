@@ -4,7 +4,10 @@ class ShiftMapper {
   static Map<String, dynamic> toJson(Shift shift) {
     return {
       'shiftId': shift.shiftId,
+      'itemName': shift.itemName,
+      'businessName': shift.businessName,
       'shiftTime': shift.shiftTime.toIso8601String(),
+      'peopleInShift': shift.peopleInShift,
       'createAt': shift.createAt.toIso8601String(),
       'notifyTime': shift.notifyTime.toIso8601String(),
       'expirationTime': shift.expirationTime.toIso8601String(),
@@ -17,9 +20,13 @@ class ShiftMapper {
   static Shift fromJson(Map<String, dynamic> json) {
     return Shift(
       shiftId: json['shiftId'],
+      itemName: json['itemName'],
+      businessName: json['businessName'],
       shiftTime: DateTime.parse(json['shiftTime']),
+      peopleInShift: json['peopleInShift'],
       createAt: DateTime.parse(json['createAt']),
       notifyTime: DateTime.parse(json['notifyTime']),
+      currentWaitingDuration: Duration(seconds: json['currentWaitingDuration']),
       expirationTime: DateTime.parse(json['expirationTime']),
       estimatedArrivalTime: Duration(minutes: json['estimatedArrivalTime']),
       status: stringToStatus(json['status']),
@@ -50,6 +57,8 @@ class ShiftMapper {
   }
 
   static List<Shift> listFromJson(List<dynamic> jsonList) {
-    return jsonList.map((json) => fromJson(json as Map<String, dynamic>)).toList();
+    return jsonList
+        .map((json) => fromJson(json as Map<String, dynamic>))
+        .toList();
   }
 }

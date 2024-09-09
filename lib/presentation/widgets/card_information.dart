@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_turno/presentation/widgets/count_douwn_timer.dart';
 import '../../features/shift/domain/entities/shift.dart';
 
 class CardInformation extends StatefulWidget {
@@ -15,7 +16,6 @@ class CardInformationState extends State<CardInformation> {
 
   @override
   Widget build(BuildContext context) {
-    final shift = widget.shift;
 
     return Center(
       child: Card(
@@ -26,17 +26,23 @@ class CardInformationState extends State<CardInformation> {
               children: <Widget>[
                 ListTile(
                   leading: Icon(
-                    _getIconForStatus(shift.status),
-                    color: _getColorForStatus(shift.status),
+                    _getIconForStatus(widget.shift.status),
+                    color: _getColorForStatus(widget.shift.status),
                   ),
-                  title: const Text('shift.business.name'),
+                  title: Text(widget.shift.itemName),
                   subtitle: Column(
                     children: [
-                      const Row(
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text('Servicio'),
-                          Text('shift.item.name'),
+                          CountdownTimer(
+                            initialDuration: widget.shift.currentWaitingDuration,
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Theme.of(context).primaryColorDark
+                            ),
+                          ),
+                          Text(widget.shift.businessName),
                         ],
                       ),
                       if (_isExpanded) ...[
@@ -44,14 +50,14 @@ class CardInformationState extends State<CardInformation> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const Text('Tiempo del turno'),
-                            Text(shift.shiftTime.toString()),
+                            Text(widget.shift.shiftTime.toString()),
                           ],
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const Text('Tiempo estimado para llegar'),
-                            Text(shift.estimatedArrivalTime.toString())
+                            Text(widget.shift.estimatedArrivalTime.toString())
                           ],
                         ),
                         // Agrega más filas según sea necesario

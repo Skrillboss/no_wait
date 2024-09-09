@@ -6,11 +6,11 @@ class CreateShiftApiClient {
   final RequestHandler requestHandler = RequestHandler();
 
   Future<Map<String, dynamic>> createShift(
-      String userId, String itemId) async {
+      String userId, String itemId, int peopleInShift) async {
     try {
       final response = await requestHandler.postRequest(
           endPoint: '/creteShift',
-          dataDecode: {'userId': userId, 'itemId': itemId},
+          dataDecode: {'userId': userId, 'itemId': itemId, 'peopleInShift': peopleInShift},
           errorCode: 2000);
       return jsonDecode(response.body);
     } on CustomException {

@@ -2,8 +2,17 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:get_it/get_it.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_turno/features/item/application/use_cases/read_item.dart';
-import '../../features/item/domain/entities/item.dart';
+import 'package:todo_turno/features/shift/application/use_cases/create_shift.dart';
+import 'package:todo_turno/presentation/provider/bottom_navigation_bar_provider/bottom_navigation_bar_provider.dart';
+import 'package:todo_turno/presentation/views/add/qr_scanner_view.dart';
+import 'package:todo_turno/presentation/widgets/number_selection.dart';
+import '../../../features/item/domain/entities/item.dart';
+import '../../../features/shift/domain/entities/shift.dart';
+import '../../../features/user/application/provider/user_provider.dart';
+import '../../provider/views_list_provider/views_list_provider.dart';
+import '../../widgets/count_douwn_timer.dart';
 
 class ItemView extends StatefulWidget {
   final String itemId;
@@ -16,6 +25,7 @@ class ItemView extends StatefulWidget {
 
 class _ItemViewState extends State<ItemView> {
   final ReadItem readItem = GetIt.instance<ReadItem>();
+  final CreateShift createShift = GetIt.instance<CreateShift>();
   Item? item;
 
   @override
@@ -30,6 +40,10 @@ class _ItemViewState extends State<ItemView> {
 
   @override
   Widget build(BuildContext context) {
+    final UserProvider userProvider = Provider.of<UserProvider>(context);
+    final BottomNavigationBarProvider bottomNavigationBarProvider = Provider.of<BottomNavigationBarProvider>(context);
+    final ViewsListProvider viewsListProvider =
+    Provider.of<ViewsListProvider>(context, listen: false);
     if (item == null) {
       return const Scaffold(
           body: Center(child: CircularProgressIndicator(strokeWidth: 2)));
@@ -44,12 +58,14 @@ class _ItemViewState extends State<ItemView> {
           expandedHeight: size.height * 0.7,
           foregroundColor: Colors.white,
           leading: IconButton(
-            onPressed: (){},
+            onPressed: () {
+              viewsListProvider.setQrScannerView = const QrScannerView();
+            },
             icon: const Icon(Icons.arrow_back_outlined),
           ),
           flexibleSpace: FlexibleSpaceBar(
             titlePadding:
-                const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             background: Stack(
               children: [
                 SizedBox.expand(
@@ -72,7 +88,23 @@ class _ItemViewState extends State<ItemView> {
         ),
         SliverList(
           delegate: SliverChildBuilderDelegate(
-              (context, index) => _ItemDetails(item: item!),
+                  (context, index) => _ItemDetails(
+                item: item!,
+                onSubmit: (peopleInShift) async {
+                  /**** Este bloque de codigo lo tengo que encapsular en un flujo de pantallas sincrona****/
+                  final Shift shiftCreated = await createShift
+                      .call(
+                      userId: userProvider.getUser!.userId,
+                      itemId: item!.id,
+                      peopleInShift: peopleInShift);
+
+                  userProvider.getUser!.shifts.add(shiftCreated);
+                  /**** En la que si el proceso es exitoso, mostrara una animacion de confirmacion en caso contrario mostrara una pantalla estatica de error ****/
+
+                  bottomNavigationBarProvider.setPos = 1;
+                  viewsListProvider.setQrScannerView = const QrScannerView();
+                },
+              ),
               childCount: 1),
         )
       ],
@@ -82,8 +114,9 @@ class _ItemViewState extends State<ItemView> {
 
 class _ItemDetails extends StatefulWidget {
   final Item item;
+  final Function(int) onSubmit;
 
-  const _ItemDetails({required this.item});
+  const _ItemDetails({required this.item, required this.onSubmit});
 
   @override
   _ItemDetailsState createState() => _ItemDetailsState();
@@ -92,32 +125,7 @@ class _ItemDetails extends StatefulWidget {
 class _ItemDetailsState extends State<_ItemDetails> {
   bool isExpanded = false;
   bool isLoading = false;
-  late Timer _timer;
-  Duration _currentDuration = Duration.zero;
-
-  @override
-  void initState() {
-    super.initState();
-    _currentDuration = widget.item.currentWaitingDuration;
-    _startTimer();
-  }
-
-  void _startTimer() {
-    _timer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
-      setState(() {
-        _currentDuration = _currentDuration - const Duration(seconds: 1);
-        if (_currentDuration.inSeconds <= 0) {
-          _timer.cancel();
-        }
-      });
-    });
-  }
-
-  @override
-  void dispose() {
-    _timer.cancel();
-    super.dispose();
-  }
+  int peopleInShift = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -127,17 +135,40 @@ class _ItemDetailsState extends State<_ItemDetails> {
         children: [
           mainInformation(),
           const Divider(),
-          const Text('Tiempo de espera Aprox', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 24, color: Colors.green)),
-          Text(_formatDuration(_currentDuration), style: TextStyle(fontWeight: FontWeight.w900, fontSize: 26, color: Theme.of(context).primaryColorDark),),
-
+          const Text('Tiempo de espera Aprox',
+              style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 24,
+                  color: Colors.green)),
+          CountdownTimer(
+            initialDuration: widget.item.currentWaitingDuration,
+            style: TextStyle(
+              fontWeight: FontWeight.w900,
+              fontSize: 26,
+              color: Theme.of(context).primaryColorDark,
+            ),
+          ),
           const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [const Text('Valoracion promedio'), RatingStars(value: widget.item.rating ?? 0)],
+            children: [
+              const Text('Valoracion promedio'),
+              RatingStars(value: widget.item.rating ?? 0)
+            ],
+          ),
+          const SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text('Personas'),
+              NumberSelection(
+                onChanged: (value) => peopleInShift = value,
+              )
+            ],
           ),
           const SizedBox(height: 20),
           ElevatedButton(
-            onPressed: () => {},
+            onPressed: () => widget.onSubmit.call(peopleInShift),
             style: ElevatedButton.styleFrom(
               fixedSize: const Size.fromWidth(500),
               foregroundColor: Colors.white,
@@ -163,15 +194,6 @@ class _ItemDetailsState extends State<_ItemDetails> {
       ),
     );
   }
-
-  String _formatDuration(Duration duration) {
-    final int minutes = duration.inMinutes % 60;
-    final int hours = duration.inHours;
-    final int seconds = duration.inSeconds % 60;
-    return '${_twoDigits(hours)}:${_twoDigits(minutes)}:${_twoDigits(seconds)}';
-  }
-
-  String _twoDigits(int n) => n.toString().padLeft(2, '0');
 
   Widget mainInformation() {
     final Size size = MediaQuery.of(context).size;
@@ -266,9 +288,9 @@ class _CustomGradient extends StatelessWidget {
 
   const _CustomGradient(
       {this.begin = Alignment.centerLeft,
-      this.end = Alignment.centerRight,
-      required this.stops,
-      required this.colors});
+        this.end = Alignment.centerRight,
+        required this.stops,
+        required this.colors});
 
   @override
   Widget build(BuildContext context) {

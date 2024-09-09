@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import '../../views/forms/login_user_view.dart';
-import '../../views/qr_scanner_view.dart';
+import '../../views/auth/login_user_view.dart';
+import '../../views/add/qr_scanner_view.dart';
 import '../../views/settings_view.dart';
 import '../../views/shifts_view.dart';
 import '../../views/map_view.dart';

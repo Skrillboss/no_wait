@@ -20,7 +20,7 @@ class RegisterUserApiClient {
   ) async {
     try{
       final response = await requestHandler.postRequest(
-          endPoint: '/register',
+          endPoint: '/users/register',
           dataDecode: {
             'name': name,
             'nickName': nickName,
@@ -30,7 +30,8 @@ class RegisterUserApiClient {
             'paymentInfo': paymentInfo != null ? PaymentInfoMapper.toJson(paymentInfo) : null,
             'business': business != null ? BusinessMapper.toJson(business) : null,
           },
-          errorCode: 2000
+          errorCode: 2000,
+        useToken: false
       );
       return jsonDecode(response.body);
     } on CustomException{

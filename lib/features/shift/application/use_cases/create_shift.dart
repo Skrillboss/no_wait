@@ -6,7 +6,7 @@ class CreateShift{
 
   CreateShift(this.repository);
 
-  Future<Shift> call({required String userId, required String itemId}) async {
-    return await repository.create(userId, itemId);
+  Future<Shift> call({required String userId, required String itemId, required int peopleInShift}) async {
+    return await repository.create(userId, itemId, peopleInShift);
   }
 }

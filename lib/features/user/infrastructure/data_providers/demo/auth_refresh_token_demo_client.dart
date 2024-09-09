@@ -2,7 +2,7 @@ class AuthRefreshTokenDemoClient {
   Future<Map<String, dynamic>> login(String refreshToken) async {
     final Map<String, dynamic> response = {
       'user': {
-        'userId': '12345',
+        'id': '12345',
         'name': 'Luis',
         'nickName': 'Luisillo',
         'email': 'heredialuis20@gmail.com',
