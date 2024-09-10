@@ -6,13 +6,14 @@ class AuthUserApiClient {
   final RequestHandler requestHandler = RequestHandler();
 
   Future<Map<String, dynamic>> login(String username, String password) async {
-    try{
+    try {
       final response = await requestHandler.postRequest(
           endPoint: '/users/login',
           dataDecode: {'nickName': username, 'password': password},
-          errorCode: 2000);
+          errorCode: 2000,
+          useToken: false);
       return jsonDecode(response.body);
-    } on CustomException{
+    } on CustomException {
       rethrow;
     }
   }

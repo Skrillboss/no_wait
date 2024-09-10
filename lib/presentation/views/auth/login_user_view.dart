@@ -25,6 +25,7 @@ class _LoginUserViewState extends State<LoginUserView> {
 
   final LoginUser loginUser = GetIt.instance<LoginUser>();
   bool isLoading = false;
+  String validation = '';
 
   void changeView(BuildContext context, Widget view) {
     final ViewsListProvider viewsListProvider =
@@ -40,10 +41,16 @@ class _LoginUserViewState extends State<LoginUserView> {
 
       final UserProvider userProvider =
           Provider.of<UserProvider>(context, listen: false);
-      userProvider.setUser = await loginUser.call(
-        nickName: _nickNameController.text,
-        password: _passwordController.text,
-      );
+      try{
+        userProvider.setUser = await loginUser.call(
+          nickName: _nickNameController.text,
+          password: _passwordController.text,
+        );
+      }catch(e){
+        setState(() {
+          validation = 'NickName o Password Incorrectos';
+        });
+      }
 
       if (userProvider.getIsLogged) {
         changeView(context, UserProfileView());
@@ -147,6 +154,8 @@ class _LoginUserViewState extends State<LoginUserView> {
               },
             ),
             const SizedBox(height: 20), // Espacio antes del botón
+            Text(validation),
+
             ElevatedButton(
               onPressed: () => _loginUser(context),
               style: ElevatedButton.styleFrom(

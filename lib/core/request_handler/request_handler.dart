@@ -102,10 +102,20 @@ class RequestHandler {
     try {
       String? token;
 
-      if (useToken) {
-        token = await _tokenManager.getToken();
+      if (useToken == false) {
+        Response response = await httpClient.post(
+            Uri.parse('$baseApiUrl$endPoint'),
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: jsonEncode(dataDecode)
+        );
+        if(response.statusCode == 401){
+          throw CustomException(401, 'Error al autenticar');
+        }
+        return response;
       }
-
+      token = await _tokenManager.getToken();
       return _sendRequestOrRefreshToken(() async {
         return await httpClient.post(
           Uri.parse('$baseApiUrl$endPoint'),
@@ -116,6 +126,7 @@ class RequestHandler {
           body: jsonEncode(dataDecode),
         );
       });
+
     } on CustomException {
       rethrow;
     } catch (e) {
