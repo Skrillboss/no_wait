@@ -20,7 +20,7 @@ class _LoginUserViewState extends State<LoginUserView> {
   final _loginFormKey = GlobalKey<FormState>();
 
   // Controllers para los campos de texto
-  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _nickNameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   final LoginUser loginUser = GetIt.instance<LoginUser>();
@@ -41,7 +41,7 @@ class _LoginUserViewState extends State<LoginUserView> {
       final UserProvider userProvider =
           Provider.of<UserProvider>(context, listen: false);
       userProvider.setUser = await loginUser.call(
-        username: _nameController.text,
+        nickName: _nickNameController.text,
         password: _passwordController.text,
       );
 
@@ -57,7 +57,7 @@ class _LoginUserViewState extends State<LoginUserView> {
 
   @override
   void dispose() {
-    _nameController.dispose();
+    _nickNameController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
@@ -86,9 +86,9 @@ class _LoginUserViewState extends State<LoginUserView> {
   Widget _buildColumnForm(BuildContext context) {
     List<Widget> inputs = [
       CustomInputWidget(
-        hintText: AppLocalizations.of(context)!.name,
+        hintText: AppLocalizations.of(context)!.nickname,
         icon: Icons.person,
-        controller: _nameController,
+        controller: _nickNameController,
         validator: (value) {
           if (value == null || value.isEmpty) {
             return 'El campo no puede estas vacio';

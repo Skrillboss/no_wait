@@ -8,8 +8,8 @@ class AuthUserApiClient {
   Future<Map<String, dynamic>> login(String username, String password) async {
     try{
       final response = await requestHandler.postRequest(
-          endPoint: '/login/user',
-          dataDecode: {'username': username, 'password': password},
+          endPoint: '/users/login',
+          dataDecode: {'nickName': username, 'password': password},
           errorCode: 2000);
       return jsonDecode(response.body);
     } on CustomException{

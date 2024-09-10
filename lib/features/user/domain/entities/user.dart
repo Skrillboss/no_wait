@@ -3,12 +3,12 @@ import '../../../business/domain/entities/business.dart';
 import '../../../shift/domain/entities/shift.dart';
 
 class User {
-  final String userId; // Identificador del usuario
+  final String userId;
   String name;
   String nickName;
-  String email; // Correo electrónico del usuario
-  String phoneNumber; // Número de teléfono del usuario
-  PaymentInfo? paymentInfo; // Información de pago del usuario
+  String email;
+  String phoneNumber;
+  PaymentInfo? paymentInfo;
   Business? business;
   List<Shift?> shifts;
 
