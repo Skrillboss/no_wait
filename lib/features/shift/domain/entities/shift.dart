@@ -2,17 +2,17 @@ enum ShiftStatus { active, inactive, expired, postponed, error }
 
 class Shift {
   final String shiftId; // Identificador del turno
-  final String itemName;
+  final String itemName; // nombre del producto o servicio que vas a reclamar por el turno
   final String businessName;
-  final DateTime shiftTime;
-  final int peopleInShift;
+  final DateTime shiftTime; // cuanto tarda aproximadamente turno a turno
+  final int peopleInShift; // cantidad de personas esperando actualmente su turno
   final DateTime createAt;
   final DateTime notifyTime; // Tiempo para notificar al usuario
-  final Duration currentWaitingDuration;
+  final Duration currentWaitingDuration; // actual tiempo de duracion para que sea tu turno
   final DateTime expirationTime;
-  final Duration estimatedArrivalTime; // Tiempo estimado de llegada al negocio
+  final Duration estimatedArrivalTime; // Tiempo estimado de llegada al negocio para reclamar tu turno
   final ShiftStatus status;
-  final int shiftNumber;
+  final int shiftNumber; // numero de turno
 
   // Constructor de la clase Shift
   Shift(
