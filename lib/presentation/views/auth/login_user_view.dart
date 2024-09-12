@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_turno/core/custom_exception/custom_exception.dart';
 import 'package:todo_turno/features/user/application/use_cases/login_user.dart';
 import 'package:todo_turno/presentation/views/auth/register_user_view.dart';
 import '../../../features/user/application/provider/user_provider.dart';
@@ -25,6 +26,7 @@ class _LoginUserViewState extends State<LoginUserView> {
 
   final LoginUser loginUser = GetIt.instance<LoginUser>();
   bool isLoading = false;
+  String errorMessage = '';
 
   void changeView(BuildContext context, Widget view) {
     final ViewsListProvider viewsListProvider =
@@ -40,10 +42,19 @@ class _LoginUserViewState extends State<LoginUserView> {
 
       final UserProvider userProvider =
           Provider.of<UserProvider>(context, listen: false);
-      userProvider.setUser = await loginUser.call(
-        nickName: _nickNameController.text,
-        password: _passwordController.text,
-      );
+      try{
+        userProvider.setUser = await loginUser.call(
+          nickName: _nickNameController.text,
+          password: _passwordController.text,
+        );
+      }on CustomException catch(e){
+        switch(e.errorCode){
+          case 2000:
+            errorMessage = 'Apodo o contraseña incorrectos';
+          default:
+            errorMessage = 'A ocurrido un error, intentelo mas tarde';
+        }
+      }
 
       if (userProvider.getIsLogged) {
         changeView(context, UserProfileView());
@@ -147,6 +158,8 @@ class _LoginUserViewState extends State<LoginUserView> {
               },
             ),
             const SizedBox(height: 20), // Espacio antes del botón
+            Text(errorMessage),
+
             ElevatedButton(
               onPressed: () => _loginUser(context),
               style: ElevatedButton.styleFrom(
