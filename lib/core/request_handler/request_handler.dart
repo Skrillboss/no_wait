@@ -16,7 +16,7 @@ class RequestHandler {
   RequestHandler._internal();
 
   final http.Client httpClient = GetIt.instance<http.Client>();
-  final String baseApiUrl = 'https://9329-80-103-136-39.ngrok-free.app';
+  final String baseApiUrl = 'https://df15-85-61-254-238.ngrok-free.app';
   final JwtTokenManager _tokenManager = JwtTokenManager();
 
   /// ***************************************************************************
@@ -31,7 +31,7 @@ class RequestHandler {
         dataDecode: {'refreshToken': refreshToken},
         errorCode: 2000,
       );
-      if (response.statusCode == 401) {
+      if (response.statusCode == 701) {
         throw CustomException(
             2000, 'Refresh token expired, please log in again.');
       }
@@ -49,18 +49,21 @@ class RequestHandler {
   ///                            REQUEST HANDLER                               *
   ///***************************************************************************
 
-  Future<Response> _sendRequestOrRefreshToken(
+  Future<Response> _requestHandler(
       Future<Response> Function() requestFunction) async {
-    try {
-      final response = await requestFunction();
-      if (response.statusCode == 401) {
-        await _refreshTokenRequest();
-        return await requestFunction();
+      Response response = await requestFunction();
+      if(!(response.statusCode >= 200 && response.statusCode < 300)) {
+        switch (response.statusCode) {
+          case 401:
+            throw Exception('Unauthorized User, code: ${response.statusCode}');
+          case 700:
+            await _refreshTokenRequest();
+            response = await requestFunction();
+          default:
+            throw Exception('Unhandled error, code: ${response.statusCode}');
+        }
       }
       return response;
-    } catch (e) {
-      rethrow;
-    }
   }
 
   /// ***************************************************************************
@@ -73,7 +76,7 @@ class RequestHandler {
   }) async {
     try {
       final String? token = await _tokenManager.getToken();
-      return _sendRequestOrRefreshToken(() async {
+      return await _requestHandler(() async {
         return await httpClient.get(
           Uri.parse('$baseApiUrl$endPoint'),
           headers: {
@@ -82,8 +85,8 @@ class RequestHandler {
           },
         );
       });
-    } on CustomException {
-      rethrow;
+    } on Exception catch (e) {
+      throw CustomException(errorCode, e.toString());
     } catch (e) {
       throw CustomException(errorCode, e.toString());
     }
@@ -100,23 +103,8 @@ class RequestHandler {
     bool useToken = true,
   }) async {
     try {
-      String? token;
-
-      if (useToken == false) {
-        Response response = await httpClient.post(
-            Uri.parse('$baseApiUrl$endPoint'),
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: jsonEncode(dataDecode)
-        );
-        if(response.statusCode == 401){
-          throw CustomException(401, 'Error al autenticar');
-        }
-        return response;
-      }
-      token = await _tokenManager.getToken();
-      return _sendRequestOrRefreshToken(() async {
+      return await _requestHandler(() async {
+        final String? token = await _tokenManager.getToken();
         return await httpClient.post(
           Uri.parse('$baseApiUrl$endPoint'),
           headers: {
@@ -126,9 +114,8 @@ class RequestHandler {
           body: jsonEncode(dataDecode),
         );
       });
-
-    } on CustomException {
-      rethrow;
+    } on Exception catch (e) {
+      throw CustomException(errorCode, e.toString());
     } catch (e) {
       throw CustomException(errorCode, e.toString());
     }
@@ -144,7 +131,7 @@ class RequestHandler {
       required int errorCode}) async {
     try {
       final String? token = await _tokenManager.getToken();
-      return _sendRequestOrRefreshToken(() async {
+      return _requestHandler(() async {
         return await httpClient.delete(
           Uri.parse('$baseApiUrl$endPoint'),
           headers: {
