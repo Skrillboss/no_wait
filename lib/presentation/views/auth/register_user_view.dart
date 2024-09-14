@@ -18,6 +18,7 @@ class _RegisterUserViewState extends State<RegisterUserView> {
   final _registerFormKey = GlobalKey<FormState>();
 
   // Controllers para los campos de texto
+  //User
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _nickNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -26,6 +27,12 @@ class _RegisterUserViewState extends State<RegisterUserView> {
   final TextEditingController _passwordRepeatController =
       TextEditingController();
   final TextEditingController _userRoleController = TextEditingController();
+
+  //PaymentInfo
+  final TextEditingController _cardHolderNumberController =
+      TextEditingController();
+  final TextEditingController _cardHolderNameController =
+      TextEditingController();
 
   final RegisterUser registerUser = GetIt.instance<RegisterUser>();
   bool isLoading = false;
@@ -75,23 +82,27 @@ class _RegisterUserViewState extends State<RegisterUserView> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: SizedBox(
-        height: 800,
-        child: Scaffold(
-          body: AbsorbPointer(
-            absorbing: isLoading,
-            child: Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                    colors: [Colors.green, Colors.blue],
-                    begin: Alignment.topRight,
-                    end: Alignment.bottomLeft),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
-                child: Form(
-                    key: _registerFormKey, child: _buildColumnForm(context)),
+    return Scaffold(
+      body: AbsorbPointer(
+        absorbing: isLoading,
+        child: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.green, Colors.blue],
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 20, right: 20, top: 55, bottom: 55),
+            child: SingleChildScrollView(
+              child: Form(
+                key: _registerFormKey,
+                child: Column(
+                  children: [
+                    _buildColumnForm(context),
+                  ],
+                ),
               ),
             ),
           ),
@@ -213,6 +224,71 @@ class _RegisterUserViewState extends State<RegisterUserView> {
       ),
     ];
 
+    List<Widget> paymentInfoInputs = [
+      CustomInputWidget(
+        hintText: 'Numero de tarjeta',
+        icon: Icons.numbers,
+        keyboardType: TextInputType.number,
+        controller: _cardHolderNumberController,
+        validator: (String? value) {
+          if (value == null || value.isEmpty) {
+            return 'Este campo es obligatorio';
+          }
+          return null;
+        },
+      ),
+      CustomInputWidget(
+        hintText: 'Nombre del propietario',
+        icon: Icons.person,
+        keyboardType: TextInputType.name,
+        controller: _cardHolderNameController,
+        validator: (String? value) {
+          if (value == null || value.isEmpty) {
+            return 'Este campo es obligatorio';
+          }
+          return null;
+        },
+      ),
+      CustomInputWidget(
+        hintText: 'Fecha de vencimiento',
+        icon: Icons.date_range_sharp,
+        keyboardType: TextInputType.datetime,
+        controller: _cardHolderNameController,
+        validator: (String? value) {
+          if (value == null || value.isEmpty) {
+            return 'Este campo es obligatorio';
+          }
+          return null;
+        },
+      )
+    ];
+
+    List<Widget> businessInputs = [
+      CustomInputWidget(
+        hintText: 'Cif',
+        icon: Icons.business,
+        keyboardType: const TextInputType.numberWithOptions(),
+        controller: _cardHolderNameController,
+        validator: (String? value) {
+          if (value == null || value.isEmpty) {
+            return 'Este campo es obligatorio';
+          }
+          return null;
+        },
+      )
+    ];
+
+    List<Widget> additionalInputs = [
+      ExpansionTile(
+        title: Text('Información de pago'),
+        children: widgetSpaceBuilder(paymentInfoInputs, 20).children,
+      ),
+      ExpansionTile(
+        title: Text('Información de negocio'),
+        children: widgetSpaceBuilder(businessInputs, 20).children,
+      )
+    ];
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -224,17 +300,8 @@ class _RegisterUserViewState extends State<RegisterUserView> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            ...List.generate(
-              inputs.length,
-              (index) {
-                return Column(
-                  children: [
-                    inputs[index],
-                    if (index < inputs.length - 1) const SizedBox(height: 20),
-                  ],
-                );
-              },
-            ),
+            widgetSpaceBuilder(inputs, 20),
+            widgetSpaceBuilder(additionalInputs, 20),
             const SizedBox(height: 20), // Espacio antes del botón
             ElevatedButton(
               onPressed: () => _registerUser(context),
@@ -273,6 +340,26 @@ class _RegisterUserViewState extends State<RegisterUserView> {
                   style: TextStyle(color: Colors.white, fontSize: 16)),
             )
           ],
+        )
+      ],
+    );
+  }
+
+  Column widgetSpaceBuilder(List<Widget> listOfWidgets, double spaceBetween) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        ...List.generate(
+          listOfWidgets.length,
+          (index) {
+            return Column(
+              children: [
+                listOfWidgets[index],
+                if (index < listOfWidgets.length - 1)
+                  SizedBox(height: spaceBetween),
+              ],
+            );
+          },
         )
       ],
     );
