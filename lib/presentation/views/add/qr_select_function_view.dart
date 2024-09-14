@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_turno/presentation/views/add/qr_generate_view.dart';
 import 'package:todo_turno/presentation/views/add/qr_scanner_view.dart';
 
 import '../../provider/views_list_provider/views_list_provider.dart';
@@ -16,7 +17,7 @@ class _QrSelectFunctionViewState extends State<QrSelectFunctionView> {
   @override
   Widget build(BuildContext context) {
     final ViewsListProvider viewsListProvider =
-    Provider.of<ViewsListProvider>(context, listen: false);
+        Provider.of<ViewsListProvider>(context, listen: false);
 
     return Scaffold(
       body: Container(
@@ -66,7 +67,9 @@ class _QrSelectFunctionViewState extends State<QrSelectFunctionView> {
                 ),
                 const SizedBox(height: 50),
                 ElevatedButton(
-                  onPressed: () => {},
+                  onPressed: () => {
+                    viewsListProvider.setQrScannerView = const QrGenerateView()
+                  },
                   style: ElevatedButton.styleFrom(
                     fixedSize: const Size.fromWidth(250),
                     foregroundColor: Colors.white,
