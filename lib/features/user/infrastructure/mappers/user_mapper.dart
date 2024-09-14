@@ -19,7 +19,9 @@ class UserMapper {
           : null,
       shifts: json['shifts'] != null
           ? ShiftMapper.listFromJson(json['shifts'] as List<dynamic>)
-          : []
+          : [],
+      userRole: UserRole.values
+          .firstWhere((e) => e.toString().split('.').last == json['userRole']),
     );
   }
 
@@ -33,7 +35,8 @@ class UserMapper {
       'paymentInfo': user.paymentInfo != null
           ? PaymentInfoMapper.toJson(user.paymentInfo!)
           : null,
-      'shifts': ShiftMapper.listToJson(user.shifts)
+      'shifts': ShiftMapper.listToJson(user.shifts),
+      'userRole': user.userRole.toString().split('.').last
     };
   }
 }
