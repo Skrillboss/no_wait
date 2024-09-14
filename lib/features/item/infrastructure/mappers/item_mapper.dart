@@ -37,7 +37,7 @@ class ItemMapper {
       // Convertir segundos a Duration
       status: stringToStatus(json['status']),
       // Convertir string a enum
-      shifts: ShiftMapper.listFromJson(json['shifts'] as List<dynamic>),
+      shifts: ShiftMapper.listFromJson(json['shifts'] as List<Map<String, dynamic>>),
     );
   }
 

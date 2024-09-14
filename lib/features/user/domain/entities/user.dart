@@ -2,7 +2,7 @@ import 'package:todo_turno/features/paymentInfo/domain/entities/payment_info.dar
 import '../../../business/domain/entities/business.dart';
 import '../../../shift/domain/entities/shift.dart';
 
-enum UserRole{
+enum UserRole {
   ADMIN,
   MANAGER,
   REGULAR_USER,
@@ -14,20 +14,23 @@ class User {
   String nickName;
   String email;
   String phoneNumber;
-  PaymentInfo? paymentInfo;
+  List<PaymentInfo?> paymentInfoList;
   Business? business;
-  List<Shift?> shifts;
+  List<Shift?> shiftList;
   UserRole userRole;
 
-  User({
-    required this.userId,
-    required this.name,
-    required this.nickName,
-    required this.email,
-    required this.phoneNumber,
-    required this.paymentInfo,
-    required this.business,
-    required this.shifts,
-    required this.userRole
-  });
+  User(
+      {required this.userId,
+      required this.name,
+      required this.nickName,
+      required this.email,
+      required this.phoneNumber,
+      required this.paymentInfoList,
+      required this.business,
+      required this.shiftList,
+      required this.userRole})
+      : assert(
+            (userRole != UserRole.ADMIN ||
+                (paymentInfoList.isNotEmpty && business != null)),
+            'For ADMIN role, PaymentInfo and Business are required');
 }

@@ -1,4 +1,5 @@
 class PaymentInfo {
+  final String id;
   final String cardNumber;
   final String cardHolderName;
   final DateTime expiryDate;
@@ -6,6 +7,7 @@ class PaymentInfo {
   final String cvv;
 
   PaymentInfo({
+    required this.id,
     required this.cardNumber,
     required this.cardHolderName,
     required this.expiryDate,

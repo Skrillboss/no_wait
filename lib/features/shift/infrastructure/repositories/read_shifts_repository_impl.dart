@@ -12,7 +12,7 @@ class ReadShiftsRepositoryImpl implements ReadShiftsRepository {
   Future<List<Shift>> read(String userId) async {
     final Map<String, dynamic> data = await apiClient.getShifts(userId);
 
-    final List<Shift> shifts = ShiftMapper.listFromJson(data['shifts'] as List<dynamic>);
+    final List<Shift> shifts = ShiftMapper.listFromJson(data['shifts'] as List<Map<String, dynamic>>);
 
     return shifts;
   }

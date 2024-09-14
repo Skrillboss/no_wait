@@ -1,11 +1,11 @@
 import '../../domain/auth_user_result.dart';
 import '../../domain/entities/user.dart';
 import '../../domain/repositories/auth_user_repository.dart';
-import '../data_providers/api/auth_user_api_client.dart';
+import '../data_providers/demo/auth_user_demo_client.dart';
 import '../mappers/user_mapper.dart';
 
 class AuthUserRepositoryImpl implements AuthUserRepository {
-  final AuthUserApiClient apiClient;
+  final AuthUserDemoClient apiClient;
 
   AuthUserRepositoryImpl({required this.apiClient});
 

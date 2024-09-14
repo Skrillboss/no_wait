@@ -1,7 +1,7 @@
 import '../../../../business/domain/entities/business.dart';
 import '../../../../paymentInfo/domain/entities/payment_info.dart';
 
-class RegisterDemoClient {
+class RegisterUserDemoClient {
   Future<Map<String, dynamic>> registerUser(
       String name,
       String nickName,

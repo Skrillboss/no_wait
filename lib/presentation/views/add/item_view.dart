@@ -98,7 +98,7 @@ class _ItemViewState extends State<ItemView> {
                       itemId: item!.id,
                       peopleInShift: peopleInShift);
 
-                  userProvider.getUser!.shifts.add(shiftCreated);
+                  userProvider.getUser!.shiftList.add(shiftCreated);
                   /**** En la que si el proceso es exitoso, mostrara una animacion de confirmacion en caso contrario mostrara una pantalla estatica de error ****/
 
                   bottomNavigationBarProvider.setPos = 1;

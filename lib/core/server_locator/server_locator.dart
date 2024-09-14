@@ -70,7 +70,7 @@ void setupServiceLocator() {
   sl.registerLazySingleton<AuthUserApiClient>(() => AuthUserApiClient());
 
   // Registering the AuthUserRepository
-  sl.registerLazySingleton<AuthUserRepository>(() => AuthUserRepositoryImpl(apiClient: sl<AuthUserApiClient>()));
+  sl.registerLazySingleton<AuthUserRepository>(() => AuthUserRepositoryImpl(apiClient: sl<AuthUserDemoClient>()));
 
   /* ************  LOGIN REFRESH TOKEN  ************/
   /* ******** USE CASE ******** */
@@ -94,13 +94,13 @@ void setupServiceLocator() {
   sl.registerLazySingleton<RegisterUser>(() => RegisterUser(sl<RegisterUserRepository>()));
 
   // Registering the RegisterUserDemoClient DEMO
-  sl.registerLazySingleton<RegisterDemoClient>(() => RegisterDemoClient());
+  sl.registerLazySingleton<RegisterUserDemoClient>(() => RegisterUserDemoClient());
 
   // Registering the RegisterUserApiClient API
   sl.registerLazySingleton<RegisterUserApiClient>(() => RegisterUserApiClient());
 
   // Registering the RegisterUserRepository
-  sl.registerLazySingleton<RegisterUserRepository>(() => RegisterUserRepositoryImpl(apiClient: sl<RegisterUserApiClient>()));
+  sl.registerLazySingleton<RegisterUserRepository>(() => RegisterUserRepositoryImpl(apiClient: sl<RegisterUserDemoClient>()));
 
   /* ************************************************************************ */
   /* ********************************  Item  ******************************** */

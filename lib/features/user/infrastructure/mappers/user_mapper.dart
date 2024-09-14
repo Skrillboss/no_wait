@@ -11,14 +11,16 @@ class UserMapper {
       nickName: json['nickName'],
       email: json['email'],
       phoneNumber: json['phoneNumber'],
-      paymentInfo: json['paymentInfo'] != null
-          ? PaymentInfoMapper.fromJson(json['paymentInfo'])
-          : null,
+      paymentInfoList: json['paymentInfoList'] != null
+          ? PaymentInfoMapper.listFromJson(
+              json['paymentInfoList'] as List<dynamic>)
+          : [],
       business: json['business'] != null
           ? BusinessMapper.fromJson(json['business'])
           : null,
-      shifts: json['shifts'] != null
-          ? ShiftMapper.listFromJson(json['shifts'] as List<dynamic>)
+      shiftList: json['shifts'] != null
+          ? ShiftMapper.listFromJson(
+              json['shifts'] as List<dynamic>)
           : [],
       userRole: UserRole.values
           .firstWhere((e) => e.toString().split('.').last == json['userRole']),
@@ -32,10 +34,11 @@ class UserMapper {
       'nickName': user.nickName,
       'email': user.email,
       'phoneNumber': user.phoneNumber,
-      'paymentInfo': user.paymentInfo != null
-          ? PaymentInfoMapper.toJson(user.paymentInfo!)
+      'paymentInfoList': user.paymentInfoList.isNotEmpty
+          ? PaymentInfoMapper.listToJson(user.paymentInfoList)
           : null,
-      'shifts': ShiftMapper.listToJson(user.shifts),
+      'shifts':
+          user.shiftList.isNotEmpty ? ShiftMapper.listToJson(user.shiftList) : null,
       'userRole': user.userRole.toString().split('.').last
     };
   }

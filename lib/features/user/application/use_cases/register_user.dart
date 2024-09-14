@@ -14,6 +14,7 @@ class RegisterUser {
     required String email,
     required String phoneNumber,
     required String password,
+    required String userRole,
     PaymentInfo? paymentInfo,
     Business? business,
   }) async {
@@ -23,6 +24,7 @@ class RegisterUser {
       email: email,
       phoneNumber: phoneNumber,
       password: password,
+      userRole: userRole,
       paymentInfo: paymentInfo,
       business: business,
     );

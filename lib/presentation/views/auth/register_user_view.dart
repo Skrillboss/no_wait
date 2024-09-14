@@ -25,6 +25,7 @@ class _RegisterUserViewState extends State<RegisterUserView> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _passwordRepeatController =
       TextEditingController();
+  final TextEditingController _userRoleController = TextEditingController();
 
   final RegisterUser registerUser = GetIt.instance<RegisterUser>();
   bool isLoading = false;
@@ -46,6 +47,7 @@ class _RegisterUserViewState extends State<RegisterUserView> {
         email: _emailController.text,
         phoneNumber: _phoneNumberController.text,
         password: _passwordController.text,
+        userRole: _userRoleController.text,
       );
       setState(() {
         isLoading = false;
