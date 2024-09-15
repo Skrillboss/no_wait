@@ -8,7 +8,7 @@ class RegisterUserDTO {
   final String phoneNumber;
   final String password;
   final String userRole;
-  final List<RegisterPaymentInfoDTO> paymentInfoList; // Lista de PaymentInfo
+  final List<RegisterPaymentInfoDTO?> paymentInfoList; // Lista de PaymentInfo
   final RegisterBusinessDTO? business; // Objeto Business (opcional)
 
   RegisterUserDTO({
@@ -40,7 +40,7 @@ class RegisterUserDTO {
       'phoneNumber': phoneNumber,
       'password': password,
       'userRole': userRole,
-      'paymentInfo': paymentInfoList.map((i) => i.toJson()).toList(),
+      'paymentInfo': paymentInfoList.isNotEmpty ? paymentInfoList.map((i) => i!.toJson()).toList(): [],
       'business': business?.toJson(),
     };
   }

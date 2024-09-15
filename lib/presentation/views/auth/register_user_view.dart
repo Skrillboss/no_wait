@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -69,6 +70,7 @@ class _RegisterUserViewState extends State<RegisterUserView> {
       setState(() {
         isLoading = true;
       });
+      User? user;
       RegisterPaymentInfoDTO registerPaymentInfoDTO = RegisterPaymentInfoDTO(
           cardNumber: _cardNumberController.text,
           cardHolderName: _cardHolderNameController.text,
@@ -93,17 +95,24 @@ class _RegisterUserViewState extends State<RegisterUserView> {
         paymentInfoList: [registerPaymentInfoDTO],
         business: registerBusinessDTO,
       );
-      final user = await registerUser.call(registerUserDTO: registerUserDTO);
-      setState(() {
-        isLoading = false;
-      });
-      changeView(context, const LoginUserView());
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Bienvenido a NoWait ${user.nickName}'),
-          duration: const Duration(seconds: 5),
-        ),
-      );
+      try {
+        user = await registerUser.call(registerUserDTO: registerUserDTO);
+        changeView(context, const LoginUserView());
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Bienvenido a NoWait ${user.nickName}'),
+            duration: const Duration(seconds: 5),
+          ),
+        );
+      } catch (e) {
+        print('========================HA OCURRIDO EL SIGUIENTE ERROR: $e');
+      } finally {
+        if (mounted) {
+          setState(() {
+            isLoading = false;
+          });
+        }
+      }
     }
   }
 
@@ -414,6 +423,9 @@ class _RegisterUserViewState extends State<RegisterUserView> {
           XFile? imageXFile =
               await picker.pickImage(source: ImageSource.gallery);
           if (imageXFile != null) {
+            File imageFile = File(imageXFile.path);
+            List<int> imageBytes = await imageFile.readAsBytes();
+            imageBase65 = base64Encode(imageBytes);
             setState(() {
               image = Image.file(File(imageXFile.path));
             });

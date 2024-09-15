@@ -1,12 +1,15 @@
+import 'package:intl/intl.dart';
+
 import '../../domain/entities/payment_info.dart';
 
 class PaymentInfoMapper {
   static PaymentInfo fromJson(Map<String, dynamic> json) {
+    DateFormat dateFormat = DateFormat('MM/yyyy');
     return PaymentInfo(
       id: json['paymentInfoId'],
       cardNumber: json['cardNumber'],
       cardHolderName: json['cardHolderName'],
-      expiryDate: DateTime.parse(json['expiryDate']),
+      expiryDate: dateFormat.parse(json['expiryDate']),
       // Formato ISO 8601
       cardType: json['cardType'],
       cvv: json['cvv'],
