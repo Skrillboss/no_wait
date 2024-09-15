@@ -1,32 +1,45 @@
-import '../../../../business/domain/entities/business.dart';
-import '../../../../paymentInfo/domain/entities/payment_info.dart';
+import '../../../application/dto/RegisterUserDTO.dart';
 
 class RegisterUserDemoClient {
   Future<Map<String, dynamic>> registerUser(
-      String name,
-      String nickName,
-      String email,
-      String phoneNumber,
-      String password,
-      PaymentInfo? paymentInfo,
-      Business? business) async {
+      RegisterUserDTO registerUserDTO) async {
+
+    List<Map<String, dynamic>> paymentInfoList = registerUserDTO.paymentInfoList.map((paymentInfo) {
+      return {
+        'paymentInfoId': '12345', // Puedes generar un ID único o usar uno real
+        'cardNumber': paymentInfo.cardNumber,
+        'cardHolderName': paymentInfo.cardHolderName,
+        'expiryDate': paymentInfo.expiryDate,
+        'cardType': paymentInfo.cardType,
+        'cvv': paymentInfo.cvv,
+      };
+    }).toList();
+
+    // Crear el objeto de respuesta
     final Map<String, dynamic> response = {
-      'user': {
-        'userId': '12345',
-        'name': name,
-        'nickName': nickName,
-        'email': email,
-        'phoneNumber': phoneNumber,
-        if (paymentInfo != null)
-          'paymentInfo': {
-            'cardNumber': paymentInfo.cardNumber,
-            'cardHolderName': paymentInfo.cardHolderName,
-            'expiryDate': paymentInfo.expiryDate,
-            'cardType': paymentInfo.cardType,
-            'cvv': paymentInfo.cvv,
+      'userDTO': {
+        'userId': '12345', // Puedes generar un ID único o usar uno real
+        'name': registerUserDTO.name,
+        'nickName': registerUserDTO.nickName,
+        'email': registerUserDTO.email,
+        'phoneNumber': registerUserDTO.phoneNumber,
+        'userRole': registerUserDTO.userRole,
+        'paymentInfo': paymentInfoList, // Incluir la lista completa de PaymentInfo
+        if (registerUserDTO.business != null)
+          'business': {
+            'businessId': '12345', // Puedes generar un ID único o usar uno real
+            'cif': registerUserDTO.business!.cif,
+            'name': registerUserDTO.business!.name,
+            'imageUrl': 'urlExample.com', // Cambia esto según tus necesidades
+            'phone': registerUserDTO.business!.phone,
+            'address': registerUserDTO.business!.address,
+            'email': registerUserDTO.business!.email,
+            'createdAt': DateTime.now().toString(),
           }
       },
     };
+
+    // Simula una espera para la solicitud
     await Future.delayed(const Duration(seconds: 1));
     return response;
   }

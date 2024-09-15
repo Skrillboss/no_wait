@@ -12,7 +12,7 @@ class BusinessMapper {
       address: json['address'],
       email: json['email'],
       createdAt: DateTime.parse(json['createdAt']),
-      items: json['items'] != null ? ItemMapper.listFromJson(json['items'] as List<dynamic>) : [],
+      itemList: json['items'] != null ? ItemMapper.listFromJson(json['items'] as List<dynamic>) : [],
     );
   }
 
@@ -26,7 +26,7 @@ class BusinessMapper {
       'address': business.address,
       'email': business.email,
       'createdAt': business.createdAt.toIso8601String(),
-      'items': ItemMapper.listToJson(business.items),
+      'items': ItemMapper.listToJson(business.itemList),
     };
   }
 }

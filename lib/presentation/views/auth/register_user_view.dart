@@ -1,7 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_turno/features/business/application/dto/RegisterBusinessDTO.dart';
+import 'package:todo_turno/features/paymentInfo/application/dto/RegisterPaymentInfoDTO.dart';
+import '../../../features/user/application/dto/RegisterUserDTO.dart';
 import '../../../features/user/application/use_cases/register_user.dart';
+import '../../../features/user/domain/entities/user.dart';
 import '../../provider/views_list_provider/views_list_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../widgets/custom_input_widget.dart';
@@ -26,16 +33,30 @@ class _RegisterUserViewState extends State<RegisterUserView> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _passwordRepeatController =
       TextEditingController();
-  final TextEditingController _userRoleController = TextEditingController();
+  UserRole userRoleView = UserRole.REGULAR_USER;
 
   //PaymentInfo
-  final TextEditingController _cardHolderNumberController =
-      TextEditingController();
+  final TextEditingController _cardNumberController = TextEditingController();
   final TextEditingController _cardHolderNameController =
+      TextEditingController();
+  final TextEditingController _expiryDateController = TextEditingController();
+  final TextEditingController _cardTypeController = TextEditingController();
+  final TextEditingController _cvvController = TextEditingController();
+
+  //Business
+  final TextEditingController _cifBusinessController = TextEditingController();
+  final TextEditingController _nameBusinessController = TextEditingController();
+  final TextEditingController _phoneBusinessController =
+      TextEditingController();
+  final TextEditingController _addressBusinessController =
+      TextEditingController();
+  final TextEditingController _emailBusinessController =
       TextEditingController();
 
   final RegisterUser registerUser = GetIt.instance<RegisterUser>();
   bool isLoading = false;
+  Image? image;
+  String? imageBase65;
 
   void changeView(BuildContext context, Widget view) {
     final ViewsListProvider viewsListProvider =
@@ -48,14 +69,31 @@ class _RegisterUserViewState extends State<RegisterUserView> {
       setState(() {
         isLoading = true;
       });
-      final user = await registerUser.call(
+      RegisterPaymentInfoDTO registerPaymentInfoDTO = RegisterPaymentInfoDTO(
+          cardNumber: _cardNumberController.text,
+          cardHolderName: _cardHolderNameController.text,
+          expiryDate: _expiryDateController.text,
+          cardType: _cardTypeController.text,
+          cvv: _cvvController.text);
+      RegisterBusinessDTO registerBusinessDTO = RegisterBusinessDTO(
+        cif: _cifBusinessController.text,
+        name: _nameBusinessController.text,
+        imageBase64: imageBase65,
+        phone: _phoneBusinessController.text,
+        address: _addressBusinessController.text,
+        email: _emailBusinessController.text,
+      );
+      RegisterUserDTO registerUserDTO = RegisterUserDTO(
         name: _nameController.text,
         nickName: _nickNameController.text,
         email: _emailController.text,
         phoneNumber: _phoneNumberController.text,
         password: _passwordController.text,
-        userRole: _userRoleController.text,
+        userRole: userRoleView.name,
+        paymentInfoList: [registerPaymentInfoDTO],
+        business: registerBusinessDTO,
       );
+      final user = await registerUser.call(registerUserDTO: registerUserDTO);
       setState(() {
         isLoading = false;
       });
@@ -94,7 +132,8 @@ class _RegisterUserViewState extends State<RegisterUserView> {
             ),
           ),
           child: Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20, top: 55, bottom: 55),
+            padding:
+                const EdgeInsets.only(left: 20, right: 20, top: 55, bottom: 55),
             child: SingleChildScrollView(
               child: Form(
                 key: _registerFormKey,
@@ -113,6 +152,22 @@ class _RegisterUserViewState extends State<RegisterUserView> {
 
   Widget _buildColumnForm(BuildContext context) {
     List<Widget> inputs = [
+      SegmentedButton(
+        segments: const <ButtonSegment<UserRole>>[
+          ButtonSegment<UserRole>(
+              value: UserRole.REGULAR_USER, icon: Icon(Icons.person)),
+          ButtonSegment<UserRole>(
+              value: UserRole.MANAGER, icon: Icon(Icons.badge)),
+          ButtonSegment<UserRole>(
+              value: UserRole.ADMIN, icon: Icon(Icons.admin_panel_settings))
+        ],
+        selected: <UserRole>{userRoleView},
+        onSelectionChanged: (Set<UserRole> newSelection) {
+          setState(() {
+            userRoleView = newSelection.first;
+          });
+        },
+      ),
       CustomInputWidget(
         hintText: AppLocalizations.of(context)!.name,
         icon: Icons.person,
@@ -223,13 +278,12 @@ class _RegisterUserViewState extends State<RegisterUserView> {
         },
       ),
     ];
-
     List<Widget> paymentInfoInputs = [
       CustomInputWidget(
         hintText: 'Numero de tarjeta',
         icon: Icons.numbers,
         keyboardType: TextInputType.number,
-        controller: _cardHolderNumberController,
+        controller: _cardNumberController,
         validator: (String? value) {
           if (value == null || value.isEmpty) {
             return 'Este campo es obligatorio';
@@ -253,29 +307,145 @@ class _RegisterUserViewState extends State<RegisterUserView> {
         hintText: 'Fecha de vencimiento',
         icon: Icons.date_range_sharp,
         keyboardType: TextInputType.datetime,
-        controller: _cardHolderNameController,
+        controller: _expiryDateController,
         validator: (String? value) {
           if (value == null || value.isEmpty) {
             return 'Este campo es obligatorio';
           }
           return null;
         },
-      )
+      ),
+      CustomInputWidget(
+        hintText: 'Tipo de tarjeta',
+        icon: Icons.credit_card_outlined,
+        keyboardType: TextInputType.name,
+        controller: _cardTypeController,
+        validator: (String? value) {
+          if (value == null || value.isEmpty) {
+            return 'Este campo es obligatorio';
+          }
+          return null;
+        },
+      ),
+      CustomInputWidget(
+        hintText: 'Cvv',
+        icon: Icons.security,
+        keyboardType: TextInputType.number,
+        controller: _cvvController,
+        validator: (String? value) {
+          if (value == null || value.isEmpty) {
+            return 'Este campo es obligatorio';
+          }
+          return null;
+        },
+      ),
     ];
 
     List<Widget> businessInputs = [
       CustomInputWidget(
         hintText: 'Cif',
-        icon: Icons.business,
+        icon: Icons.add_business,
         keyboardType: const TextInputType.numberWithOptions(),
-        controller: _cardHolderNameController,
+        controller: _cifBusinessController,
         validator: (String? value) {
           if (value == null || value.isEmpty) {
             return 'Este campo es obligatorio';
           }
           return null;
         },
-      )
+      ),
+      CustomInputWidget(
+        hintText: 'Nombre del negocio',
+        icon: Icons.business,
+        keyboardType: TextInputType.name,
+        controller: _nameBusinessController,
+        validator: (String? value) {
+          if (value == null || value.isEmpty) {
+            return 'Este campo es obligatorio';
+          }
+          return null;
+        },
+      ),
+      CustomInputWidget(
+        hintText: 'Teléfono del negocio',
+        icon: Icons.phone,
+        keyboardType: TextInputType.phone,
+        controller: _phoneBusinessController,
+        validator: (String? value) {
+          if (value == null || value.isEmpty) {
+            return 'Este campo es obligatorio';
+          }
+          if (value.length != 9) {
+            return 'El número debe tener 9 dígitos';
+          }
+          if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
+            return 'El número debe contener solo dígitos';
+          }
+          return null;
+        },
+      ),
+      CustomInputWidget(
+        hintText: 'Dirección del negocio',
+        icon: Icons.location_on,
+        keyboardType: TextInputType.streetAddress,
+        controller: _addressBusinessController,
+        validator: (String? value) {
+          if (value == null || value.isEmpty) {
+            return 'Este campo es obligatorio';
+          }
+          return null;
+        },
+      ),
+      CustomInputWidget(
+        hintText: 'Correo Electronico del negocio',
+        icon: Icons.email,
+        keyboardType: TextInputType.emailAddress,
+        controller: _emailBusinessController,
+        validator: (String? value) {
+          if (value == null || value.isEmpty) {
+            return 'Este campo es obligatorio';
+          }
+          return null;
+        },
+      ),
+      ElevatedButton(
+        onPressed: () async {
+          final ImagePicker picker = ImagePicker();
+          XFile? imageXFile =
+              await picker.pickImage(source: ImageSource.gallery);
+          if (imageXFile != null) {
+            setState(() {
+              image = Image.file(File(imageXFile.path));
+            });
+          } else {
+            print('No se seleccionó ninguna imagen');
+          }
+        },
+        style: ElevatedButton.styleFrom(
+          fixedSize: const Size.fromWidth(500),
+          foregroundColor: Colors.white,
+          backgroundColor: Colors.blue,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(
+                top: Radius.circular(10), bottom: Radius.circular(0)),
+          ),
+          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
+          elevation: 5, // Sombra del botón
+        ),
+        child: isLoading
+            ? const CircularProgressIndicator()
+            : const Text(
+                'Agregar imagen',
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+      ),
+      Container(
+        child: image,
+      ),
     ];
 
     List<Widget> additionalInputs = [
@@ -301,7 +471,8 @@ class _RegisterUserViewState extends State<RegisterUserView> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             widgetSpaceBuilder(inputs, 20),
-            widgetSpaceBuilder(additionalInputs, 20),
+            if (userRoleView != UserRole.REGULAR_USER)
+              widgetSpaceBuilder(additionalInputs, 20),
             const SizedBox(height: 20), // Espacio antes del botón
             ElevatedButton(
               onPressed: () => _registerUser(context),

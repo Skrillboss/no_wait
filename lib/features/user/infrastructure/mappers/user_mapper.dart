@@ -6,7 +6,7 @@ import '../../domain/entities/user.dart';
 class UserMapper {
   static User fromJson(Map<String, dynamic> json) {
     return User(
-      userId: json['id'],
+      userId: json['userId'],
       name: json['name'],
       nickName: json['nickName'],
       email: json['email'],
