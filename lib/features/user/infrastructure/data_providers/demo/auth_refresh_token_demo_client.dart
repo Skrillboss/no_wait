@@ -6,7 +6,7 @@ class AuthRefreshTokenDemoClient extends AuthRefreshTokenClientRepository{
   Future<Map<String, dynamic>> login(String refreshToken) async {
     final Map<String, dynamic> response = {
       'user': {
-        'id': '12345',
+        'userId': '12345',
         'name': 'Luis',
         'nickName': 'Luisillo',
         'email': 'heredialuis20@gmail.com',
@@ -16,17 +16,15 @@ class AuthRefreshTokenDemoClient extends AuthRefreshTokenClientRepository{
           'paymentInfoId': '12345',
           "cardNumber": "1234567812345678",
           "cardHolderName": "Cristina Perez",
-          "expiryDate": "2024-12-31",
+          "expiryDate": "12/2024",
           "cardType": "Visa",
-          "cvv": "123"
         },
           {
             'paymentInfoId': '67890',
             "cardNumber": "1234567812345678",
             "cardHolderName": "Cristina Perez",
-            "expiryDate": "2024-12-31",
+            "expiryDate": "12/2024",
             "cardType": "Visa",
-            "cvv": "123"
           }],
         "business": {
           'businessId': '12345',
