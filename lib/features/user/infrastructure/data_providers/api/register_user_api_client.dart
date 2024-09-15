@@ -2,22 +2,23 @@ import 'dart:convert';
 import 'package:todo_turno/core/custom_exception/custom_exception.dart';
 import '../../../../../core/request_handler/request_handler.dart';
 import '../../../application/dto/RegisterUserDTO.dart';
+import '../repositories/register_user_client_repository.dart';
 
-class RegisterUserApiClient {
+class RegisterUserApiClient extends RegisterUserClientRepository {
   final RequestHandler requestHandler = RequestHandler();
 
+  @override
   Future<Map<String, dynamic>> registerUser(
     RegisterUserDTO registerUserDTO,
   ) async {
-    try{
+    try {
       final response = await requestHandler.postRequest(
           endPoint: '/users/register',
           dataDecode: registerUserDTO.toJson(),
           errorCode: 2000,
-        useToken: false
-      );
+          useToken: false);
       return jsonDecode(response.body);
-    } on CustomException{
+    } on CustomException {
       rethrow;
     }
   }

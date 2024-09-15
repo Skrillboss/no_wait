@@ -1,4 +1,6 @@
-class AuthUserDemoClient {
+import '../repositories/auth_user_client_repository.dart';
+
+class AuthUserDemoClient extends AuthUserClientRepository{
   Future<Map<String, dynamic>> login(String username, String password) async {
     final Map<String, dynamic> response = {
       'userDTO': {

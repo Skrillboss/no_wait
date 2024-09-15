@@ -1,4 +1,8 @@
-class AuthRefreshTokenDemoClient {
+import '../repositories/auth_refresh_token_client_repository.dart';
+
+class AuthRefreshTokenDemoClient extends AuthRefreshTokenClientRepository{
+
+  @override
   Future<Map<String, dynamic>> login(String refreshToken) async {
     final Map<String, dynamic> response = {
       'user': {

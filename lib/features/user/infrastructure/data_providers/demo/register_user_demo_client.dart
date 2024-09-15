@@ -1,32 +1,38 @@
 import '../../../application/dto/RegisterUserDTO.dart';
+import '../repositories/register_user_client_repository.dart';
 
-class RegisterUserDemoClient {
+class RegisterUserDemoClient extends RegisterUserClientRepository {
+
+  @override
   Future<Map<String, dynamic>> registerUser(
       RegisterUserDTO registerUserDTO) async {
-
-    List<Map<String, dynamic>> paymentInfoList = registerUserDTO.paymentInfoList.isNotEmpty ?
-    registerUserDTO.paymentInfoList.map((paymentInfo) {
-      return {
-        'paymentInfoId': '12345', // Puedes generar un ID único o usar uno real
-        'cardNumber': paymentInfo!.cardNumber,
-        'cardHolderName': paymentInfo.cardHolderName,
-        'expiryDate': paymentInfo.expiryDate,
-        'cardType': paymentInfo.cardType,
-        'cvv': paymentInfo.cvv,
-      };
-    }).toList():
-    [];
+    List<Map<String, dynamic>> paymentInfoList =
+        registerUserDTO.paymentInfoList.isNotEmpty
+            ? registerUserDTO.paymentInfoList.map((paymentInfo) {
+                return {
+                  'paymentInfoId':
+                      '12345', // Puedes generar un ID único o usar uno real
+                  'cardNumber': paymentInfo!.cardNumber,
+                  'cardHolderName': paymentInfo.cardHolderName,
+                  'expiryDate': paymentInfo.expiryDate,
+                  'cardType': paymentInfo.cardType,
+                  'cvv': paymentInfo.cvv,
+                };
+              }).toList()
+            : [];
 
     // Crear el objeto de respuesta
     final Map<String, dynamic> response = {
       'userDTO': {
-        'userId': '12345', // Puedes generar un ID único o usar uno real
+        'userId': '12345',
+        // Puedes generar un ID único o usar uno real
         'name': registerUserDTO.name,
         'nickName': registerUserDTO.nickName,
         'email': registerUserDTO.email,
         'phoneNumber': registerUserDTO.phoneNumber,
         'userRole': registerUserDTO.userRole,
-        'paymentInfoList': paymentInfoList, // Incluir la lista completa de PaymentInfo
+        'paymentInfoList': paymentInfoList,
+        // Incluir la lista completa de PaymentInfo
         if (registerUserDTO.business != null)
           'business': {
             'businessId': '12345', // Puedes generar un ID único o usar uno real
