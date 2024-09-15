@@ -10,9 +10,6 @@ class PaymentInfoMapper {
       cardNumber: json['cardNumber'],
       cardHolderName: json['cardHolderName'],
       expiryDate: dateFormat.parse(json['expiryDate']),
-      // Formato ISO 8601
-      cardType: json['cardType'],
-      cvv: json['cvv'],
     );
   }
 
@@ -28,9 +25,6 @@ class PaymentInfoMapper {
       'cardNumber': paymentInfo.cardNumber,
       'cardHolderName': paymentInfo.cardHolderName,
       'expiryDate': paymentInfo.expiryDate.toIso8601String(),
-      // Convertir fecha a ISO 8601
-      'cardType': paymentInfo.cardType,
-      'cvv': paymentInfo.cvv,
     };
   }
 
