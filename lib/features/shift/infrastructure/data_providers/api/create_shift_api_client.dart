@@ -10,7 +10,7 @@ class CreateShiftApiClient {
     try {
       final response = await requestHandler.postRequest(
           endPoint: '/creteShift',
-          dataDecode: {'userId': userId, 'itemId': itemId, 'peopleInShift': peopleInShift},
+          dataDecode: {'itemId': itemId, 'peopleInShift': peopleInShift},
           errorCode: 2000);
       return jsonDecode(response.body);
     } on CustomException {

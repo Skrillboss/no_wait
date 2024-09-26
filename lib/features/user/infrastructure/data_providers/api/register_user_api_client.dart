@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:todo_turno/core/custom_exception/custom_exception.dart';
 import '../../../../../core/request_handler/request_handler.dart';
-import '../../../application/dto/RegisterUserDTO.dart';
+import '../../../application/dto/register_user_DTO.dart';
 import '../repositories/register_user_client_repository.dart';
 
 class RegisterUserApiClient extends RegisterUserClientRepository {
@@ -13,7 +13,7 @@ class RegisterUserApiClient extends RegisterUserClientRepository {
   ) async {
     try {
       final response = await requestHandler.postRequest(
-          endPoint: '/users/register',
+          endPoint: '/api/register',
           dataDecode: registerUserDTO.toJson(),
           errorCode: 2000,
           useToken: false);

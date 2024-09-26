@@ -4,7 +4,7 @@ import '../../domain/entities/business.dart';
 class BusinessMapper {
   static Business fromJson(Map<String, dynamic> json) {
     return Business(
-      id: json['businessId'],
+      id: json['id'],
       cif: json['cif'],
       name: json['name'],
       imageUrl: json['imageUrl'],

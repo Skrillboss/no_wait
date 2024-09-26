@@ -1,5 +1,7 @@
-import '../../../business/application/dto/RegisterBusinessDTO.dart';
-import '../../../paymentInfo/application/dto/RegisterPaymentInfoDTO.dart';
+import 'package:todo_turno/features/role/application/dto/register_role_DTO.dart';
+
+import '../../../business/application/dto/register_business_DTO.dart';
+import '../../../paymentInfo/application/dto/register_payment_info_DTO.dart';
 
 class RegisterUserDTO {
   final String name;
@@ -7,7 +9,7 @@ class RegisterUserDTO {
   final String email;
   final String phoneNumber;
   final String password;
-  final String userRole;
+  final List<RegisterRoleDTO> userRole;
   final List<RegisterPaymentInfoDTO?> paymentInfoList; // Lista de PaymentInfo
   final RegisterBusinessDTO? business; // Objeto Business (opcional)
 
@@ -39,9 +41,12 @@ class RegisterUserDTO {
       'email': email,
       'phoneNumber': phoneNumber,
       'password': password,
-      'userRole': userRole,
-      'paymentInfo': paymentInfoList.isNotEmpty ? paymentInfoList.map((i) => i!.toJson()).toList(): [],
-      'business': business?.toJson(),
+      'roleRequestDTOList': userRole.map((i) => i.toJson()).toList(),
+      'paymentInfoRequestDTOList': paymentInfoList
+          .where((i) => i != null)
+          .map((i) => i!.toJson())
+          .toList(),
+      'businessRequestDTO': business?.toJson(),
     };
   }
 }

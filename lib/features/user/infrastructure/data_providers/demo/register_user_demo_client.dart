@@ -1,4 +1,4 @@
-import '../../../application/dto/RegisterUserDTO.dart';
+import '../../../application/dto/register_user_DTO.dart';
 import '../repositories/register_user_client_repository.dart';
 
 class RegisterUserDemoClient extends RegisterUserClientRepository {

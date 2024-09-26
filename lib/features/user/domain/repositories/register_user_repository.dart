@@ -1,4 +1,4 @@
-import '../../application/dto/RegisterUserDTO.dart';
+import '../../application/dto/register_user_DTO.dart';
 import '../entities/user.dart';
 
 abstract class RegisterUserRepository {

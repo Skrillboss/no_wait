@@ -5,9 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_turno/features/business/application/dto/RegisterBusinessDTO.dart';
-import 'package:todo_turno/features/paymentInfo/application/dto/RegisterPaymentInfoDTO.dart';
-import '../../../features/user/application/dto/RegisterUserDTO.dart';
+import 'package:todo_turno/features/business/application/dto/register_business_DTO.dart';
+import 'package:todo_turno/features/paymentInfo/application/dto/register_payment_info_DTO.dart';
+import 'package:todo_turno/features/role/application/dto/register_role_DTO.dart';
+import '../../../features/user/application/dto/register_user_DTO.dart';
 import '../../../features/user/application/use_cases/register_user.dart';
 import '../../../features/user/domain/entities/user.dart';
 import '../../provider/views_list_provider/views_list_provider.dart';
@@ -34,7 +35,7 @@ class _RegisterUserViewState extends State<RegisterUserView> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _passwordRepeatController =
       TextEditingController();
-  UserRole userRoleView = UserRole.REGULAR_USER;
+  UserRole userRoleView = UserRole.USER;
 
   //PaymentInfo
   final TextEditingController _cardNumberController = TextEditingController();
@@ -71,27 +72,35 @@ class _RegisterUserViewState extends State<RegisterUserView> {
         isLoading = true;
       });
       User? user;
-      RegisterPaymentInfoDTO registerPaymentInfoDTO = RegisterPaymentInfoDTO(
-          cardNumber: _cardNumberController.text,
-          cardHolderName: _cardHolderNameController.text,
-          expiryDate: _expiryDateController.text,
-          cardType: _cardTypeController.text,
-          cvv: _cvvController.text);
-      RegisterBusinessDTO registerBusinessDTO = RegisterBusinessDTO(
-        cif: _cifBusinessController.text,
-        name: _nameBusinessController.text,
-        imageBase64: imageBase65,
-        phone: _phoneBusinessController.text,
-        address: _addressBusinessController.text,
-        email: _emailBusinessController.text,
+      RegisterPaymentInfoDTO? registerPaymentInfoDTO;
+      RegisterBusinessDTO? registerBusinessDTO;
+      RegisterRoleDTO registerRoleDTO = RegisterRoleDTO(
+          name: userRoleView.name
       );
+
+      if(userRoleView != UserRole.USER){
+        registerPaymentInfoDTO = RegisterPaymentInfoDTO(
+            cardNumber: _cardNumberController.text,
+            cardHolderName: _cardHolderNameController.text,
+            expiryDate: _expiryDateController.text,
+            cardType: _cardTypeController.text,
+            cvv: _cvvController.text);
+        registerBusinessDTO = RegisterBusinessDTO(
+          cif: _cifBusinessController.text,
+          name: _nameBusinessController.text,
+          imageBase64: imageBase65,
+          phone: _phoneBusinessController.text,
+          address: _addressBusinessController.text,
+          email: _emailBusinessController.text,
+        );
+      }
       RegisterUserDTO registerUserDTO = RegisterUserDTO(
         name: _nameController.text,
         nickName: _nickNameController.text,
         email: _emailController.text,
         phoneNumber: _phoneNumberController.text,
         password: _passwordController.text,
-        userRole: userRoleView.name,
+        userRole: [registerRoleDTO],
         paymentInfoList: [registerPaymentInfoDTO],
         business: registerBusinessDTO,
       );
@@ -164,7 +173,7 @@ class _RegisterUserViewState extends State<RegisterUserView> {
       SegmentedButton(
         segments: const <ButtonSegment<UserRole>>[
           ButtonSegment<UserRole>(
-              value: UserRole.REGULAR_USER, icon: Icon(Icons.person)),
+              value: UserRole.USER, icon: Icon(Icons.person)),
           ButtonSegment<UserRole>(
               value: UserRole.MANAGER, icon: Icon(Icons.badge)),
           ButtonSegment<UserRole>(
@@ -483,7 +492,7 @@ class _RegisterUserViewState extends State<RegisterUserView> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             widgetSpaceBuilder(inputs, 20),
-            if (userRoleView != UserRole.REGULAR_USER)
+            if (userRoleView != UserRole.USER)
               widgetSpaceBuilder(additionalInputs, 20),
             const SizedBox(height: 20), // Espacio antes del botón
             ElevatedButton(

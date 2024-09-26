@@ -100,7 +100,7 @@ void setupServiceLocator() {
   sl.registerLazySingleton<RegisterUserApiClient>(() => RegisterUserApiClient());
 
   // Registering the RegisterUserRepository
-  sl.registerLazySingleton<RegisterUserRepository>(() => RegisterUserRepositoryImpl(apiClient: sl<RegisterUserDemoClient>()));
+  sl.registerLazySingleton<RegisterUserRepository>(() => RegisterUserRepositoryImpl(apiClient: sl<RegisterUserApiClient>()));
 
   /* ************************************************************************ */
   /* ********************************  Item  ******************************** */

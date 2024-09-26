@@ -94,7 +94,6 @@ class _ItemViewState extends State<ItemView> {
                   /**** Este bloque de codigo lo tengo que encapsular en un flujo de pantallas sincrona****/
                   final Shift shiftCreated = await createShift
                       .call(
-                      userId: userProvider.getUser!.userId,
                       itemId: item!.id,
                       peopleInShift: peopleInShift);
 

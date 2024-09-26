@@ -1,6 +1,6 @@
 import '../../domain/entities/user.dart';
 import '../../domain/repositories/register_user_repository.dart';
-import '../dto/RegisterUserDTO.dart';
+import '../dto/register_user_DTO.dart';
 
 class RegisterUser {
   final RegisterUserRepository repository;

@@ -4,9 +4,9 @@ import '../../domain/entities/payment_info.dart';
 
 class PaymentInfoMapper {
   static PaymentInfo fromJson(Map<String, dynamic> json) {
-    DateFormat dateFormat = DateFormat('MM/yyyy');
+    DateFormat dateFormat = DateFormat('yyyy-MM-dd');
     return PaymentInfo(
-      id: json['paymentInfoId'],
+      id: json['id'],
       cardNumber: json['cardNumber'],
       cardHolderName: json['cardHolderName'],
       expiryDate: dateFormat.parse(json['expiryDate']),

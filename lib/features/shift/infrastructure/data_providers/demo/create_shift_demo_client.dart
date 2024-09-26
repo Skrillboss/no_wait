@@ -1,6 +1,5 @@
 class CreateShiftDemoClient {
-  Future<Map<String, dynamic>> createShift(
-      String userId, String itemId, int peopleInShift) async {
+  Future<Map<String, dynamic>> createShift(String itemId, int peopleInShift) async {
     final Map<String, dynamic> response = {
       'shift': {
         "shiftId": "1",

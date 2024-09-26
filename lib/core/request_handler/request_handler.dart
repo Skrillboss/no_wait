@@ -16,7 +16,7 @@ class RequestHandler {
   RequestHandler._internal();
 
   final http.Client httpClient = GetIt.instance<http.Client>();
-  final String baseApiUrl = 'https://c97f-85-61-254-238.ngrok-free.app';
+  final String baseApiUrl = 'https://f11f-85-61-254-238.ngrok-free.app';
   final JwtTokenManager _tokenManager = JwtTokenManager();
 
   /// ***************************************************************************
