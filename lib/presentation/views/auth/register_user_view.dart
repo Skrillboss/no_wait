@@ -1,13 +1,14 @@
-import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_turno/features/business/application/dto/register_business_DTO.dart';
+import 'package:todo_turno/features/image/application/use_cases/take_photo.dart';
+import 'package:todo_turno/features/image/domain/entities/image_data.dart';
 import 'package:todo_turno/features/paymentInfo/application/dto/register_payment_info_DTO.dart';
 import 'package:todo_turno/features/role/application/dto/register_role_DTO.dart';
+import '../../../features/image/application/use_cases/create_photo.dart';
 import '../../../features/user/application/dto/register_user_DTO.dart';
 import '../../../features/user/application/use_cases/register_user.dart';
 import '../../../features/user/domain/entities/user.dart';
@@ -56,9 +57,12 @@ class _RegisterUserViewState extends State<RegisterUserView> {
       TextEditingController();
 
   final RegisterUser registerUser = GetIt.instance<RegisterUser>();
+  final CreatePhoto createPhoto = GetIt.instance<CreatePhoto>();
+  final TakePhoto takePhoto = TakePhoto();
   bool isLoading = false;
+  late File imageFile;
+  late ImageData imageData;
   Image? image;
-  String? imageBase65;
 
   void changeView(BuildContext context, Widget view) {
     final ViewsListProvider viewsListProvider =
@@ -71,6 +75,17 @@ class _RegisterUserViewState extends State<RegisterUserView> {
       setState(() {
         isLoading = true;
       });
+
+      try{
+        imageData = await createPhoto.call(fileImage: imageFile);
+      }catch(e){
+        print('========================HA OCURRIDO EL SIGUIENTE ERROR: $e');
+        if (mounted) {
+          setState(() {
+            isLoading = false;
+          });
+        }
+      }
       User? user;
       RegisterPaymentInfoDTO? registerPaymentInfoDTO;
       RegisterBusinessDTO? registerBusinessDTO;
@@ -88,7 +103,7 @@ class _RegisterUserViewState extends State<RegisterUserView> {
         registerBusinessDTO = RegisterBusinessDTO(
           cif: _cifBusinessController.text,
           name: _nameBusinessController.text,
-          imageBase64: imageBase65,
+          imageUrl: imageData.displayUrl,
           phone: _phoneBusinessController.text,
           address: _addressBusinessController.text,
           email: _emailBusinessController.text,
@@ -428,19 +443,10 @@ class _RegisterUserViewState extends State<RegisterUserView> {
       ),
       ElevatedButton(
         onPressed: () async {
-          final ImagePicker picker = ImagePicker();
-          XFile? imageXFile =
-              await picker.pickImage(source: ImageSource.gallery);
-          if (imageXFile != null) {
-            File imageFile = File(imageXFile.path);
-            List<int> imageBytes = await imageFile.readAsBytes();
-            imageBase65 = base64Encode(imageBytes);
+          imageFile = await takePhoto.call(ImageSource.gallery);
             setState(() {
-              image = Image.file(File(imageXFile.path));
+              image = Image.file(imageFile);
             });
-          } else {
-            print('No se seleccionó ninguna imagen');
-          }
         },
         style: ElevatedButton.styleFrom(
           fixedSize: const Size.fromWidth(500),

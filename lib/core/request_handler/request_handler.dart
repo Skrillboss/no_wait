@@ -16,7 +16,7 @@ class RequestHandler {
   RequestHandler._internal();
 
   final http.Client httpClient = GetIt.instance<http.Client>();
-  final String baseApiUrl = 'https://f11f-85-61-254-238.ngrok-free.app';
+  final String baseNoWaitUrl = 'https://16ca-85-61-254-238.ngrok-free.app';
   final JwtTokenManager _tokenManager = JwtTokenManager();
 
   /// ***************************************************************************
@@ -78,7 +78,7 @@ class RequestHandler {
       final String? token = await _tokenManager.getToken();
       return await _requestHandler(() async {
         return await httpClient.get(
-          Uri.parse('$baseApiUrl$endPoint'),
+          Uri.parse('$baseNoWaitUrl$endPoint'),
           headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer $token',
@@ -97,22 +97,41 @@ class RequestHandler {
   ///***************************************************************************
 
   Future<Response> postRequest({
+    String? baseApiUrl,
     required String endPoint,
     required Object? dataDecode,
     required int errorCode,
+    bool isFormData = false, // Nuevo parámetro para controlar si es form-data
     bool useToken = true,
   }) async {
     try {
       return await _requestHandler(() async {
         final String? token = await _tokenManager.getToken();
-        return await httpClient.post(
-          Uri.parse('$baseApiUrl$endPoint'),
-          headers: {
-            'Content-Type': 'application/json',
+        final String baseUrl = baseApiUrl ?? baseNoWaitUrl;
+
+        if (isFormData && dataDecode is Map<String, String>) {
+          // if form-data
+          var request = http.MultipartRequest('POST', Uri.parse('$baseUrl$endPoint'));
+
+          request.headers.addAll({
             if (useToken && token != null) 'Authorization': 'Bearer $token',
-          },
-          body: jsonEncode(dataDecode),
-        );
+          });
+
+          request.fields.addAll(dataDecode);
+
+          var streamedResponse = await request.send();
+          return await http.Response.fromStream(streamedResponse);
+        } else {
+          // if JSON
+          return await httpClient.post(
+            Uri.parse('$baseUrl$endPoint'),
+            headers: {
+              'Content-Type': 'application/json',
+              if (useToken && token != null) 'Authorization': 'Bearer $token',
+            },
+            body: jsonEncode(dataDecode),
+          );
+        }
       });
     } on Exception catch (e) {
       throw CustomException(errorCode, e.toString());
@@ -120,6 +139,7 @@ class RequestHandler {
       throw CustomException(errorCode, e.toString());
     }
   }
+
 
   /// ***************************************************************************
   ///                                      DELETE                              *
@@ -133,7 +153,7 @@ class RequestHandler {
       final String? token = await _tokenManager.getToken();
       return _requestHandler(() async {
         return await httpClient.delete(
-          Uri.parse('$baseApiUrl$endPoint'),
+          Uri.parse('$baseNoWaitUrl$endPoint'),
           headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer $token',
