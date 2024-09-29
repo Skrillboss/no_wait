@@ -477,11 +477,23 @@ class _RegisterUserViewState extends State<RegisterUserView> {
 
     List<Widget> additionalInputs = [
       ExpansionTile(
-        title: Text('Información de pago'),
+        title: const Text('Información de pago'),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15), // Borde redondeado
+        ),
+        collapsedShape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10), // Borde redondeado cuando está colapsado
+        ),
         children: widgetSpaceBuilder(paymentInfoInputs, 20).children,
       ),
       ExpansionTile(
-        title: Text('Información de negocio'),
+        title: const Text('Información de negocio'),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15), // Borde redondeado
+        ),
+        collapsedShape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10), // Borde redondeado cuando está colapsado
+        ),
         children: widgetSpaceBuilder(businessInputs, 20).children,
       )
     ];
