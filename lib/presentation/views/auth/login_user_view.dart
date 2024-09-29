@@ -99,7 +99,7 @@ class _LoginUserViewState extends State<LoginUserView> {
     List<Widget> inputs = [
       CustomInputWidget(
         hintText: AppLocalizations.of(context)!.nickname,
-        icon: Icons.person,
+        icon: const Icon(Icons.person),
         controller: _nickNameController,
         validator: (value) {
           if (value == null || value.isEmpty) {
@@ -113,7 +113,7 @@ class _LoginUserViewState extends State<LoginUserView> {
       CustomInputWidget(
         obscureText: true,
         hintText: AppLocalizations.of(context)!.passwordHint,
-        icon: Icons.password,
+        icon: const Icon(Icons.password),
         keyboardType: TextInputType.visiblePassword,
         controller: _passwordController,
         validator: (value) {

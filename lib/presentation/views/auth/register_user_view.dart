@@ -203,7 +203,7 @@ class _RegisterUserViewState extends State<RegisterUserView> {
       ),
       CustomInputWidget(
         hintText: AppLocalizations.of(context)!.name,
-        icon: Icons.person,
+        icon: const Icon(Icons.person),
         controller: _nameController,
         validator: (value) {
           if (value == null || value.isEmpty) {
@@ -216,7 +216,7 @@ class _RegisterUserViewState extends State<RegisterUserView> {
       ),
       CustomInputWidget(
         hintText: AppLocalizations.of(context)!.nickname,
-        icon: Icons.tag_faces,
+        icon: const Icon(Icons.tag_faces),
         controller: _nickNameController,
         validator: (value) {
           if (value == null || value.isEmpty) {
@@ -229,7 +229,7 @@ class _RegisterUserViewState extends State<RegisterUserView> {
       ),
       CustomInputWidget(
         hintText: AppLocalizations.of(context)!.phone,
-        icon: Icons.phone,
+        icon: const Icon(Icons.phone),
         keyboardType: TextInputType.phone,
         controller: _phoneNumberController,
         validator: (value) {
@@ -247,7 +247,7 @@ class _RegisterUserViewState extends State<RegisterUserView> {
       ),
       CustomInputWidget(
         hintText: AppLocalizations.of(context)!.email,
-        icon: Icons.email,
+        icon: const Icon(Icons.email),
         keyboardType: TextInputType.emailAddress,
         controller: _emailController,
         validator: (String? value) {
@@ -260,7 +260,7 @@ class _RegisterUserViewState extends State<RegisterUserView> {
       CustomInputWidget(
         obscureText: true,
         hintText: AppLocalizations.of(context)!.passwordHint,
-        icon: Icons.password,
+        icon: const Icon(Icons.password),
         keyboardType: TextInputType.visiblePassword,
         controller: _passwordController,
         validator: (value) {
@@ -285,7 +285,7 @@ class _RegisterUserViewState extends State<RegisterUserView> {
       CustomInputWidget(
         obscureText: true,
         hintText: AppLocalizations.of(context)!.repeatPasswordHint,
-        icon: Icons.password,
+        icon: const Icon(Icons.password),
         keyboardType: TextInputType.visiblePassword,
         controller: _passwordRepeatController,
         validator: (value) {
@@ -314,7 +314,7 @@ class _RegisterUserViewState extends State<RegisterUserView> {
     List<Widget> paymentInfoInputs = [
       CustomInputWidget(
         hintText: 'Numero de tarjeta',
-        icon: Icons.numbers,
+        icon: const Icon(Icons.numbers),
         keyboardType: TextInputType.number,
         controller: _cardNumberController,
         validator: (String? value) {
@@ -326,7 +326,7 @@ class _RegisterUserViewState extends State<RegisterUserView> {
       ),
       CustomInputWidget(
         hintText: 'Nombre del propietario',
-        icon: Icons.person,
+        icon: const Icon(Icons.person),
         keyboardType: TextInputType.name,
         controller: _cardHolderNameController,
         validator: (String? value) {
@@ -338,7 +338,7 @@ class _RegisterUserViewState extends State<RegisterUserView> {
       ),
       CustomInputWidget(
         hintText: 'Fecha de vencimiento',
-        icon: Icons.date_range_sharp,
+        icon: const Icon(Icons.date_range_sharp),
         keyboardType: TextInputType.datetime,
         controller: _expiryDateController,
         validator: (String? value) {
@@ -350,7 +350,7 @@ class _RegisterUserViewState extends State<RegisterUserView> {
       ),
       CustomInputWidget(
         hintText: 'Tipo de tarjeta',
-        icon: Icons.credit_card_outlined,
+        icon: const Icon(Icons.credit_card_outlined),
         keyboardType: TextInputType.name,
         controller: _cardTypeController,
         validator: (String? value) {
@@ -362,7 +362,7 @@ class _RegisterUserViewState extends State<RegisterUserView> {
       ),
       CustomInputWidget(
         hintText: 'Cvv',
-        icon: Icons.security,
+        icon: const Icon(Icons.security),
         keyboardType: TextInputType.number,
         controller: _cvvController,
         validator: (String? value) {
@@ -377,7 +377,7 @@ class _RegisterUserViewState extends State<RegisterUserView> {
     List<Widget> businessInputs = [
       CustomInputWidget(
         hintText: 'Cif',
-        icon: Icons.add_business,
+        icon: const Icon(Icons.add_business),
         keyboardType: const TextInputType.numberWithOptions(),
         controller: _cifBusinessController,
         validator: (String? value) {
@@ -389,7 +389,7 @@ class _RegisterUserViewState extends State<RegisterUserView> {
       ),
       CustomInputWidget(
         hintText: 'Nombre del negocio',
-        icon: Icons.business,
+        icon: const Icon(Icons.business),
         keyboardType: TextInputType.name,
         controller: _nameBusinessController,
         validator: (String? value) {
@@ -401,7 +401,7 @@ class _RegisterUserViewState extends State<RegisterUserView> {
       ),
       CustomInputWidget(
         hintText: 'Teléfono del negocio',
-        icon: Icons.phone,
+        icon: const Icon(Icons.phone),
         keyboardType: TextInputType.phone,
         controller: _phoneBusinessController,
         validator: (String? value) {
@@ -419,7 +419,7 @@ class _RegisterUserViewState extends State<RegisterUserView> {
       ),
       CustomInputWidget(
         hintText: 'Dirección del negocio',
-        icon: Icons.location_on,
+        icon: const Icon(Icons.location_on),
         keyboardType: TextInputType.streetAddress,
         controller: _addressBusinessController,
         validator: (String? value) {
@@ -431,7 +431,7 @@ class _RegisterUserViewState extends State<RegisterUserView> {
       ),
       CustomInputWidget(
         hintText: 'Correo Electronico del negocio',
-        icon: Icons.email,
+        icon: const Icon(Icons.email),
         keyboardType: TextInputType.emailAddress,
         controller: _emailBusinessController,
         validator: (String? value) {
