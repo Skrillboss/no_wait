@@ -1,8 +1,7 @@
-import '../../../../business/domain/entities/business.dart';
 import '../../../domain/entities/item.dart';
 
 class CreateItemDemoClient {
-  Future<Map<String, dynamic>> createItem(Business business, String itemName,
+  Future<Map<String, dynamic>> createItem(String businessId, String itemName,
       String description, String mainImagePath, ItemStatus status) async {
     final Map<String, dynamic> response = {
       'item': {
