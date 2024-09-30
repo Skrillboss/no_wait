@@ -13,7 +13,7 @@ class RegisterUserApiClient extends RegisterUserClientRepository {
   ) async {
     try {
       final response = await requestHandler.postRequest(
-          endPoint: '/api/register',
+          endPoint: '/user/register',
           dataDecode: registerUserDTO.toJson(),
           errorCode: 2000,
           useToken: false);
