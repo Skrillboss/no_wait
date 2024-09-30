@@ -1,15 +1,8 @@
-import '../../../business/domain/entities/business.dart';
-import '../../../paymentInfo/domain/entities/payment_info.dart';
+import '../../application/dto/register_user_DTO.dart';
 import '../entities/user.dart';
 
 abstract class RegisterUserRepository {
   Future<User> register({
-    required String name,
-    required String nickName,
-    required String email,
-    required String phoneNumber,
-    required String password,
-    PaymentInfo? paymentInfo,
-    Business? business,
+    required RegisterUserDTO registerUserDTO
   });
 }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_turno/presentation/provider/views_list_provider/views_list_provider.dart';
+import 'package:todo_turno/presentation/views/add/qr_select_function_view.dart';
 
 import 'item_view.dart';
 
@@ -17,7 +18,7 @@ class QrScannerView extends StatefulWidget {
 class _QrScannerViewState extends State<QrScannerView>
     with WidgetsBindingObserver {
   final MobileScannerController _mobileScannerController =
-  MobileScannerController(detectionSpeed: DetectionSpeed.noDuplicates);
+      MobileScannerController(detectionSpeed: DetectionSpeed.noDuplicates);
 
   StreamSubscription<Object?>? _subscription;
 
@@ -65,8 +66,8 @@ class _QrScannerViewState extends State<QrScannerView>
         _subscription = null;
         break;
       case AppLifecycleState.resumed:
-      // Restart the scanner when the app is resumed.
-      // Don't forget to resume listening to the barcode events.
+        // Restart the scanner when the app is resumed.
+        // Don't forget to resume listening to the barcode events.
         _subscription =
             _mobileScannerController.barcodes.listen(_handleBarcode);
         unawaited(_mobileScannerController.start());
@@ -79,22 +80,86 @@ class _QrScannerViewState extends State<QrScannerView>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _hasCameraPermission
-          ? MobileScanner(
-          controller: _mobileScannerController, onDetect: _handleBarcode)
-          : Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-              colors: [Colors.green, Colors.blue],
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft),
-        ),
-        child: const Center(
-          child: Text(
-            'Necesito los permisos de la cámara para continuar.',
-            style: TextStyle(color: Colors.white, fontSize: 18),
+      body: Stack(
+        children: [
+          // Aquí va tu MobileScanner o el mensaje de permisos
+          _hasCameraPermission
+              ? mobileScanner()
+              : Container(
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                        colors: [Colors.green, Colors.blue],
+                        begin: Alignment.topRight,
+                        end: Alignment.bottomLeft),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      'Necesito los permisos de la cámara para continuar.',
+                      style: TextStyle(color: Colors.white, fontSize: 18),
+                    ),
+                  ),
+                ),
+          // Agregar un botón en la esquina superior izquierda
+          Positioned(
+            top: 24,
+            left: 16,
+            child: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () {
+                final ViewsListProvider viewsListProvider =
+                    Provider.of<ViewsListProvider>(context, listen: false);
+                viewsListProvider.setQrScannerView =
+                    const QrSelectFunctionView();
+              },
+            ),
           ),
-        ),
+        ],
+      ),
+    );
+  }
+
+  Widget mobileScanner() {
+    final ViewsListProvider viewsListProvider =
+        Provider.of<ViewsListProvider>(context, listen: false);
+    viewsListProvider.setQrScannerView = const QrSelectFunctionView();
+    return Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+            colors: [Colors.green, Colors.blue],
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft),
+      ),
+      alignment: Alignment.center,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const Text(
+            'AQUI DEBE HABER UNA IMAGEN\nBONITA DE UN SAPITO QUE\nREACCIONE AL TAP DEL USUARIO\nde Luis para Luis\n:)',
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(
+            height: 400,
+            width: 300,
+            child: MobileScanner(
+                controller: _mobileScannerController,
+                onDetect: _handleBarcode,
+                placeholderBuilder: (BuildContext context, Widget? child) {
+                  return const Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CircularProgressIndicator(),
+                        SizedBox(height: 16),
+                        Text("Loading camera...")
+                      ],
+                    ),
+                  );
+                },
+                scanWindow: Rect.fromCenter(
+                    center: const Offset(10.0, 20.0), height: 10, width: 10)),
+          ),
+        ],
       ),
     );
   }
@@ -114,13 +179,14 @@ class _QrScannerViewState extends State<QrScannerView>
 
   void _handleBarcode(BarcodeCapture barCodeCapture) {
     final List<Barcode> barcodes = barCodeCapture.barcodes;
-    if(barcodes.first.rawValue != null){
+    if (barcodes.first.rawValue != null) {
       final String itemId = barcodes.first.rawValue!;
-      final ViewsListProvider viewsListProvider = Provider.of<ViewsListProvider>(context, listen: false);
+      final ViewsListProvider viewsListProvider =
+          Provider.of<ViewsListProvider>(context, listen: false);
       viewsListProvider.setQrScannerView = ItemView(itemId: itemId);
-    }else{
-      print('Error, el valor esperado por el scan de tipo string ha recibido un null');
+    } else {
+      print(
+          'Error, el valor esperado por el scan de tipo string ha recibido un null');
     }
-
   }
 }

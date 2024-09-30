@@ -94,11 +94,10 @@ class _ItemViewState extends State<ItemView> {
                   /**** Este bloque de codigo lo tengo que encapsular en un flujo de pantallas sincrona****/
                   final Shift shiftCreated = await createShift
                       .call(
-                      userId: userProvider.getUser!.userId,
                       itemId: item!.id,
                       peopleInShift: peopleInShift);
 
-                  userProvider.getUser!.shifts.add(shiftCreated);
+                  userProvider.getUser!.shiftList.add(shiftCreated);
                   /**** En la que si el proceso es exitoso, mostrara una animacion de confirmacion en caso contrario mostrara una pantalla estatica de error ****/
 
                   bottomNavigationBarProvider.setPos = 1;

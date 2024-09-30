@@ -9,7 +9,7 @@ class Business {
   String address;
   final String email;
   final DateTime createdAt;
-  List<Item> items;
+  List<Item?> itemList;
 
   Business(
       {required this.id,
@@ -20,6 +20,6 @@ class Business {
         required this.address,
         required this.email,
         required this.createdAt,
-        required this.items
+        required this.itemList
       });
 }

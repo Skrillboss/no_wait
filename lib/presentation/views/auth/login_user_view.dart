@@ -47,6 +47,9 @@ class _LoginUserViewState extends State<LoginUserView> {
           nickName: _nickNameController.text,
           password: _passwordController.text,
         );
+        if (userProvider.getIsLogged) {
+          changeView(context, UserProfileView());
+        }
       }on CustomException catch(e){
         switch(e.errorCode){
           case 2000:
@@ -54,15 +57,13 @@ class _LoginUserViewState extends State<LoginUserView> {
           default:
             errorMessage = 'A ocurrido un error, intentelo mas tarde';
         }
+      }finally{
+        if(mounted){
+          setState(() {
+            isLoading = false;
+          });
+        }
       }
-
-      if (userProvider.getIsLogged) {
-        changeView(context, UserProfileView());
-      }
-
-      setState(() {
-        isLoading = false;
-      });
     }
   }
 
@@ -98,7 +99,7 @@ class _LoginUserViewState extends State<LoginUserView> {
     List<Widget> inputs = [
       CustomInputWidget(
         hintText: AppLocalizations.of(context)!.nickname,
-        icon: Icons.person,
+        icon: const Icon(Icons.person),
         controller: _nickNameController,
         validator: (value) {
           if (value == null || value.isEmpty) {
@@ -112,7 +113,7 @@ class _LoginUserViewState extends State<LoginUserView> {
       CustomInputWidget(
         obscureText: true,
         hintText: AppLocalizations.of(context)!.passwordHint,
-        icon: Icons.password,
+        icon: const Icon(Icons.password),
         keyboardType: TextInputType.visiblePassword,
         controller: _passwordController,
         validator: (value) {

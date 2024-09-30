@@ -164,7 +164,7 @@ class UserProfileView extends StatelessWidget {
           )
         ],
       ),
-      if (userProvider.getUser!.paymentInfo != null)
+      if (userProvider.getUser!.paymentInfoList.isNotEmpty)
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -173,7 +173,9 @@ class UserProfileView extends StatelessWidget {
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
             Text(
-              userProvider.getUser!.paymentInfo!.cardNumber,
+              //TODO: en lugar de mostrar solo el primero tengo que iterar sobre paymentInfoList
+              //como la lista que es para mostrar toda la informacion de pago del usuario
+              userProvider.getUser!.paymentInfoList.first!.cardNumber,
               style: const TextStyle(fontSize: 16),
             )
           ],

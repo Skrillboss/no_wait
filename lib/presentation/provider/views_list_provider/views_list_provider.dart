@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import '../../views/add/qr_select_function_view.dart';
 import '../../views/auth/login_user_view.dart';
-import '../../views/add/qr_scanner_view.dart';
 import '../../views/settings_view.dart';
 import '../../views/shifts_view.dart';
 import '../../views/map_view.dart';
@@ -9,7 +9,7 @@ class ViewsListProvider extends ChangeNotifier {
   Widget _shiftView = const ShiftsView();
   Widget _profileView = const LoginUserView();
   Widget _settingsView = const SettingsView();
-  Widget _qrScannerView = const QrScannerView();
+  Widget _qrScannerView = const QrSelectFunctionView();
   Widget _mapView = const MapView();
 
   Widget get getShiftView => _shiftView;

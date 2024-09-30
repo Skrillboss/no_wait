@@ -28,7 +28,7 @@ class ShiftsView extends StatelessWidget {
             child: Consumer<UserProvider>(
               builder: (context, userProvider, child) {
                 return Column(
-                  children: userProvider.getUser!.shifts
+                  children: userProvider.getUser!.shiftList
                       .where((shift) => shift != null)
                       .map((shift) => CardInformation(shift: shift!))
                       .toList(),
