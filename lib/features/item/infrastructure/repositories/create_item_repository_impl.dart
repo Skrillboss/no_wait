@@ -1,10 +1,10 @@
 import 'package:todo_turno/features/item/domain/entities/item.dart';
+import 'package:todo_turno/features/item/infrastructure/data_providers/repositories/create_item_client_repository.dart';
 import '../../domain/repositories/create_item_repository.dart';
-import '../data_providers/demo/create_item_demo_client.dart';
 import '../mappers/item_mapper.dart';
 
 class CreateItemRepositoryImpl implements CreateItemRepository {
-  final CreateItemDemoClient apiClient;
+  final CreateItemClientRepository apiClient;
 
   CreateItemRepositoryImpl({required this.apiClient});
 

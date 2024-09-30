@@ -1,6 +1,9 @@
 import '../../../domain/entities/item.dart';
+import '../repositories/create_item_client_repository.dart';
 
-class CreateItemDemoClient {
+class CreateItemDemoClient extends CreateItemClientRepository {
+
+  @override
   Future<Map<String, dynamic>> createItem(String businessId, String itemName,
       String description, String mainImagePath, ItemStatus status) async {
     final Map<String, dynamic> response = {
@@ -10,7 +13,10 @@ class CreateItemDemoClient {
         'description': description,
         'mainImagePath': mainImagePath,
         'durationPerShifts': 3600, // 1 hour in seconds
-        'status': status.toString().split('.').last, // Convert enum to string representation
+        'status': status
+            .toString()
+            .split('.')
+            .last, // Convert enum to string representation
       }
     };
     await Future.delayed(const Duration(seconds: 1));

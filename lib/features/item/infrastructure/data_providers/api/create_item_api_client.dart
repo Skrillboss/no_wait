@@ -3,10 +3,12 @@ import 'package:todo_turno/core/custom_exception/custom_exception.dart';
 import 'package:todo_turno/features/item/infrastructure/mappers/item_mapper.dart';
 import '../../../../../core/request_handler/request_handler.dart';
 import '../../../domain/entities/item.dart';
+import '../repositories/create_item_client_repository.dart';
 
-class CreateItemApiClient {
+class CreateItemApiClient extends CreateItemClientRepository{
   final RequestHandler requestHandler = RequestHandler();
 
+  @override
   Future<Map<String, dynamic>> createItem(
       String businessId,
       String itemName,

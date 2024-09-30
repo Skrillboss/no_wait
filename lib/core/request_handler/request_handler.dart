@@ -16,7 +16,7 @@ class RequestHandler {
   RequestHandler._internal();
 
   final http.Client httpClient = GetIt.instance<http.Client>();
-  final String baseNoWaitUrl = 'https://16ca-85-61-254-238.ngrok-free.app';
+  final String baseNoWaitUrl = 'https://30b0-85-61-254-238.ngrok-free.app';
   final JwtTokenManager _tokenManager = JwtTokenManager();
 
   /// ***************************************************************************
