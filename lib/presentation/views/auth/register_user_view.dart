@@ -354,7 +354,7 @@ class _RegisterUserViewState extends State<RegisterUserView> {
       CustomInputWidget(
         hintText: 'Tipo de tarjeta',
         icon: const Icon(Icons.credit_card_outlined),
-        keyboardType: TextInputType.name,
+        isCardTypeInput: true,
         controller: _cardTypeController,
         validator: (String? value) {
           if (value == null || value.isEmpty) {
