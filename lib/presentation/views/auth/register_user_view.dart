@@ -76,16 +76,6 @@ class _RegisterUserViewState extends State<RegisterUserView> {
         isLoading = true;
       });
 
-      try{
-        imageData = await createPhoto.call(fileImage: imageFile);
-      }catch(e){
-        print('========================HA OCURRIDO EL SIGUIENTE ERROR: $e');
-        if (mounted) {
-          setState(() {
-            isLoading = false;
-          });
-        }
-      }
       User? user;
       RegisterPaymentInfoDTO? registerPaymentInfoDTO;
       RegisterBusinessDTO? registerBusinessDTO;
@@ -94,6 +84,17 @@ class _RegisterUserViewState extends State<RegisterUserView> {
       );
 
       if(userRoleView != UserRole.USER){
+        try{
+          imageData = await createPhoto.call(fileImage: imageFile);
+        }catch(e){
+          print('========================HA OCURRIDO EL SIGUIENTE ERROR: $e');
+          if (mounted) {
+            setState(() {
+              isLoading = false;
+            });
+          }
+        }
+
         registerPaymentInfoDTO = RegisterPaymentInfoDTO(
             cardNumber: _cardNumberController.text,
             cardHolderName: _cardHolderNameController.text,
