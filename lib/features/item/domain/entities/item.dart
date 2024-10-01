@@ -1,11 +1,11 @@
 import '../../../shift/domain/entities/shift.dart';
 
 enum ItemStatus{
-  active,
-  inactive,
-  suspended,
-  noStock,
-  unhandledError
+  ACTIVE,
+  INACTIVE,
+  SUSPENDED,
+  NOSTOCK,
+  UNHANDLEDERROR
 }
 
 class Item {

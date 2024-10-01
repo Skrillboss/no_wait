@@ -1,6 +1,6 @@
 import 'package:todo_turno/features/role/application/dto/register_role_DTO.dart';
 
-import '../../../business/application/dto/register_business_DTO.dart';
+import '../../../business/application/dto/register_business_request_DTO.dart';
 import '../../../paymentInfo/application/dto/register_payment_info_DTO.dart';
 
 class RegisterUserDTO {
@@ -11,7 +11,7 @@ class RegisterUserDTO {
   final String password;
   final List<RegisterRoleDTO> userRole;
   final List<RegisterPaymentInfoDTO?> paymentInfoList; // Lista de PaymentInfo
-  final RegisterBusinessDTO? business; // Objeto Business (opcional)
+  final RegisterBusinessRequestDTO? business; // Objeto Business (opcional)
 
   RegisterUserDTO({
     required this.name,

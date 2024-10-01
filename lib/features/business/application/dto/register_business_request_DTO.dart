@@ -1,4 +1,4 @@
-class RegisterBusinessDTO {
+class RegisterBusinessRequestDTO {
   final String cif;
   final String name;
   final String? imageUrl; // Optional
@@ -6,7 +6,7 @@ class RegisterBusinessDTO {
   final String address;
   final String email;
 
-  RegisterBusinessDTO({
+  RegisterBusinessRequestDTO({
     required this.cif,
     required this.name,
     this.imageUrl,

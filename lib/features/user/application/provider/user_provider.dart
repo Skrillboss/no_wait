@@ -8,6 +8,10 @@ class UserProvider extends ChangeNotifier {
   User? get getUser => _user;
   bool get getIsLogged => _isLogged;
 
+  String? getBusinessId(){
+    return _user?.business?.id;
+  }
+
   void logOut() {
     _user = null;
     _isLogged = false;

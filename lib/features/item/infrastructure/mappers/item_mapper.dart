@@ -26,9 +26,9 @@ class ItemMapper {
       id: json['id'],
       name: json['name'],
       description: json['description'],
-      numberPeopleWaiting: json['numberClientsWaiting'],
-      peoplePerShift: json['clientsPerShift'],
-      numberShiftsWaiting: json['numberShiftWaiting'],
+      numberPeopleWaiting: json['numberPeopleWaiting'],
+      peoplePerShift: json['peoplePerShift'],
+      numberShiftsWaiting: json['numberShiftsWaiting'],
       rating: json['rating'],
       mainImagePath: json['mainImagePath'],
       secondaryImagePath: json['secondaryImagePath'],
@@ -43,15 +43,15 @@ class ItemMapper {
 
   static String statusToString(ItemStatus status) {
     switch (status) {
-      case ItemStatus.active:
+      case ItemStatus.ACTIVE:
         return 'active';
-      case ItemStatus.inactive:
+      case ItemStatus.INACTIVE:
         return 'inactive';
-      case ItemStatus.suspended:
+      case ItemStatus.SUSPENDED:
         return 'suspended';
-      case ItemStatus.noStock:
+      case ItemStatus.NOSTOCK:
         return 'noStock';
-      case ItemStatus.unhandledError:
+      case ItemStatus.UNHANDLEDERROR:
         return 'unhandledError';
     }
   }
@@ -59,15 +59,15 @@ class ItemMapper {
   static ItemStatus stringToStatus(String status) {
     switch (status) {
       case 'active':
-        return ItemStatus.active;
+        return ItemStatus.ACTIVE;
       case 'inactive':
-        return ItemStatus.inactive;
+        return ItemStatus.INACTIVE;
       case 'suspended':
-        return ItemStatus.suspended;
+        return ItemStatus.SUSPENDED;
       case 'noStock':
-        return ItemStatus.noStock;
+        return ItemStatus.NOSTOCK;
       case 'unhandledError':
-        return ItemStatus.unhandledError;
+        return ItemStatus.UNHANDLEDERROR;
       default:
         throw ArgumentError('Invalid item status: $status');
     }

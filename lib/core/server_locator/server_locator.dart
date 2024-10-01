@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:todo_turno/core/network/jwt_token_manager.dart';
+import 'package:todo_turno/features/business/infrastructure/data_providers/api/create_item_api_client.dart';
 import 'package:todo_turno/features/image/application/use_cases/create_photo.dart';
 import 'package:todo_turno/features/image/infrastructure/data_providers/api/create_photo_api_client.dart';
 import 'package:todo_turno/features/item/domain/repositories/delete_item_repository.dart';
@@ -20,18 +21,17 @@ import 'package:todo_turno/features/user/domain/repositories/register_user_repos
 import 'package:todo_turno/features/user/infrastructure/data_providers/demo/auth_refresh_token_demo_client.dart';
 import 'package:todo_turno/features/user/infrastructure/repositories/auth_refresh_token_repository_impl.dart';
 import 'package:todo_turno/features/user/infrastructure/repositories/register_repository_impl.dart';
+import '../../features/business/domain/repositories/create_item_repository.dart';
+import '../../features/business/infrastructure/data_providers/demo/create_item_demo_client.dart';
+import '../../features/business/infrastructure/repositories/create_item_repository_impl.dart';
 import '../../features/image/domain/repositories/create_photo_repository.dart';
 import '../../features/image/infrastructure/data_providers/demo/create_photo_demo_client.dart';
 import '../../features/image/infrastructure/repositories/create_photo_repository_impl.dart';
 import '../../features/item/application/use_cases/read_item.dart';
-import '../../features/item/domain/repositories/create_item_repository.dart';
 import '../../features/item/domain/repositories/read_item_repository.dart';
 import '../../features/item/domain/repositories/update_item_repository.dart';
-import '../../features/item/infrastructure/data_providers/api/create_item_api_client.dart';
-import '../../features/item/infrastructure/data_providers/demo/create_item_demo_client.dart';
 import '../../features/item/infrastructure/data_providers/demo/read_item_demo_client.dart';
 import '../../features/item/infrastructure/data_providers/demo/update_item_demo_client.dart';
-import '../../features/item/infrastructure/repositories/create_item_repository_impl.dart';
 import '../../features/item/infrastructure/repositories/read_item_repository_impl.dart';
 import '../../features/item/infrastructure/repositories/update_item_repository_impl.dart';
 import '../../features/shift/application/use_cases/create_shift.dart';
@@ -109,6 +109,22 @@ void setupServiceLocator() {
 
 
   /* ************************************************************************ */
+  /* ******************************  Business  ****************************** */
+  /* ************************************************************************ */
+
+  /* ******************  CREATE ITEM  ******************/
+  /* ******** USE CASE ******** */
+
+  // Registering the CreateItemDemoClient DEMO
+  sl.registerLazySingleton<CreateItemDemoClient>(() => CreateItemDemoClient());
+
+  // Registering the CreateItemApiClient API
+  sl.registerLazySingleton<CreateItemApiClient>(() => CreateItemApiClient());
+
+  // Registering the CreateItemRepository
+  sl.registerLazySingleton<CreateItemRepository>(() => CreateItemRepositoryImpl(apiClient: sl<CreateItemApiClient>()));
+
+  /* ************************************************************************ */
   /* ******************************** Image ******************************** */
   /* ************************************************************************ */
   /* ******** USE CASE ******** */
@@ -127,17 +143,6 @@ void setupServiceLocator() {
   /* ************************************************************************ */
   /* ********************************  Item  ******************************** */
   /* ************************************************************************ */
-
-  /* *****************  CREATE  *****************/
-
-  // Registering the CreateItemDemoClient DEMO
-  sl.registerLazySingleton<CreateItemDemoClient>(() => CreateItemDemoClient());
-
-  // Registering the CreateApiDemoClient API
-  sl.registerLazySingleton<CreateItemApiClient>(() => CreateItemApiClient());
-
-  // Registering the CreateItemRepository
-  sl.registerLazySingleton<CreateItemRepository>(() => CreateItemRepositoryImpl(apiClient: sl<CreateItemDemoClient>()));
 
   /* ******************  READ  ******************/
   /* ******** USE CASE ******** */
