@@ -64,6 +64,7 @@ class _RegisterUserViewState extends State<RegisterUserView> {
   late File imageFile;
   late ImageData imageData;
   Image? image;
+  DateTime date = DateTime(2016, 10);
 
   void changeView(BuildContext context, Widget view) {
     final ViewsListProvider viewsListProvider =

@@ -1,8 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CustomInputWidget extends StatefulWidget {
-  final String? hintText; // Mantengo el hintText
-  final Icon? icon; // Mantengo el icono existente
+  final String? hintText;
+  final Icon? icon;
   final bool obscureText;
   final TextEditingController? controller;
   final String? Function(String?)? validator;
@@ -10,9 +11,9 @@ class CustomInputWidget extends StatefulWidget {
 
   const CustomInputWidget({
     Key? key,
-    this.hintText, // hintText opcional
-    this.icon, // icono opcional
-    this.obscureText = false, // Por defecto no es un campo de contraseña
+    this.hintText,
+    this.icon,
+    this.obscureText = false,
     this.controller,
     this.validator,
     this.keyboardType = TextInputType.text,
@@ -23,50 +24,68 @@ class CustomInputWidget extends StatefulWidget {
 }
 
 class _CustomInputWidgetState extends State<CustomInputWidget> {
+  DateTime _selectedDate = DateTime.now();
   bool _obscureText = true;
 
   @override
   void initState() {
     super.initState();
-    _obscureText = widget.obscureText; // Inicializamos según el parámetro
+    _obscureText = widget.obscureText;
+  }
+
+  // Método para mostrar el dialogo de fecha
+  void _showDatePicker(BuildContext context) {
+    showCupertinoModalPopup(
+      context: context,
+      builder: (_) => Container(
+        height: 250,
+        color: Colors.white,
+        child: CupertinoDatePicker(
+          initialDateTime: _selectedDate,
+          mode: CupertinoDatePickerMode.monthYear,
+          use24hFormat: true,
+          onDateTimeChanged: (DateTime newDate) {
+            setState(() {
+              _selectedDate = newDate;
+              widget.controller?.text =
+              '${_selectedDate.year}/${_selectedDate.month}';
+            });
+          },
+        ),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: widget.controller,
-      validator: widget.validator,
-      keyboardType: widget.keyboardType,
-      obscureText: _obscureText,
-      // Controla si el texto está oculto o no
-      decoration: InputDecoration(
-        hintText: widget.hintText,
-        // Agregamos el hintText
-        prefixIcon: widget.icon,
-        // Mantiene el ícono existente
-        suffixIcon: widget.obscureText
-            ? IconButton(
-                icon: Icon(
-                  _obscureText ? Icons.visibility : Icons.visibility_off,
-                ),
-                onPressed: () {
-                  setState(() {
-                    _obscureText =
-                        !_obscureText; // Alternamos entre mostrar y ocultar
-                  });
-                },
-              )
-            : null,
-        // Si no es un campo de contraseña, no mostramos el ícono del ojo
-        filled: true,
-        fillColor: Theme.of(context).inputDecorationTheme.fillColor ??
-            Theme.of(context).primaryColorLight.withOpacity(0.1),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(50),
-          borderSide: BorderSide.none, // Remove the border for a cleaner look
+    return GestureDetector(
+      onTap: () {
+        // Verifica si el tipo de teclado es datetime
+        if (widget.keyboardType == TextInputType.datetime) {
+          _showDatePicker(context);
+        }
+      },
+      child: AbsorbPointer(
+        absorbing: widget.keyboardType == TextInputType.datetime,
+        child: TextFormField(
+          controller: widget.controller,
+          validator: widget.validator,
+          keyboardType: widget.keyboardType,
+          obscureText: _obscureText,
+          decoration: InputDecoration(
+            hintText: widget.hintText,
+            prefixIcon: widget.icon,
+            filled: true,
+            fillColor: Theme.of(context).inputDecorationTheme.fillColor ??
+                Theme.of(context).primaryColorLight.withOpacity(0.1),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(50),
+              borderSide: BorderSide.none,
+            ),
+            contentPadding: const EdgeInsets.symmetric(
+                horizontal: 20.0, vertical: 15.0),
+          ),
         ),
-        contentPadding:
-            const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
       ),
     );
   }
