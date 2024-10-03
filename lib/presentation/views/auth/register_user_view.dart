@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_turno/features/business/application/dto/register_business_DTO.dart';
+import 'package:todo_turno/features/business/application/dto/register_business_request_DTO.dart';
 import 'package:todo_turno/features/image/application/use_cases/take_photo.dart';
 import 'package:todo_turno/features/image/domain/entities/image_data.dart';
 import 'package:todo_turno/features/paymentInfo/application/dto/register_payment_info_DTO.dart';
@@ -15,6 +15,8 @@ import '../../../features/user/domain/entities/user.dart';
 import '../../provider/views_list_provider/views_list_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../widgets/custom_input_widget.dart';
+import '../../widgets/tools/custom_keyboardType.dart';
+import '../../widgets/tools/generate_space_between_widget.dart';
 import 'login_user_view.dart';
 
 class RegisterUserView extends StatefulWidget {
@@ -43,6 +45,7 @@ class _RegisterUserViewState extends State<RegisterUserView> {
   final TextEditingController _cardHolderNameController =
       TextEditingController();
   final TextEditingController _expiryDateController = TextEditingController();
+  String _expiryDate = '';
   final TextEditingController _cardTypeController = TextEditingController();
   final TextEditingController _cvvController = TextEditingController();
 
@@ -63,6 +66,7 @@ class _RegisterUserViewState extends State<RegisterUserView> {
   late File imageFile;
   late ImageData imageData;
   Image? image;
+  DateTime date = DateTime(2016, 10);
 
   void changeView(BuildContext context, Widget view) {
     final ViewsListProvider viewsListProvider =
@@ -76,31 +80,32 @@ class _RegisterUserViewState extends State<RegisterUserView> {
         isLoading = true;
       });
 
-      try{
-        imageData = await createPhoto.call(fileImage: imageFile);
-      }catch(e){
-        print('========================HA OCURRIDO EL SIGUIENTE ERROR: $e');
-        if (mounted) {
-          setState(() {
-            isLoading = false;
-          });
-        }
-      }
       User? user;
       RegisterPaymentInfoDTO? registerPaymentInfoDTO;
-      RegisterBusinessDTO? registerBusinessDTO;
+      RegisterBusinessRequestDTO? registerBusinessDTO;
       RegisterRoleDTO registerRoleDTO = RegisterRoleDTO(
           name: userRoleView.name
       );
 
       if(userRoleView != UserRole.USER){
+        try{
+          imageData = await createPhoto.call(fileImage: imageFile);
+        }catch(e){
+          print('========================HA OCURRIDO EL SIGUIENTE ERROR: $e');
+          if (mounted) {
+            setState(() {
+              isLoading = false;
+            });
+          }
+        }
+
         registerPaymentInfoDTO = RegisterPaymentInfoDTO(
             cardNumber: _cardNumberController.text,
             cardHolderName: _cardHolderNameController.text,
-            expiryDate: _expiryDateController.text,
+            expiryDate: _expiryDate,
             cardType: _cardTypeController.text,
             cvv: _cvvController.text);
-        registerBusinessDTO = RegisterBusinessDTO(
+        registerBusinessDTO = RegisterBusinessRequestDTO(
           cif: _cifBusinessController.text,
           name: _nameBusinessController.text,
           imageUrl: imageData.displayUrl,
@@ -339,8 +344,11 @@ class _RegisterUserViewState extends State<RegisterUserView> {
       CustomInputWidget(
         hintText: 'Fecha de vencimiento',
         icon: const Icon(Icons.date_range_sharp),
-        keyboardType: TextInputType.datetime,
+        customKeyboardType: CustomKeyboardType.MONTH_YEAR,
         controller: _expiryDateController,
+        onDateChanged: (String date){
+          _expiryDate = date;
+        },
         validator: (String? value) {
           if (value == null || value.isEmpty) {
             return 'Este campo es obligatorio';
@@ -351,7 +359,7 @@ class _RegisterUserViewState extends State<RegisterUserView> {
       CustomInputWidget(
         hintText: 'Tipo de tarjeta',
         icon: const Icon(Icons.credit_card_outlined),
-        keyboardType: TextInputType.name,
+        customKeyboardType: CustomKeyboardType.CARD_TYPE,
         controller: _cardTypeController,
         validator: (String? value) {
           if (value == null || value.isEmpty) {
@@ -484,7 +492,7 @@ class _RegisterUserViewState extends State<RegisterUserView> {
         collapsedShape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10), // Borde redondeado cuando está colapsado
         ),
-        children: widgetSpaceBuilder(paymentInfoInputs, 20).children,
+        children: GenerateStaceBetweenWidget.widgetSpaceBuilder(paymentInfoInputs, 20).children,
       ),
       ExpansionTile(
         title: const Text('Información de negocio'),
@@ -494,7 +502,7 @@ class _RegisterUserViewState extends State<RegisterUserView> {
         collapsedShape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10), // Borde redondeado cuando está colapsado
         ),
-        children: widgetSpaceBuilder(businessInputs, 20).children,
+        children: GenerateStaceBetweenWidget.widgetSpaceBuilder(businessInputs, 20).children,
       )
     ];
 
@@ -509,9 +517,9 @@ class _RegisterUserViewState extends State<RegisterUserView> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            widgetSpaceBuilder(inputs, 20),
+            GenerateStaceBetweenWidget.widgetSpaceBuilder(inputs, 20),
             if (userRoleView != UserRole.USER)
-              widgetSpaceBuilder(additionalInputs, 20),
+              GenerateStaceBetweenWidget.widgetSpaceBuilder(additionalInputs, 20),
             const SizedBox(height: 20), // Espacio antes del botón
             ElevatedButton(
               onPressed: () => _registerUser(context),
@@ -550,26 +558,6 @@ class _RegisterUserViewState extends State<RegisterUserView> {
                   style: TextStyle(color: Colors.white, fontSize: 16)),
             )
           ],
-        )
-      ],
-    );
-  }
-
-  Column widgetSpaceBuilder(List<Widget> listOfWidgets, double spaceBetween) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        ...List.generate(
-          listOfWidgets.length,
-          (index) {
-            return Column(
-              children: [
-                listOfWidgets[index],
-                if (index < listOfWidgets.length - 1)
-                  SizedBox(height: spaceBetween),
-              ],
-            );
-          },
         )
       ],
     );

@@ -26,48 +26,48 @@ class ItemMapper {
       id: json['id'],
       name: json['name'],
       description: json['description'],
-      numberPeopleWaiting: json['numberClientsWaiting'],
-      peoplePerShift: json['clientsPerShift'],
-      numberShiftsWaiting: json['numberShiftWaiting'],
+      numberPeopleWaiting: json['numberPeopleWaiting'],
+      peoplePerShift: json['peoplePerShift'],
+      numberShiftsWaiting: json['numberShiftsWaiting'],
       rating: json['rating'],
       mainImagePath: json['mainImagePath'],
       secondaryImagePath: json['secondaryImagePath'],
-      currentWaitingDuration: Duration(seconds: json['currentWaitingDuration']),
-      durationPerShifts: Duration(seconds: json['durationPerShifts']),
+      currentWaitingDuration: Duration(minutes: json['currentWaitingDuration']),
+      durationPerShifts: Duration(minutes: json['durationPerShifts']),
       // Convertir segundos a Duration
       status: stringToStatus(json['status']),
       // Convertir string a enum
-      shifts: ShiftMapper.listFromJson(json['shifts'] as List<Map<String, dynamic>>),
+      shifts: ShiftMapper.listFromJson(json['shifts'] as List<dynamic>),
     );
   }
 
   static String statusToString(ItemStatus status) {
     switch (status) {
-      case ItemStatus.active:
+      case ItemStatus.ACTIVE:
         return 'active';
-      case ItemStatus.inactive:
+      case ItemStatus.INACTIVE:
         return 'inactive';
-      case ItemStatus.suspended:
+      case ItemStatus.SUSPENDED:
         return 'suspended';
-      case ItemStatus.noStock:
+      case ItemStatus.NOSTOCK:
         return 'noStock';
-      case ItemStatus.unhandledError:
+      case ItemStatus.UNHANDLEDERROR:
         return 'unhandledError';
     }
   }
 
   static ItemStatus stringToStatus(String status) {
     switch (status) {
-      case 'active':
-        return ItemStatus.active;
-      case 'inactive':
-        return ItemStatus.inactive;
-      case 'suspended':
-        return ItemStatus.suspended;
-      case 'noStock':
-        return ItemStatus.noStock;
-      case 'unhandledError':
-        return ItemStatus.unhandledError;
+      case 'ACTIVE':
+        return ItemStatus.ACTIVE;
+      case 'INACTIVE':
+        return ItemStatus.INACTIVE;
+      case 'SUSPENDED':
+        return ItemStatus.SUSPENDED;
+      case 'NO_STOCK':
+        return ItemStatus.NOSTOCK;
+      case 'UNHANDLED_ERROR':
+        return ItemStatus.UNHANDLEDERROR;
       default:
         throw ArgumentError('Invalid item status: $status');
     }

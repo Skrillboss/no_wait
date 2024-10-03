@@ -10,7 +10,7 @@ class AuthUserApiClient extends AuthUserClientRepository{
   Future<Map<String, dynamic>> login(String username, String password) async {
     try {
       final response = await requestHandler.postRequest(
-          endPoint: '/api/login',
+          endPoint: '/user/login',
           dataDecode: {'nickName': username, 'password': password},
           errorCode: 2000,
           useToken: false);
