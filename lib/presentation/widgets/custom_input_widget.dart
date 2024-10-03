@@ -26,19 +26,18 @@ class CustomInputWidget extends StatefulWidget {
     this.keyboardType = TextInputType.text,
     this.onDurationChanged,
     this.onDateChanged,
-  }) : assert(
-  !(customKeyboardType == CustomKeyboardType.DURATION && onDurationChanged == null),
-  'onDurationChanged cannot be null when customKeyboardType is DURATION'
-  ),
+  })  : assert(
+            !(customKeyboardType == CustomKeyboardType.DURATION &&
+                onDurationChanged == null),
+            'onDurationChanged cannot be null when customKeyboardType is DURATION'),
         assert(
-        !(customKeyboardType == CustomKeyboardType.MONTH_YEAR && onDateChanged == null),
-        'onDateChanged cannot be null when customKeyboardType is MONTH_YEAR'
-        );
+            !(customKeyboardType == CustomKeyboardType.MONTH_YEAR &&
+                onDateChanged == null),
+            'onDateChanged cannot be null when customKeyboardType is MONTH_YEAR');
 
   @override
   _CustomInputWidgetState createState() => _CustomInputWidgetState();
 }
-
 
 class _CustomInputWidgetState extends State<CustomInputWidget> {
   Duration _selectedDuration = const Duration(hours: 0, minutes: 0);
@@ -57,7 +56,7 @@ class _CustomInputWidgetState extends State<CustomInputWidget> {
   String _formatDuration(Duration duration) {
     int hours = duration.inHours;
     int minutes = duration.inMinutes.remainder(60);
-    if(hours == 0){
+    if (hours == 0) {
       return '${minutes.toString()} min.';
     }
     return '${hours.toString()}h ${minutes.toString()} min.';
@@ -147,11 +146,11 @@ class _CustomInputWidgetState extends State<CustomInputWidget> {
               _selectedDate = newDate;
               widget.controller?.text =
                   '${_selectedDate.year}/${_selectedDate.month}';
-              _rawDateFormated = dateFormat.parse(newDate.toString()).toString();
+              _rawDateFormated =
+                  dateFormat.parse(newDate.toString()).toString();
               if (widget.onDateChanged != null) {
                 widget.onDateChanged!(_rawDateFormated);
               }
-
             });
           },
         ),
@@ -187,6 +186,19 @@ class _CustomInputWidgetState extends State<CustomInputWidget> {
           decoration: InputDecoration(
             hintText: widget.hintText,
             prefixIcon: widget.icon,
+            suffixIcon: widget.obscureText
+                ? IconButton(
+                    icon: Icon(
+                      _obscureText ? Icons.visibility : Icons.visibility_off,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _obscureText =
+                            !_obscureText; // Alternamos entre mostrar y ocultar
+                      });
+                    },
+                  )
+                : null,
             filled: true,
             fillColor: Theme.of(context).inputDecorationTheme.fillColor ??
                 Theme.of(context).primaryColorLight.withOpacity(0.1),
