@@ -3,16 +3,18 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:pretty_qr_code/pretty_qr_code.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:todo_turno/features/business/application/dto/add_item_request_DTO.dart';
 import 'package:todo_turno/features/item/domain/entities/item.dart';
+import 'package:todo_turno/presentation/views/add/qr_view.dart';
 import '../../../features/business/application/use_cases/add_item.dart';
+import '../../../features/image/application/use_cases/create_photo.dart';
 import '../../../features/image/application/use_cases/take_photo.dart';
 import '../../../features/image/domain/entities/image_data.dart';
 import '../../../features/item/application/dto/create_item_request_DTO.dart';
 import '../../../features/user/application/provider/user_provider.dart';
+import '../../provider/views_list_provider/views_list_provider.dart';
 import '../../widgets/custom_input_widget.dart';
 import '../../widgets/tools/custom_keyboardType.dart';
 import '../../widgets/tools/generate_space_between_widget.dart';
@@ -39,39 +41,61 @@ class _QrGenerateViewState extends State<QrGenerateView> {
   String? qrData;
   bool isLoading = false;
 
+  final CreatePhoto createPhoto = GetIt.instance<CreatePhoto>();
   final TakePhoto takePhoto = TakePhoto();
-  late File imageFile;
-  late ImageData imageData;
-  Image? image;
+  late File mainImageFile;
+  late File secondaryImageFile;
+  late ImageData mainImageData;
+  late ImageData secondaryImageData;
+  Image? mainImage;
+  Image? secondaryImage;
 
   final AddItem addItem = GetIt.instance<AddItem>();
 
-  Future<void> _addItem(BuildContext context) async {
-    final UserProvider userProvider = Provider.of<UserProvider>(context);
+  Future<void> _addItem(BuildContext context, String businessId) async {
     if (_registerFormKey.currentState!.validate()) {
+      final ViewsListProvider viewsListProvider =
+          Provider.of<ViewsListProvider>(context, listen: false);
+
       setState(() {
         isLoading = true;
       });
-      String? businessId = userProvider.getBusinessId();
-      if (businessId != null) {
-        CreateItemRequestDTO createItemRequestDTO = CreateItemRequestDTO(
-            name: _nameController.text,
-            description: _descriptionController.text,
-            peoplePerShift: int.parse(_descriptionController.text),
-            mainImagePath: '',
-            secondaryImagePath: '',
-            durationPerShifts: _durationPerShiftInMinutes,
-            status: itemStatusView.name);
-        AddItemRequestDTO addItemRequestDTO =
-            AddItemRequestDTO(businessId, createItemRequestDTO);
 
-        Item item = await addItem.call(addItemRequestDTO: addItemRequestDTO);
+      try {
+        mainImageData = await createPhoto.call(fileImage: mainImageFile);
+        secondaryImageData =
+            await createPhoto.call(fileImage: secondaryImageFile);
+      } catch (e) {
+        print('========================HA OCURRIDO EL SIGUIENTE ERROR: $e');
+        if (mounted) {
+          setState(() {
+            isLoading = false;
+          });
+        }
       }
+
+      CreateItemRequestDTO createItemRequestDTO = CreateItemRequestDTO(
+          name: _nameController.text,
+          description: _descriptionController.text,
+          peoplePerShift: int.parse(_peoplePerShiftController.text),
+          mainImagePath: mainImageData.displayUrl,
+          secondaryImagePath: secondaryImageData.displayUrl,
+          durationPerShifts: _durationPerShiftInMinutes,
+          status: itemStatusView.name);
+      AddItemRequestDTO addItemRequestDTO =
+          AddItemRequestDTO(businessId, createItemRequestDTO);
+
+      Item item = await addItem.call(addItemRequestDTO: addItemRequestDTO);
+      viewsListProvider.setQrScannerView = QrView(item: item);
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final UserProvider userProvider = Provider.of<UserProvider>(context);
+    //TODO: colocar un condicional en caso de no conseguir el identificado del business
+    String businessId = userProvider.getBusinessId()!;
+
     List<Widget> inputs = [
       CustomInputWidget(
         hintText: 'Nombre del item',
@@ -124,9 +148,9 @@ class _QrGenerateViewState extends State<QrGenerateView> {
       ),
       ElevatedButton(
         onPressed: () async {
-          imageFile = await takePhoto.call(ImageSource.gallery);
+          mainImageFile = await takePhoto.call(ImageSource.gallery);
           setState(() {
-            image = Image.file(imageFile);
+            mainImage = Image.file(mainImageFile);
           });
         },
         style: ElevatedButton.styleFrom(
@@ -143,7 +167,7 @@ class _QrGenerateViewState extends State<QrGenerateView> {
         child: isLoading
             ? const CircularProgressIndicator()
             : const Text(
-                'Agregar imagen',
+                'Imagen Principal',
                 style: const TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -152,7 +176,39 @@ class _QrGenerateViewState extends State<QrGenerateView> {
               ),
       ),
       Container(
-        child: image,
+        child: mainImage,
+      ),
+      ElevatedButton(
+        onPressed: () async {
+          secondaryImageFile = await takePhoto.call(ImageSource.gallery);
+          setState(() {
+            secondaryImage = Image.file(secondaryImageFile);
+          });
+        },
+        style: ElevatedButton.styleFrom(
+          fixedSize: const Size.fromWidth(500),
+          foregroundColor: Colors.white,
+          backgroundColor: Colors.blue,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(
+                top: Radius.circular(10), bottom: Radius.circular(0)),
+          ),
+          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
+          elevation: 5, // Sombra del botón
+        ),
+        child: isLoading
+            ? const CircularProgressIndicator()
+            : const Text(
+                'Imagen Secundaria',
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+      ),
+      Container(
+        child: secondaryImage,
       ),
       Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -301,7 +357,7 @@ class _QrGenerateViewState extends State<QrGenerateView> {
                     GenerateStaceBetweenWidget.widgetSpaceBuilder(inputs, 20),
                     const SizedBox(height: 20),
                     ElevatedButton(
-                      onPressed: () => _addItem(context),
+                      onPressed: () => _addItem(context, businessId),
                       style: ElevatedButton.styleFrom(
                         fixedSize: const Size.fromWidth(500),
                         foregroundColor: Colors.white,

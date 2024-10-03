@@ -32,12 +32,12 @@ class ItemMapper {
       rating: json['rating'],
       mainImagePath: json['mainImagePath'],
       secondaryImagePath: json['secondaryImagePath'],
-      currentWaitingDuration: Duration(seconds: json['currentWaitingDuration']),
-      durationPerShifts: Duration(seconds: json['durationPerShifts']),
+      currentWaitingDuration: Duration(minutes: json['currentWaitingDuration']),
+      durationPerShifts: Duration(minutes: json['durationPerShifts']),
       // Convertir segundos a Duration
       status: stringToStatus(json['status']),
       // Convertir string a enum
-      shifts: ShiftMapper.listFromJson(json['shifts'] as List<Map<String, dynamic>>),
+      shifts: ShiftMapper.listFromJson(json['shifts'] as List<dynamic>),
     );
   }
 
@@ -58,15 +58,15 @@ class ItemMapper {
 
   static ItemStatus stringToStatus(String status) {
     switch (status) {
-      case 'active':
+      case 'ACTIVE':
         return ItemStatus.ACTIVE;
-      case 'inactive':
+      case 'INACTIVE':
         return ItemStatus.INACTIVE;
-      case 'suspended':
+      case 'SUSPENDED':
         return ItemStatus.SUSPENDED;
-      case 'noStock':
+      case 'NO_STOCK':
         return ItemStatus.NOSTOCK;
-      case 'unhandledError':
+      case 'UNHANDLED_ERROR':
         return ItemStatus.UNHANDLEDERROR;
       default:
         throw ArgumentError('Invalid item status: $status');
