@@ -15,6 +15,7 @@ import '../../../features/user/domain/entities/user.dart';
 import '../../provider/views_list_provider/views_list_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../widgets/custom_input_widget.dart';
+import '../../widgets/tools/custom_keyboardType.dart';
 import '../../widgets/tools/generate_space_between_widget.dart';
 import 'login_user_view.dart';
 
@@ -44,6 +45,7 @@ class _RegisterUserViewState extends State<RegisterUserView> {
   final TextEditingController _cardHolderNameController =
       TextEditingController();
   final TextEditingController _expiryDateController = TextEditingController();
+  String _expiryDate = '';
   final TextEditingController _cardTypeController = TextEditingController();
   final TextEditingController _cvvController = TextEditingController();
 
@@ -100,7 +102,7 @@ class _RegisterUserViewState extends State<RegisterUserView> {
         registerPaymentInfoDTO = RegisterPaymentInfoDTO(
             cardNumber: _cardNumberController.text,
             cardHolderName: _cardHolderNameController.text,
-            expiryDate: _expiryDateController.text,
+            expiryDate: _expiryDate,
             cardType: _cardTypeController.text,
             cvv: _cvvController.text);
         registerBusinessDTO = RegisterBusinessRequestDTO(
@@ -342,8 +344,11 @@ class _RegisterUserViewState extends State<RegisterUserView> {
       CustomInputWidget(
         hintText: 'Fecha de vencimiento',
         icon: const Icon(Icons.date_range_sharp),
-        keyboardType: TextInputType.datetime,
+        customKeyboardType: CustomKeyboardType.MONTH_YEAR,
         controller: _expiryDateController,
+        onDateChanged: (String date){
+          _expiryDate = date;
+        },
         validator: (String? value) {
           if (value == null || value.isEmpty) {
             return 'Este campo es obligatorio';
@@ -354,7 +359,7 @@ class _RegisterUserViewState extends State<RegisterUserView> {
       CustomInputWidget(
         hintText: 'Tipo de tarjeta',
         icon: const Icon(Icons.credit_card_outlined),
-        isCardTypeInput: true,
+        customKeyboardType: CustomKeyboardType.CARD_TYPE,
         controller: _cardTypeController,
         validator: (String? value) {
           if (value == null || value.isEmpty) {

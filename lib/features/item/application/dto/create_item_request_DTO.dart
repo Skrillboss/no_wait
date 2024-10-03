@@ -4,7 +4,7 @@ class CreateItemRequestDTO {
   final int peoplePerShift;
   final String mainImagePath;
   final String secondaryImagePath;
-  final double durationPerShifts; // En minutos
+  final int durationPerShifts; // En minutos
   final String status; // Representa el ItemStatus como String
 
   CreateItemRequestDTO({

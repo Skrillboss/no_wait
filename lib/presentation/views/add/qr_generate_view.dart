@@ -14,6 +14,7 @@ import '../../../features/image/domain/entities/image_data.dart';
 import '../../../features/item/application/dto/create_item_request_DTO.dart';
 import '../../../features/user/application/provider/user_provider.dart';
 import '../../widgets/custom_input_widget.dart';
+import '../../widgets/tools/custom_keyboardType.dart';
 import '../../widgets/tools/generate_space_between_widget.dart';
 
 class QrGenerateView extends StatefulWidget {
@@ -29,9 +30,10 @@ class _QrGenerateViewState extends State<QrGenerateView> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _peoplePerShiftController =
-  TextEditingController();
+      TextEditingController();
+  int _durationPerShiftInMinutes = 0;
   final TextEditingController _durationPerShiftsController =
-  TextEditingController();
+      TextEditingController();
   ItemStatus itemStatusView = ItemStatus.ACTIVE;
 
   String? qrData;
@@ -43,7 +45,6 @@ class _QrGenerateViewState extends State<QrGenerateView> {
   Image? image;
 
   final AddItem addItem = GetIt.instance<AddItem>();
-
 
   Future<void> _addItem(BuildContext context) async {
     final UserProvider userProvider = Provider.of<UserProvider>(context);
@@ -59,13 +60,10 @@ class _QrGenerateViewState extends State<QrGenerateView> {
             peoplePerShift: int.parse(_descriptionController.text),
             mainImagePath: '',
             secondaryImagePath: '',
-            durationPerShifts: double.parse(_durationPerShiftsController.text),
-            status: itemStatusView.name
-        );
-        AddItemRequestDTO addItemRequestDTO = AddItemRequestDTO(
-            businessId,
-            createItemRequestDTO
-        );
+            durationPerShifts: _durationPerShiftInMinutes,
+            status: itemStatusView.name);
+        AddItemRequestDTO addItemRequestDTO =
+            AddItemRequestDTO(businessId, createItemRequestDTO);
 
         Item item = await addItem.call(addItemRequestDTO: addItemRequestDTO);
       }
@@ -113,7 +111,10 @@ class _QrGenerateViewState extends State<QrGenerateView> {
         hintText: 'Duración por turno',
         icon: const Icon(Icons.timelapse),
         controller: _durationPerShiftsController,
-        keyboardType: TextInputType.number,
+        customKeyboardType: CustomKeyboardType.DURATION,
+        onDurationChanged: (int duration) {
+          _durationPerShiftInMinutes = duration;
+        },
         validator: (value) {
           if (value == null || value.isEmpty) {
             return 'El campo no puede estar vacío';
@@ -142,13 +143,13 @@ class _QrGenerateViewState extends State<QrGenerateView> {
         child: isLoading
             ? const CircularProgressIndicator()
             : const Text(
-          'Agregar imagen',
-          style: const TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
-        ),
+                'Agregar imagen',
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
       ),
       Container(
         child: image,
@@ -161,111 +162,116 @@ class _QrGenerateViewState extends State<QrGenerateView> {
           Container(
             width: double.infinity, // Ajusta el tamaño según sea necesario
             child: SegmentedButton(
-              segments: const <ButtonSegment<ItemStatus>>[
-                ButtonSegment<ItemStatus>(
-                    value: ItemStatus.ACTIVE,
-                    icon: Icon(Icons.play_circle_filled),
-                    label: Text('Activo')),
-              ],
-              selected: <ItemStatus>{itemStatusView},
-              onSelectionChanged: (Set<ItemStatus> newSelection) {
-                setState(() {
-                  itemStatusView = newSelection.first;
-                });
-              },
-              style: ElevatedButton.styleFrom(
-                fixedSize: const Size.fromWidth(500),
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                segments: const <ButtonSegment<ItemStatus>>[
+                  ButtonSegment<ItemStatus>(
+                      value: ItemStatus.ACTIVE,
+                      icon: Icon(Icons.play_circle_filled),
+                      label: Text('Activo')),
+                ],
+                selected: <ItemStatus>{
+                  itemStatusView
+                },
+                onSelectionChanged: (Set<ItemStatus> newSelection) {
+                  setState(() {
+                    itemStatusView = newSelection.first;
+                  });
+                },
+                style: ElevatedButton.styleFrom(
+                  fixedSize: const Size.fromWidth(500),
+                  shape: const RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.vertical(top: Radius.circular(20)),
+                  ),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
+                  elevation: 5,
                 ),
-                padding:
-                const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
-                elevation: 5,
-              ),
-                showSelectedIcon: false
-            ),
+                showSelectedIcon: false),
           ),
           Container(
             width: double.infinity,
             child: SegmentedButton(
-              segments: const <ButtonSegment<ItemStatus>>[
-                ButtonSegment<ItemStatus>(
-                    value: ItemStatus.INACTIVE,
-                    icon: Icon(Icons.block),
-                    label: Text('Inactivo')),
-              ],
-              selected: <ItemStatus>{itemStatusView},
-              onSelectionChanged: (Set<ItemStatus> newSelection) {
-                setState(() {
-                  itemStatusView = newSelection.first;
-                });
-              },
-              style: ElevatedButton.styleFrom(
-                fixedSize: const Size.fromWidth(500),
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.zero),
+                segments: const <ButtonSegment<ItemStatus>>[
+                  ButtonSegment<ItemStatus>(
+                      value: ItemStatus.INACTIVE,
+                      icon: Icon(Icons.block),
+                      label: Text('Inactivo')),
+                ],
+                selected: <ItemStatus>{
+                  itemStatusView
+                },
+                onSelectionChanged: (Set<ItemStatus> newSelection) {
+                  setState(() {
+                    itemStatusView = newSelection.first;
+                  });
+                },
+                style: ElevatedButton.styleFrom(
+                  fixedSize: const Size.fromWidth(500),
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.zero),
+                  ),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
+                  elevation: 5,
                 ),
-                padding:
-                const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
-                elevation: 5,
-              ),
-                showSelectedIcon: false
-            ),
+                showSelectedIcon: false),
           ),
           Container(
             width: double.infinity,
             child: SegmentedButton(
-              segments: const <ButtonSegment<ItemStatus>>[
-                ButtonSegment<ItemStatus>(
-                    value: ItemStatus.SUSPENDED,
-                    icon: Icon(Icons.pause_circle_filled),
-                    label: Text('Suspendido')),
-              ],
-              selected: <ItemStatus>{itemStatusView},
-              onSelectionChanged: (Set<ItemStatus> newSelection) {
-                setState(() {
-                  itemStatusView = newSelection.first;
-                });
-              },
-              style: ElevatedButton.styleFrom(
-                fixedSize: const Size.fromWidth(500),
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.zero),
+                segments: const <ButtonSegment<ItemStatus>>[
+                  ButtonSegment<ItemStatus>(
+                      value: ItemStatus.SUSPENDED,
+                      icon: Icon(Icons.pause_circle_filled),
+                      label: Text('Suspendido')),
+                ],
+                selected: <ItemStatus>{
+                  itemStatusView
+                },
+                onSelectionChanged: (Set<ItemStatus> newSelection) {
+                  setState(() {
+                    itemStatusView = newSelection.first;
+                  });
+                },
+                style: ElevatedButton.styleFrom(
+                  fixedSize: const Size.fromWidth(500),
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.zero),
+                  ),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
+                  elevation: 5,
                 ),
-                padding:
-                const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
-                elevation: 5,
-              ),
-                showSelectedIcon: false
-            ),
+                showSelectedIcon: false),
           ),
           Container(
             width: double.infinity,
             child: SegmentedButton(
-              segments: const <ButtonSegment<ItemStatus>>[
-                ButtonSegment<ItemStatus>(
-                    value: ItemStatus.NOSTOCK,
-                    icon: Icon(Icons.admin_panel_settings),
-                    label: Text('Sin Stock')),
-              ],
-              selected: <ItemStatus>{itemStatusView},
-              onSelectionChanged: (Set<ItemStatus> newSelection) {
-                setState(() {
-                  itemStatusView = newSelection.first;
-                });
-              },
-              style: ElevatedButton.styleFrom(
-                fixedSize: const Size.fromWidth(500),
-                shape: const RoundedRectangleBorder(
-                  borderRadius:
-                  BorderRadius.vertical(bottom: Radius.circular(20)),
+                segments: const <ButtonSegment<ItemStatus>>[
+                  ButtonSegment<ItemStatus>(
+                      value: ItemStatus.NOSTOCK,
+                      icon: Icon(Icons.admin_panel_settings),
+                      label: Text('Sin Stock')),
+                ],
+                selected: <ItemStatus>{
+                  itemStatusView
+                },
+                onSelectionChanged: (Set<ItemStatus> newSelection) {
+                  setState(() {
+                    itemStatusView = newSelection.first;
+                  });
+                },
+                style: ElevatedButton.styleFrom(
+                  fixedSize: const Size.fromWidth(500),
+                  shape: const RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.vertical(bottom: Radius.circular(20)),
+                  ),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
+                  elevation: 5,
                 ),
-                padding:
-                const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
-                elevation: 5,
-              ),
-                showSelectedIcon: false
-            ),
+                showSelectedIcon: false),
           ),
         ],
       ),
@@ -284,9 +290,10 @@ class _QrGenerateViewState extends State<QrGenerateView> {
           ),
           child: Padding(
             padding:
-            const EdgeInsets.only(left: 20, right: 20, top: 55, bottom: 55),
+                const EdgeInsets.only(left: 20, right: 20, top: 55, bottom: 55),
             child: SingleChildScrollView(
-              child: Form(  // El hijo del SingleChildScrollView es el Form
+              child: Form(
+                // El hijo del SingleChildScrollView es el Form
                 key: _registerFormKey,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -309,13 +316,13 @@ class _QrGenerateViewState extends State<QrGenerateView> {
                       child: isLoading
                           ? const CircularProgressIndicator()
                           : Text(
-                        AppLocalizations.of(context)!.registerButton,
-                        style: const TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
+                              AppLocalizations.of(context)!.registerButton,
+                              style: const TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
                     ),
                   ],
                 ),
