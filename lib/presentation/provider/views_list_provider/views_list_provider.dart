@@ -9,14 +9,14 @@ class ViewsListProvider extends ChangeNotifier {
   Widget _shiftView = const ShiftsView();
   Widget _profileView = const LoginUserView();
   Widget _settingsView = const SettingsView();
-  Widget _qrScannerView = const QrSelectFunctionView();
+  List<Widget> _qrScannerView = [QrSelectFunctionView()];
   Widget _mapView = const MapView();
 
   Widget get getShiftView => _shiftView;
 
   Widget get getProfileView => _profileView;
 
-  Widget get getQrScannerView => _qrScannerView;
+  Widget get getQrScannerView => _qrScannerView.last;
 
   Widget get getMapView => _mapView;
 
@@ -33,7 +33,12 @@ class ViewsListProvider extends ChangeNotifier {
   }
 
   set setQrScannerView(Widget qrScannerView) {
-    _qrScannerView = qrScannerView;
+    _qrScannerView.add(qrScannerView);
+    notifyListeners();
+  }
+
+  void popQrScannerView(){
+    _qrScannerView.removeLast();
     notifyListeners();
   }
 
