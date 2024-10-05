@@ -15,9 +15,12 @@ import '../../provider/views_list_provider/views_list_provider.dart';
 import '../../widgets/count_douwn_timer.dart';
 
 class ItemView extends StatefulWidget {
-  final String itemId;
+  final String? itemId;
+  final Item? itemProvided;
 
-  const ItemView({super.key, required this.itemId});
+  const ItemView({super.key, this.itemId, this.itemProvided})
+  : assert(itemId != null || itemProvided != null, 'You must pass wither itemId or itemProvided.'),
+  assert(!(itemId != null && itemProvided != null), 'You cannot pass both itemId and itemProvided at the same time.');
 
   @override
   _ItemViewState createState() => _ItemViewState();
@@ -31,11 +34,15 @@ class _ItemViewState extends State<ItemView> {
   @override
   void initState() {
     super.initState();
-    unawaited(readItem.call(itemId: widget.itemId).then((value) {
-      setState(() {
-        item = value;
-      });
-    }));
+    if(widget.itemId != null) {
+      unawaited(readItem.call(itemId: widget.itemId!).then((value) {
+        setState(() {
+          item = value;
+        });
+      }));
+    }else{
+      item = widget.itemProvided;
+    }
   }
 
   @override

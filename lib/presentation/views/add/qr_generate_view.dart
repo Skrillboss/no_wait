@@ -52,11 +52,9 @@ class _QrGenerateViewState extends State<QrGenerateView> {
 
   final AddItem addItem = GetIt.instance<AddItem>();
 
-  Future<void> _addItem(BuildContext context, String businessId) async {
+  Future<void> _addItem(BuildContext context, String businessId,
+      ViewsListProvider viewsListProvider) async {
     if (_registerFormKey.currentState!.validate()) {
-      final ViewsListProvider viewsListProvider =
-          Provider.of<ViewsListProvider>(context, listen: false);
-
       setState(() {
         isLoading = true;
       });
@@ -88,6 +86,40 @@ class _QrGenerateViewState extends State<QrGenerateView> {
       Item item = await addItem.call(addItemRequestDTO: addItemRequestDTO);
       viewsListProvider.setQrScannerView = QrView(item: item);
     }
+  }
+
+  Future<bool?> _showBackDialog() {
+    return showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('¿Estás seguro?'),
+          content: const Text(
+            '¿Deseas salir del formulario? \n ¡Perderas toda la información!',
+          ),
+          actions: <Widget>[
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Continuar'),
+              onPressed: () {
+                Navigator.pop(context, false);
+              },
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Salir'),
+              onPressed: () {
+                Navigator.pop(context, true);
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -194,7 +226,7 @@ class _QrGenerateViewState extends State<QrGenerateView> {
                 top: Radius.circular(10), bottom: Radius.circular(0)),
           ),
           padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
-          elevation: 5, // Sombra del botón
+          elevation: 5,
         ),
         child: isLoading
             ? const CircularProgressIndicator()
@@ -214,7 +246,6 @@ class _QrGenerateViewState extends State<QrGenerateView> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Agrupando los botones en un contenedor
           Container(
             width: double.infinity, // Ajusta el tamaño según sea necesario
             child: SegmentedButton(
@@ -333,54 +364,69 @@ class _QrGenerateViewState extends State<QrGenerateView> {
       ),
     ];
 
+    final ViewsListProvider viewsListProvider =
+        Provider.of<ViewsListProvider>(context, listen: false);
+
     return Scaffold(
       body: AbsorbPointer(
         absorbing: isLoading,
-        child: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Colors.green, Colors.blue],
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
+        child: PopScope<Object?>(
+          canPop: false,
+          onPopInvokedWithResult: (bool didPop, Object? result) async {
+            if (didPop) {
+              return;
+            }
+            final bool shouldPop = await _showBackDialog() ?? false;
+            if (context.mounted && shouldPop) {
+              viewsListProvider.popQrScannerView();
+            }
+          },
+          child: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Colors.green, Colors.blue],
+                begin: Alignment.topRight,
+                end: Alignment.bottomLeft,
+              ),
             ),
-          ),
-          child: Padding(
-            padding:
-                const EdgeInsets.only(left: 20, right: 20, top: 55, bottom: 55),
-            child: SingleChildScrollView(
-              child: Form(
-                // El hijo del SingleChildScrollView es el Form
-                key: _registerFormKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GenerateStaceBetweenWidget.widgetSpaceBuilder(inputs, 20),
-                    const SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: () => _addItem(context, businessId),
-                      style: ElevatedButton.styleFrom(
-                        fixedSize: const Size.fromWidth(500),
-                        foregroundColor: Colors.white,
-                        backgroundColor: Theme.of(context).primaryColorDark,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+            child: Padding(
+              padding: const EdgeInsets.only(
+                  left: 20, right: 20, top: 55, bottom: 55),
+              child: SingleChildScrollView(
+                child: Form(
+                  key: _registerFormKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      GenerateStaceBetweenWidget.widgetSpaceBuilder(inputs, 20),
+                      const SizedBox(height: 20),
+                      ElevatedButton(
+                        onPressed: () =>
+                            _addItem(context, businessId, viewsListProvider),
+                        style: ElevatedButton.styleFrom(
+                          fixedSize: const Size.fromWidth(500),
+                          foregroundColor: Colors.white,
+                          backgroundColor: Theme.of(context).primaryColorDark,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 15, horizontal: 25),
+                          elevation: 5,
                         ),
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 15, horizontal: 25),
-                        elevation: 5,
-                      ),
-                      child: isLoading
-                          ? const CircularProgressIndicator()
-                          : Text(
-                              AppLocalizations.of(context)!.registerButton,
-                              style: const TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
+                        child: isLoading
+                            ? const CircularProgressIndicator()
+                            : Text(
+                                AppLocalizations.of(context)!.registerButton,
+                                style: const TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
                               ),
-                            ),
-                    ),
-                  ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
