@@ -38,7 +38,7 @@ class ViewsListProvider extends ChangeNotifier {
   }
 
   void popQrScannerView(){
-    _qrScannerView.removeLast();
+    _qrScannerView.remove;
     notifyListeners();
   }
 
