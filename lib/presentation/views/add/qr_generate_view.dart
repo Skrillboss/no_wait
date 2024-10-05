@@ -9,6 +9,7 @@ import 'package:todo_turno/features/business/application/dto/add_item_request_DT
 import 'package:todo_turno/features/item/domain/entities/item.dart';
 import 'package:todo_turno/presentation/views/add/qr_view.dart';
 import '../../../features/business/application/use_cases/add_item.dart';
+import '../../../features/image/application/use_cases/compress_file.dart';
 import '../../../features/image/application/use_cases/create_photo.dart';
 import '../../../features/image/application/use_cases/take_photo.dart';
 import '../../../features/image/domain/entities/image_data.dart';
@@ -43,7 +44,7 @@ class _QrGenerateViewState extends State<QrGenerateView> {
 
   final CreatePhoto createPhoto = GetIt.instance<CreatePhoto>();
   final TakePhoto takePhoto = TakePhoto();
-  late File mainImageFile;
+  late File mainImageCompressFile;
   late File secondaryImageFile;
   late ImageData mainImageData;
   late ImageData secondaryImageData;
@@ -60,7 +61,7 @@ class _QrGenerateViewState extends State<QrGenerateView> {
       });
 
       try {
-        mainImageData = await createPhoto.call(fileImage: mainImageFile);
+        mainImageData = await createPhoto.call(fileImage: mainImageCompressFile);
         secondaryImageData =
             await createPhoto.call(fileImage: secondaryImageFile);
       } catch (e) {
@@ -180,9 +181,10 @@ class _QrGenerateViewState extends State<QrGenerateView> {
       ),
       ElevatedButton(
         onPressed: () async {
-          mainImageFile = await takePhoto.call(ImageSource.gallery);
+          File imageWithoutCompress = await takePhoto.call(ImageSource.gallery);
+          mainImageCompressFile = await CompressFile.compressAndGetFile(imageWithoutCompress);
           setState(() {
-            mainImage = Image.file(mainImageFile);
+            mainImage = Image.file(mainImageCompressFile);
           });
         },
         style: ElevatedButton.styleFrom(
@@ -200,7 +202,7 @@ class _QrGenerateViewState extends State<QrGenerateView> {
             ? const CircularProgressIndicator()
             : const Text(
                 'Imagen Principal',
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
