@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_turno/features/user/application/provider/user_provider.dart';
 import 'package:todo_turno/presentation/provider/views_list_provider/views_list_provider.dart';
+import '../../../features/business/application/dto/save_item_id_to_mail_request_DTO.dart';
+import '../../../features/business/application/use_cases/save_item_id_to_mail.dart';
 import '../../../features/item/domain/entities/item.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
 
@@ -17,11 +21,25 @@ class QrView extends StatefulWidget {
 
 class _QrViewState extends State<QrView> {
   bool isLoading = false;
+  late SaveItemIdToMailRequestDTO saveItemIdToMailRequestDTO;
 
   @override
   Widget build(BuildContext context) {
+    final SaveItemIdToMail saveItemIdToMail =
+        GetIt.instance<SaveItemIdToMail>();
+
     final ViewsListProvider viewsListProvider =
-    Provider.of<ViewsListProvider>(context, listen: false);
+        Provider.of<ViewsListProvider>(context, listen: false);
+
+    final UserProvider userProvider =
+        Provider.of<UserProvider>(context, listen: false);
+
+    String? businessId = userProvider.getBusinessId();
+
+    if (businessId != null) {
+      saveItemIdToMailRequestDTO =
+          SaveItemIdToMailRequestDTO(businessId, widget.item.id);
+    }
 
     return Scaffold(
       body: Container(
@@ -47,14 +65,16 @@ class _QrViewState extends State<QrView> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   ElevatedButton(
-                    onPressed: () => {},
+                    onPressed: () =>{
+                      saveItemIdToMail.call(
+                          saveItemDTO: saveItemIdToMailRequestDTO)
+                    },
                     style: ElevatedButton.styleFrom(
                       fixedSize: const Size.fromWidth(150),
                       foregroundColor: Colors.white,
                       backgroundColor: Theme.of(context).primaryColorDark,
                       shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(12),
                       ),
                       padding: const EdgeInsets.symmetric(
                           vertical: 15, horizontal: 8),
@@ -73,8 +93,9 @@ class _QrViewState extends State<QrView> {
                   ),
                   ElevatedButton(
                     onPressed: () => {
-                    viewsListProvider.setQrScannerView = ItemView(itemProvided: widget.item)
-                  },
+                      viewsListProvider.setQrScannerView =
+                          ItemView(itemProvided: widget.item)
+                    },
                     style: ElevatedButton.styleFrom(
                       fixedSize: const Size.fromWidth(150),
                       foregroundColor: Colors.white,
