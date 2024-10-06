@@ -210,36 +210,20 @@ class _RegisterUserViewState extends State<RegisterUserView> {
         hintText: AppLocalizations.of(context)!.name,
         icon: const Icon(Icons.person),
         controller: _nameController,
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return 'El campo no puede estar vacío';
-          } else if (value.length < 5) {
-            return 'El campo debe tener como mínimo 5 caracteres';
-          }
-          return null;
-        },
       ),
       CustomInputWidget(
         hintText: AppLocalizations.of(context)!.nickname,
         icon: const Icon(Icons.tag_faces),
         controller: _nickNameController,
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return 'El campo no puede estar vacío';
-          } else if (value.length < 5) {
-            return 'El campo debe tener como mínimo 5 caracteres';
-          }
-          return null;
-        },
       ),
       CustomInputWidget(
         hintText: AppLocalizations.of(context)!.phone,
         icon: const Icon(Icons.phone),
         keyboardType: TextInputType.phone,
         controller: _phoneNumberController,
-        validator: (value) {
+        validator: (String? value) {
           if (value == null || value.isEmpty) {
-            return 'El número telefónico es obligatorio';
+            return 'Este campo es obligatorio';
           }
           if (value.length != 9) {
             return 'El número debe tener 9 dígitos';
@@ -255,12 +239,6 @@ class _RegisterUserViewState extends State<RegisterUserView> {
         icon: const Icon(Icons.email),
         keyboardType: TextInputType.emailAddress,
         controller: _emailController,
-        validator: (String? value) {
-          if (value == null || value.isEmpty) {
-            return 'El correo electrónico es obligatorio';
-          }
-          return null;
-        },
       ),
       CustomInputWidget(
         obscureText: true,
@@ -322,24 +300,12 @@ class _RegisterUserViewState extends State<RegisterUserView> {
         icon: const Icon(Icons.numbers),
         keyboardType: TextInputType.number,
         controller: _cardNumberController,
-        validator: (String? value) {
-          if (value == null || value.isEmpty) {
-            return 'Este campo es obligatorio';
-          }
-          return null;
-        },
       ),
       CustomInputWidget(
         hintText: 'Nombre del propietario',
         icon: const Icon(Icons.person),
         keyboardType: TextInputType.name,
         controller: _cardHolderNameController,
-        validator: (String? value) {
-          if (value == null || value.isEmpty) {
-            return 'Este campo es obligatorio';
-          }
-          return null;
-        },
       ),
       CustomInputWidget(
         hintText: 'Fecha de vencimiento',
@@ -349,36 +315,18 @@ class _RegisterUserViewState extends State<RegisterUserView> {
         onDateChanged: (String date){
           _expiryDate = date;
         },
-        validator: (String? value) {
-          if (value == null || value.isEmpty) {
-            return 'Este campo es obligatorio';
-          }
-          return null;
-        },
       ),
       CustomInputWidget(
         hintText: 'Tipo de tarjeta',
         icon: const Icon(Icons.credit_card_outlined),
         customKeyboardType: CustomKeyboardType.CARD_TYPE,
         controller: _cardTypeController,
-        validator: (String? value) {
-          if (value == null || value.isEmpty) {
-            return 'Este campo es obligatorio';
-          }
-          return null;
-        },
       ),
       CustomInputWidget(
         hintText: 'Cvv',
         icon: const Icon(Icons.security),
         keyboardType: TextInputType.number,
         controller: _cvvController,
-        validator: (String? value) {
-          if (value == null || value.isEmpty) {
-            return 'Este campo es obligatorio';
-          }
-          return null;
-        },
       ),
     ];
 
@@ -388,24 +336,12 @@ class _RegisterUserViewState extends State<RegisterUserView> {
         icon: const Icon(Icons.add_business),
         keyboardType: const TextInputType.numberWithOptions(),
         controller: _cifBusinessController,
-        validator: (String? value) {
-          if (value == null || value.isEmpty) {
-            return 'Este campo es obligatorio';
-          }
-          return null;
-        },
       ),
       CustomInputWidget(
         hintText: 'Nombre del negocio',
         icon: const Icon(Icons.business),
         keyboardType: TextInputType.name,
         controller: _nameBusinessController,
-        validator: (String? value) {
-          if (value == null || value.isEmpty) {
-            return 'Este campo es obligatorio';
-          }
-          return null;
-        },
       ),
       CustomInputWidget(
         hintText: 'Teléfono del negocio',
@@ -430,24 +366,12 @@ class _RegisterUserViewState extends State<RegisterUserView> {
         icon: const Icon(Icons.location_on),
         keyboardType: TextInputType.streetAddress,
         controller: _addressBusinessController,
-        validator: (String? value) {
-          if (value == null || value.isEmpty) {
-            return 'Este campo es obligatorio';
-          }
-          return null;
-        },
       ),
       CustomInputWidget(
         hintText: 'Correo Electronico del negocio',
         icon: const Icon(Icons.email),
         keyboardType: TextInputType.emailAddress,
         controller: _emailBusinessController,
-        validator: (String? value) {
-          if (value == null || value.isEmpty) {
-            return 'Este campo es obligatorio';
-          }
-          return null;
-        },
       ),
       ElevatedButton(
         onPressed: () async {

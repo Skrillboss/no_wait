@@ -10,30 +10,39 @@ class CustomInputWidget extends StatefulWidget {
   final bool obscureText;
   final TextEditingController? controller;
   final String? Function(String?)? validator;
+  final bool canBeEmpty;
   final CustomKeyboardType customKeyboardType;
   final TextInputType? keyboardType;
   final Function(int)? onDurationChanged;
   final Function(String)? onDateChanged;
+  final int? maxLength;
 
-  const CustomInputWidget({
-    super.key,
-    this.hintText,
-    this.icon,
-    this.obscureText = false,
-    this.controller,
-    this.validator,
-    this.customKeyboardType = CustomKeyboardType.DEFAULT,
-    this.keyboardType = TextInputType.text,
-    this.onDurationChanged,
-    this.onDateChanged,
-  })  : assert(
+  const CustomInputWidget(
+      {super.key,
+      this.hintText,
+      this.icon,
+      this.obscureText = false,
+      this.controller,
+      this.validator,
+      this.canBeEmpty = false,
+      this.customKeyboardType = CustomKeyboardType.DEFAULT,
+      this.keyboardType = TextInputType.text,
+      this.onDurationChanged,
+      this.onDateChanged,
+      this.maxLength})
+      : assert(
             !(customKeyboardType == CustomKeyboardType.DURATION &&
                 onDurationChanged == null),
             'onDurationChanged cannot be null when customKeyboardType is DURATION'),
         assert(
             !(customKeyboardType == CustomKeyboardType.MONTH_YEAR &&
                 onDateChanged == null),
-            'onDateChanged cannot be null when customKeyboardType is MONTH_YEAR');
+            'onDateChanged cannot be null when customKeyboardType is MONTH_YEAR'),
+        assert(
+        !(customKeyboardType != CustomKeyboardType.DEFAULT &&
+            maxLength != null),
+        'maxLength must be null when customKeyboardType is not DEFAULT'
+        );
 
   @override
   _CustomInputWidgetState createState() => _CustomInputWidgetState();
@@ -51,6 +60,44 @@ class _CustomInputWidgetState extends State<CustomInputWidget> {
   void initState() {
     super.initState();
     _obscureText = widget.obscureText;
+  }
+
+  String? _internalValidator(String? value) {
+    if (!widget.canBeEmpty && (value == null || value.isEmpty)) {
+      return 'El campo no puede estar vacío';
+    }
+
+    if (widget.validator != null) {
+      final customValidation = widget.validator!(value);
+      if (customValidation != null) {
+        return customValidation;
+      }
+    }
+
+    switch (widget.customKeyboardType) {
+      case CustomKeyboardType.CARD_TYPE:
+        if (value != null && value.isNotEmpty) {
+          return 'Debes introducir el tipo de tarjeta';
+        }
+        break;
+
+      case CustomKeyboardType.DURATION:
+        if (_rawDurationInMinutes <= 0) {
+          return 'La duración debe ser mayor a 0';
+        }
+        break;
+
+      case CustomKeyboardType.MONTH_YEAR:
+        if (_rawDateFormated.isEmpty) {
+          return 'Debe seleccionar una fecha válida';
+        }
+        break;
+
+      default:
+        break;
+    }
+
+    return null;
   }
 
   String _formatDuration(Duration duration) {
@@ -169,8 +216,6 @@ class _CustomInputWidgetState extends State<CustomInputWidget> {
             _showDatePicker(context);
           case CustomKeyboardType.DURATION:
             _showDurationPicker(context);
-          case CustomKeyboardType.PHONE_NUMBER:
-          // TODO: Handle this case.
           case CustomKeyboardType.DEFAULT:
         }
       },
@@ -178,7 +223,7 @@ class _CustomInputWidgetState extends State<CustomInputWidget> {
         absorbing: widget.customKeyboardType != CustomKeyboardType.DEFAULT,
         child: TextFormField(
           controller: widget.controller,
-          validator: widget.validator,
+          validator: _internalValidator,
           keyboardType: widget.customKeyboardType == CustomKeyboardType.DEFAULT
               ? widget.keyboardType
               : TextInputType.none,
@@ -209,6 +254,18 @@ class _CustomInputWidgetState extends State<CustomInputWidget> {
             contentPadding:
                 const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
           ),
+          maxLength: widget.customKeyboardType == CustomKeyboardType.DEFAULT
+              ? widget.maxLength ?? 30
+              : null,
+          buildCounter: widget.maxLength == null ?(
+            BuildContext context, {
+            required int currentLength,
+            required bool isFocused,
+            required int? maxLength,
+          }) {
+            return null;
+          }:
+              null
         ),
       ),
     );

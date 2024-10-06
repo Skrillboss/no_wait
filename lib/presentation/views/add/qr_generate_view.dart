@@ -134,35 +134,18 @@ class _QrGenerateViewState extends State<QrGenerateView> {
         hintText: 'Nombre del item',
         icon: const Icon(Icons.emoji_objects_outlined),
         controller: _nameController,
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return 'El campo no puede estar vacío';
-          }
-          return null;
-        },
       ),
       CustomInputWidget(
         hintText: 'Descripción del item',
         icon: const Icon(Icons.description),
         controller: _descriptionController,
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return 'El campo no puede estar vacío';
-          }
-          return null;
-        },
+        maxLength: 100,
       ),
       CustomInputWidget(
         hintText: 'Número de personas por turno',
         icon: const Icon(Icons.group),
         controller: _peoplePerShiftController,
         keyboardType: TextInputType.number,
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return 'El campo no puede estar vacío';
-          }
-          return null;
-        },
       ),
       CustomInputWidget(
         hintText: 'Duración por turno',
@@ -171,12 +154,6 @@ class _QrGenerateViewState extends State<QrGenerateView> {
         customKeyboardType: CustomKeyboardType.DURATION,
         onDurationChanged: (int duration) {
           _durationPerShiftInMinutes = duration;
-        },
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return 'El campo no puede estar vacío';
-          }
-          return null;
         },
       ),
       ElevatedButton(
