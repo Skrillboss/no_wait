@@ -218,7 +218,7 @@ class _CustomInputWidgetState extends State<CustomInputWidget> {
       isCountrySelectionEnabled: true,
       isCountryButtonPersistent: true,
       countryButtonStyle: const CountryButtonStyle(
-        padding: EdgeInsets.only(bottom: 10, left: 12, right: 5),
+        padding: EdgeInsets.only(bottom: 10, left: 14, right: 5),
       ),
     );
   }
