@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_turno/presentation/widgets/tools/custom_keyboardType.dart';
+import 'package:phone_form_field/phone_form_field.dart';
 
 class CustomInputWidget extends StatefulWidget {
   final String? hintText;
@@ -39,10 +40,9 @@ class CustomInputWidget extends StatefulWidget {
                 onDateChanged == null),
             'onDateChanged cannot be null when customKeyboardType is MONTH_YEAR'),
         assert(
-        !(customKeyboardType != CustomKeyboardType.DEFAULT &&
-            maxLength != null),
-        'maxLength must be null when customKeyboardType is not DEFAULT'
-        );
+            !(customKeyboardType != CustomKeyboardType.DEFAULT &&
+                maxLength != null),
+            'maxLength must be null when customKeyboardType is not DEFAULT');
 
   @override
   _CustomInputWidgetState createState() => _CustomInputWidgetState();
@@ -75,6 +75,10 @@ class _CustomInputWidgetState extends State<CustomInputWidget> {
     }
 
     switch (widget.customKeyboardType) {
+      case CustomKeyboardType.PHONE_NUMBER:
+        //TODO: administrar un validator
+        break;
+
       case CustomKeyboardType.CARD_TYPE:
         if (value != null && value.isNotEmpty) {
           return 'Debes introducir el tipo de tarjeta';
@@ -216,57 +220,79 @@ class _CustomInputWidgetState extends State<CustomInputWidget> {
             _showDatePicker(context);
           case CustomKeyboardType.DURATION:
             _showDurationPicker(context);
+          case CustomKeyboardType.PHONE_NUMBER:
           case CustomKeyboardType.DEFAULT:
         }
       },
       child: AbsorbPointer(
-        absorbing: widget.customKeyboardType != CustomKeyboardType.DEFAULT,
-        child: TextFormField(
-          controller: widget.controller,
-          validator: _internalValidator,
-          keyboardType: widget.customKeyboardType == CustomKeyboardType.DEFAULT
-              ? widget.keyboardType
-              : TextInputType.none,
-          obscureText: _obscureText,
-          decoration: InputDecoration(
-            hintText: widget.hintText,
-            prefixIcon: widget.icon,
-            suffixIcon: widget.obscureText
-                ? IconButton(
-                    icon: Icon(
-                      _obscureText ? Icons.visibility : Icons.visibility_off,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _obscureText =
-                            !_obscureText; // Alternamos entre mostrar y ocultar
-                      });
-                    },
-                  )
-                : null,
-            filled: true,
-            fillColor: Theme.of(context).inputDecorationTheme.fillColor ??
-                Theme.of(context).primaryColorLight.withOpacity(0.1),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(50),
-              borderSide: BorderSide.none,
-            ),
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
-          ),
-          maxLength: widget.customKeyboardType == CustomKeyboardType.DEFAULT
-              ? widget.maxLength ?? 30
-              : null,
-          buildCounter: widget.maxLength == null ?(
-            BuildContext context, {
-            required int currentLength,
-            required bool isFocused,
-            required int? maxLength,
-          }) {
-            return null;
-          }:
-              null
-        ),
+        absorbing: !(widget.customKeyboardType == CustomKeyboardType.DEFAULT ||
+            widget.customKeyboardType == CustomKeyboardType.PHONE_NUMBER),
+        child: widget.customKeyboardType != CustomKeyboardType.PHONE_NUMBER
+            ? TextFormField(
+                controller: widget.controller,
+                validator: _internalValidator,
+                keyboardType:
+                    widget.customKeyboardType == CustomKeyboardType.DEFAULT
+                        ? widget.keyboardType
+                        : TextInputType.none,
+                obscureText: _obscureText,
+                decoration: InputDecoration(
+                  hintText: widget.hintText,
+                  prefixIcon: widget.icon,
+                  suffixIcon: widget.obscureText
+                      ? IconButton(
+                          icon: Icon(
+                            _obscureText
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _obscureText =
+                                  !_obscureText; // Alternamos entre mostrar y ocultar
+                            });
+                          },
+                        )
+                      : null,
+                  filled: true,
+                  fillColor: Theme.of(context).inputDecorationTheme.fillColor ??
+                      Theme.of(context).primaryColorLight.withOpacity(0.1),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(50),
+                    borderSide: BorderSide.none,
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 20.0, vertical: 15.0),
+                ),
+                maxLength:
+                    widget.customKeyboardType == CustomKeyboardType.DEFAULT
+                        ? widget.maxLength ?? 30
+                        : null,
+                buildCounter: widget.maxLength == null
+                    ? (
+                        BuildContext context, {
+                        required int currentLength,
+                        required bool isFocused,
+                        required int? maxLength,
+                      }) {
+                        return null;
+                      }
+                    : null)
+            : PhoneFormField(
+                initialValue: PhoneNumber.parse('+34'),
+                validator: PhoneValidator.compose([
+                  PhoneValidator.required(context),
+                  PhoneValidator.validMobile(context)
+                ]),
+                countrySelectorNavigator: const CountrySelectorNavigator.page(),
+                onChanged: (phoneNumber) => print('changed into $phoneNumber'),
+                enabled: true,
+                isCountrySelectionEnabled: true,
+                isCountryButtonPersistent: true,
+                countryButtonStyle: const CountryButtonStyle(
+                  padding: EdgeInsets.only(bottom: 10, left: 12, right: 5),
+                ),
+              ),
       ),
     );
   }

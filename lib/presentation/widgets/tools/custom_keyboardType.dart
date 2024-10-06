@@ -3,4 +3,5 @@ enum CustomKeyboardType {
   MONTH_YEAR,
   CARD_TYPE,
   DURATION,
+  PHONE_NUMBER
 }

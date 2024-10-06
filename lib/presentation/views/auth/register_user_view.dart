@@ -219,20 +219,8 @@ class _RegisterUserViewState extends State<RegisterUserView> {
       CustomInputWidget(
         hintText: AppLocalizations.of(context)!.phone,
         icon: const Icon(Icons.phone),
-        keyboardType: TextInputType.phone,
+        customKeyboardType: CustomKeyboardType.PHONE_NUMBER,
         controller: _phoneNumberController,
-        validator: (String? value) {
-          if (value == null || value.isEmpty) {
-            return 'Este campo es obligatorio';
-          }
-          if (value.length != 9) {
-            return 'El número debe tener 9 dígitos';
-          }
-          if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
-            return 'El número debe contener solo dígitos';
-          }
-          return null;
-        },
       ),
       CustomInputWidget(
         hintText: AppLocalizations.of(context)!.email,
@@ -346,20 +334,8 @@ class _RegisterUserViewState extends State<RegisterUserView> {
       CustomInputWidget(
         hintText: 'Teléfono del negocio',
         icon: const Icon(Icons.phone),
-        keyboardType: TextInputType.phone,
+        customKeyboardType: CustomKeyboardType.PHONE_NUMBER,
         controller: _phoneBusinessController,
-        validator: (String? value) {
-          if (value == null || value.isEmpty) {
-            return 'Este campo es obligatorio';
-          }
-          if (value.length != 9) {
-            return 'El número debe tener 9 dígitos';
-          }
-          if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
-            return 'El número debe contener solo dígitos';
-          }
-          return null;
-        },
       ),
       CustomInputWidget(
         hintText: 'Dirección del negocio',
