@@ -139,7 +139,7 @@ class _QrGenerateViewState extends State<QrGenerateView> {
         hintText: 'Descripción del item',
         icon: const Icon(Icons.description),
         textController: _descriptionController,
-        maxLength: 100,
+        maxLength: 230,
       ),
       CustomInputWidget(
         hintText: 'Número de personas por turno',
