@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:phone_form_field/phone_form_field.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_turno/features/business/application/dto/register_business_request_DTO.dart';
 import 'package:todo_turno/features/image/application/use_cases/take_photo.dart';
@@ -34,7 +35,7 @@ class _RegisterUserViewState extends State<RegisterUserView> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _nickNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _phoneNumberController = TextEditingController();
+  final PhoneController _phoneUserController = PhoneController(initialValue: const PhoneNumber(isoCode: IsoCode.ES, nsn: ''));
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _passwordRepeatController =
       TextEditingController();
@@ -52,8 +53,7 @@ class _RegisterUserViewState extends State<RegisterUserView> {
   //Business
   final TextEditingController _cifBusinessController = TextEditingController();
   final TextEditingController _nameBusinessController = TextEditingController();
-  final TextEditingController _phoneBusinessController =
-      TextEditingController();
+  final PhoneController _phoneBusinessController = PhoneController(initialValue: const PhoneNumber(isoCode: IsoCode.ES, nsn: ''));
   final TextEditingController _addressBusinessController =
       TextEditingController();
   final TextEditingController _emailBusinessController =
@@ -83,14 +83,13 @@ class _RegisterUserViewState extends State<RegisterUserView> {
       User? user;
       RegisterPaymentInfoDTO? registerPaymentInfoDTO;
       RegisterBusinessRequestDTO? registerBusinessDTO;
-      RegisterRoleDTO registerRoleDTO = RegisterRoleDTO(
-          name: userRoleView.name
-      );
+      RegisterRoleDTO registerRoleDTO =
+          RegisterRoleDTO(name: userRoleView.name);
 
-      if(userRoleView != UserRole.USER){
-        try{
+      if (userRoleView != UserRole.USER) {
+        try {
           imageData = await createPhoto.call(fileImage: imageFile);
-        }catch(e){
+        } catch (e) {
           print('========================HA OCURRIDO EL SIGUIENTE ERROR: $e');
           if (mounted) {
             setState(() {
@@ -109,7 +108,7 @@ class _RegisterUserViewState extends State<RegisterUserView> {
           cif: _cifBusinessController.text,
           name: _nameBusinessController.text,
           imageUrl: imageData.displayUrl,
-          phone: _phoneBusinessController.text,
+          phone: _phoneBusinessController.value.international,
           address: _addressBusinessController.text,
           email: _emailBusinessController.text,
         );
@@ -118,7 +117,7 @@ class _RegisterUserViewState extends State<RegisterUserView> {
         name: _nameController.text,
         nickName: _nickNameController.text,
         email: _emailController.text,
-        phoneNumber: _phoneNumberController.text,
+        phoneNumber: _phoneUserController.value.international,
         password: _passwordController.text,
         userRole: [registerRoleDTO],
         paymentInfoList: [registerPaymentInfoDTO],
@@ -146,11 +145,17 @@ class _RegisterUserViewState extends State<RegisterUserView> {
   }
 
   @override
+  void initState() {
+    super.initState();
+
+  }
+
+  @override
   void dispose() {
     _nameController.dispose();
     _nickNameController.dispose();
     _emailController.dispose();
-    _phoneNumberController.dispose();
+    _phoneUserController.dispose();
     _passwordController.dispose();
     _passwordRepeatController.dispose();
     super.dispose();
@@ -209,31 +214,31 @@ class _RegisterUserViewState extends State<RegisterUserView> {
       CustomInputWidget(
         hintText: AppLocalizations.of(context)!.name,
         icon: const Icon(Icons.person),
-        controller: _nameController,
+        textController: _nameController,
       ),
       CustomInputWidget(
         hintText: AppLocalizations.of(context)!.nickname,
         icon: const Icon(Icons.tag_faces),
-        controller: _nickNameController,
+        textController: _nickNameController,
       ),
       CustomInputWidget(
         hintText: AppLocalizations.of(context)!.phone,
         icon: const Icon(Icons.phone),
         customKeyboardType: CustomKeyboardType.PHONE_NUMBER,
-        controller: _phoneNumberController,
+        phoneController: _phoneUserController,
       ),
       CustomInputWidget(
         hintText: AppLocalizations.of(context)!.email,
         icon: const Icon(Icons.email),
         keyboardType: TextInputType.emailAddress,
-        controller: _emailController,
+        textController: _emailController,
       ),
       CustomInputWidget(
         obscureText: true,
         hintText: AppLocalizations.of(context)!.passwordHint,
         icon: const Icon(Icons.password),
         keyboardType: TextInputType.visiblePassword,
-        controller: _passwordController,
+        textController: _passwordController,
         validator: (value) {
           if (value == null || value.isEmpty) {
             return 'La contraseña es obligatoria';
@@ -258,7 +263,7 @@ class _RegisterUserViewState extends State<RegisterUserView> {
         hintText: AppLocalizations.of(context)!.repeatPasswordHint,
         icon: const Icon(Icons.password),
         keyboardType: TextInputType.visiblePassword,
-        controller: _passwordRepeatController,
+        textController: _passwordRepeatController,
         validator: (value) {
           if (value == null || value.isEmpty) {
             return 'La contraseña es obligatoria';
@@ -287,20 +292,20 @@ class _RegisterUserViewState extends State<RegisterUserView> {
         hintText: 'Numero de tarjeta',
         icon: const Icon(Icons.numbers),
         keyboardType: TextInputType.number,
-        controller: _cardNumberController,
+        textController: _cardNumberController,
       ),
       CustomInputWidget(
         hintText: 'Nombre del propietario',
         icon: const Icon(Icons.person),
         keyboardType: TextInputType.name,
-        controller: _cardHolderNameController,
+        textController: _cardHolderNameController,
       ),
       CustomInputWidget(
         hintText: 'Fecha de vencimiento',
         icon: const Icon(Icons.date_range_sharp),
         customKeyboardType: CustomKeyboardType.MONTH_YEAR,
-        controller: _expiryDateController,
-        onDateChanged: (String date){
+        textController: _expiryDateController,
+        onDateChanged: (String date) {
           _expiryDate = date;
         },
       ),
@@ -308,13 +313,13 @@ class _RegisterUserViewState extends State<RegisterUserView> {
         hintText: 'Tipo de tarjeta',
         icon: const Icon(Icons.credit_card_outlined),
         customKeyboardType: CustomKeyboardType.CARD_TYPE,
-        controller: _cardTypeController,
+        textController: _cardTypeController,
       ),
       CustomInputWidget(
         hintText: 'Cvv',
         icon: const Icon(Icons.security),
         keyboardType: TextInputType.number,
-        controller: _cvvController,
+        textController: _cvvController,
       ),
     ];
 
@@ -323,38 +328,38 @@ class _RegisterUserViewState extends State<RegisterUserView> {
         hintText: 'Cif',
         icon: const Icon(Icons.add_business),
         keyboardType: const TextInputType.numberWithOptions(),
-        controller: _cifBusinessController,
+        textController: _cifBusinessController,
       ),
       CustomInputWidget(
         hintText: 'Nombre del negocio',
         icon: const Icon(Icons.business),
         keyboardType: TextInputType.name,
-        controller: _nameBusinessController,
+        textController: _nameBusinessController,
       ),
       CustomInputWidget(
         hintText: 'Teléfono del negocio',
         icon: const Icon(Icons.phone),
         customKeyboardType: CustomKeyboardType.PHONE_NUMBER,
-        controller: _phoneBusinessController,
+        phoneController: _phoneBusinessController,
       ),
       CustomInputWidget(
         hintText: 'Dirección del negocio',
         icon: const Icon(Icons.location_on),
         keyboardType: TextInputType.streetAddress,
-        controller: _addressBusinessController,
+        textController: _addressBusinessController,
       ),
       CustomInputWidget(
         hintText: 'Correo Electronico del negocio',
         icon: const Icon(Icons.email),
         keyboardType: TextInputType.emailAddress,
-        controller: _emailBusinessController,
+        textController: _emailBusinessController,
       ),
       ElevatedButton(
         onPressed: () async {
           imageFile = await takePhoto.call(ImageSource.gallery);
-            setState(() {
-              image = Image.file(imageFile);
-            });
+          setState(() {
+            image = Image.file(imageFile);
+          });
         },
         style: ElevatedButton.styleFrom(
           fixedSize: const Size.fromWidth(500),
@@ -390,9 +395,12 @@ class _RegisterUserViewState extends State<RegisterUserView> {
           borderRadius: BorderRadius.circular(15), // Borde redondeado
         ),
         collapsedShape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10), // Borde redondeado cuando está colapsado
+          borderRadius: BorderRadius.circular(
+              10), // Borde redondeado cuando está colapsado
         ),
-        children: GenerateStaceBetweenWidget.widgetSpaceBuilder(paymentInfoInputs, 20).children,
+        children:
+            GenerateStaceBetweenWidget.widgetSpaceBuilder(paymentInfoInputs, 20)
+                .children,
       ),
       ExpansionTile(
         title: const Text('Información de negocio'),
@@ -400,9 +408,12 @@ class _RegisterUserViewState extends State<RegisterUserView> {
           borderRadius: BorderRadius.circular(15), // Borde redondeado
         ),
         collapsedShape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10), // Borde redondeado cuando está colapsado
+          borderRadius: BorderRadius.circular(
+              10), // Borde redondeado cuando está colapsado
         ),
-        children: GenerateStaceBetweenWidget.widgetSpaceBuilder(businessInputs, 20).children,
+        children:
+            GenerateStaceBetweenWidget.widgetSpaceBuilder(businessInputs, 20)
+                .children,
       )
     ];
 
@@ -419,7 +430,8 @@ class _RegisterUserViewState extends State<RegisterUserView> {
           children: [
             GenerateStaceBetweenWidget.widgetSpaceBuilder(inputs, 20),
             if (userRoleView != UserRole.USER)
-              GenerateStaceBetweenWidget.widgetSpaceBuilder(additionalInputs, 20),
+              GenerateStaceBetweenWidget.widgetSpaceBuilder(
+                  additionalInputs, 20),
             const SizedBox(height: 20), // Espacio antes del botón
             ElevatedButton(
               onPressed: () => _registerUser(context),

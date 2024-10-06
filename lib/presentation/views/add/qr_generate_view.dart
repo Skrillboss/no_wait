@@ -133,24 +133,24 @@ class _QrGenerateViewState extends State<QrGenerateView> {
       CustomInputWidget(
         hintText: 'Nombre del item',
         icon: const Icon(Icons.emoji_objects_outlined),
-        controller: _nameController,
+        textController: _nameController,
       ),
       CustomInputWidget(
         hintText: 'Descripción del item',
         icon: const Icon(Icons.description),
-        controller: _descriptionController,
+        textController: _descriptionController,
         maxLength: 100,
       ),
       CustomInputWidget(
         hintText: 'Número de personas por turno',
         icon: const Icon(Icons.group),
-        controller: _peoplePerShiftController,
+        textController: _peoplePerShiftController,
         keyboardType: TextInputType.number,
       ),
       CustomInputWidget(
         hintText: 'Duración por turno',
         icon: const Icon(Icons.timelapse),
-        controller: _durationPerShiftsController,
+        textController: _durationPerShiftsController,
         customKeyboardType: CustomKeyboardType.DURATION,
         onDurationChanged: (int duration) {
           _durationPerShiftInMinutes = duration;
