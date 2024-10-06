@@ -82,7 +82,7 @@ class _CustomInputWidgetState extends State<CustomInputWidget> {
 
     switch (widget.customKeyboardType) {
       case CustomKeyboardType.CARD_TYPE:
-        if (value != null && value.isNotEmpty) {
+        if (value != null && value.isEmpty) {
           return 'Debes introducir el tipo de tarjeta';
         }
         break;
@@ -177,7 +177,7 @@ class _CustomInputWidgetState extends State<CustomInputWidget> {
                   onSelectionChanged: (Set<String> newSelection) {
                     setState(() {
                       _cardTypeView = newSelection.first;
-                      widget.textController?.text = newSelection.first;
+                      widget.textController?.text = _cardTypeView;
                       Navigator.pop(context);
                     });
                   },
@@ -207,7 +207,7 @@ class _CustomInputWidgetState extends State<CustomInputWidget> {
                   widget.textController?.text =
                   '${_selectedDate.year}/${_selectedDate.month}';
                   _rawDateFormated =
-                      dateFormat.parse(newDate.toString()).toString();
+                      dateFormat.format(newDate);
                   if (widget.onDateChanged != null) {
                     widget.onDateChanged!(_rawDateFormated);
                   }

@@ -310,6 +310,9 @@ class _RegisterUserViewState extends State<RegisterUserView> {
         },
       ),
       CustomInputWidget(
+
+
+
         hintText: 'Tipo de tarjeta',
         icon: const Icon(Icons.credit_card_outlined),
         customKeyboardType: CustomKeyboardType.CARD_TYPE,
