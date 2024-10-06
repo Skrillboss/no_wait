@@ -22,9 +22,14 @@ import 'package:todo_turno/features/user/infrastructure/data_providers/demo/auth
 import 'package:todo_turno/features/user/infrastructure/repositories/auth_refresh_token_repository_impl.dart';
 import 'package:todo_turno/features/user/infrastructure/repositories/register_repository_impl.dart';
 import '../../features/business/application/use_cases/add_item.dart';
+import '../../features/business/application/use_cases/save_item_id_to_mail.dart';
 import '../../features/business/domain/repositories/create_item_repository.dart';
+import '../../features/business/domain/repositories/save_item_repository.dart';
+import '../../features/business/infrastructure/data_providers/api/save_item_api_client.dart';
 import '../../features/business/infrastructure/data_providers/demo/create_item_demo_client.dart';
+import '../../features/business/infrastructure/data_providers/demo/save_item_demo_client.dart';
 import '../../features/business/infrastructure/repositories/create_item_repository_impl.dart';
+import '../../features/business/infrastructure/repositories/save_item_repository_impl.dart';
 import '../../features/image/domain/repositories/create_photo_repository.dart';
 import '../../features/image/infrastructure/data_providers/demo/create_photo_demo_client.dart';
 import '../../features/image/infrastructure/repositories/create_photo_repository_impl.dart';
@@ -125,6 +130,19 @@ void setupServiceLocator() {
 
   // Registering the CreateItemRepository
   sl.registerLazySingleton<CreateItemRepository>(() => CreateItemRepositoryImpl(apiClient: sl<CreateItemApiClient>()));
+
+  /* ******************  SAVE ITEM TO MAIL  ******************/
+  /* ******** USE CASE ******** */
+  sl.registerLazySingleton<SaveItemIdToMail>(() => SaveItemIdToMail(sl<SaveItemRepository>()));
+
+  // Registering the SaveItemDemoClient DEMO
+  sl.registerLazySingleton<SaveItemDemoClient>(() => SaveItemDemoClient());
+
+  // Registering the SaveItemApiClient API
+  sl.registerLazySingleton<SaveItemApiClient>(() => SaveItemApiClient());
+
+  // Registering the SaveItemClientRepository
+  sl.registerLazySingleton<SaveItemRepository>(() => SaveItemRepositoryImpl(apiClient: sl<SaveItemApiClient>()));
 
   /* ************************************************************************ */
   /* ******************************** Image ******************************** */

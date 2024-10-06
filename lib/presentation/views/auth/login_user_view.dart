@@ -100,7 +100,7 @@ class _LoginUserViewState extends State<LoginUserView> {
       CustomInputWidget(
         hintText: AppLocalizations.of(context)!.nickname,
         icon: const Icon(Icons.person),
-        controller: _nickNameController,
+        textController: _nickNameController,
         validator: (value) {
           if (value == null || value.isEmpty) {
             return 'El campo no puede estas vacio';
@@ -115,7 +115,7 @@ class _LoginUserViewState extends State<LoginUserView> {
         hintText: AppLocalizations.of(context)!.passwordHint,
         icon: const Icon(Icons.password),
         keyboardType: TextInputType.visiblePassword,
-        controller: _passwordController,
+        textController: _passwordController,
         validator: (value) {
           if (value == null || value.isEmpty) {
             return 'La contraseña es obligatoria';

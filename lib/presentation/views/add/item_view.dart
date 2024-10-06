@@ -180,10 +180,10 @@ class _ItemDetailsState extends State<_ItemDetails> {
               foregroundColor: Colors.white,
               backgroundColor: Theme.of(context).primaryColorDark,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12), // Bordes redondeados
+                borderRadius: BorderRadius.circular(12),
               ),
               padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
-              elevation: 5, // Sombra del botón
+              elevation: 5,
             ),
             child: isLoading
                 ? const CircularProgressIndicator()
@@ -205,52 +205,48 @@ class _ItemDetailsState extends State<_ItemDetails> {
     final Size size = MediaQuery.of(context).size;
 
     const int maxDescriptionLength = 100;
+    final String description = widget.item.description;
+    final String displayText = description.length > maxDescriptionLength
+        ? (isExpanded ? description : '${description.substring(0, maxDescriptionLength)}...')
+        : description;
 
-    final String displayText = isExpanded
-        ? widget.item.description
-        : '${widget.item.description.substring(0, maxDescriptionLength)}...';
+    return isExpanded
+        ? _buildExpandedContent(displayText)
+        : _buildCollapsedContent(displayText, size);
+  }
 
-    if (isExpanded) {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            widget.item.name,
-            style: const TextStyle(
-                color: Colors.green, fontSize: 24, fontWeight: FontWeight.w900),
+  Widget _buildExpandedContent(String displayText) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          widget.item.name,
+          style: const TextStyle(
+            color: Colors.green,
+            fontSize: 24,
+            fontWeight: FontWeight.w900,
           ),
-          Text(
-            displayText,
-            textAlign: TextAlign.center,
-          ),
-          if (widget.item.description.length > maxDescriptionLength)
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  isExpanded = !isExpanded;
-                });
-              },
-              child: Text(
-                isExpanded ? 'Leer menos' : 'Leer más',
-                style: const TextStyle(
-                    color: Colors.blue, fontWeight: FontWeight.bold),
-              ),
-            ),
-        ],
-      );
-    }
+        ),
+        Text(
+          displayText,
+          textAlign: TextAlign.center,
+        ),
+        if (widget.item.description.length > 100) _buildReadMoreButton(),
+      ],
+    );
+  }
+
+  Widget _buildCollapsedContent(String displayText, Size size) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        isExpanded == false
-            ? ClipRRect(
+        if (!isExpanded) ClipRRect(
           borderRadius: BorderRadius.circular(20),
           child: Image.network(
             widget.item.secondaryImagePath ?? widget.item.mainImagePath,
             width: size.width * 0.3,
           ),
-        )
-            : Container(),
+        ),
         const SizedBox(width: 10),
         SizedBox(
           width: (size.width - 40) * 0.7,
@@ -260,30 +256,37 @@ class _ItemDetailsState extends State<_ItemDetails> {
               Text(
                 widget.item.name,
                 style: const TextStyle(
-                    color: Colors.green,
-                    fontSize: 24,
-                    fontWeight: FontWeight.w900),
+                  color: Colors.green,
+                  fontSize: 24,
+                  fontWeight: FontWeight.w900,
+                ),
               ),
               Text(displayText),
-              if (widget.item.description.length > maxDescriptionLength)
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      isExpanded = !isExpanded;
-                    });
-                  },
-                  child: Text(
-                    isExpanded ? 'Leer menos' : 'Leer más',
-                    style: const TextStyle(
-                        color: Colors.blue, fontWeight: FontWeight.bold),
-                  ),
-                ),
+              if (widget.item.description.length > 100) _buildReadMoreButton(),
             ],
           ),
         ),
       ],
     );
   }
+
+  Widget _buildReadMoreButton() {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          isExpanded = !isExpanded;
+        });
+      },
+      child: Text(
+        isExpanded ? 'Leer menos' : 'Leer más',
+        style: const TextStyle(
+          color: Colors.blue,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+
 }
 
 class _CustomGradient extends StatelessWidget {
