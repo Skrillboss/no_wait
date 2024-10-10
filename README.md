@@ -1,16 +1,21 @@
-# todo_turno
+# 🚀 NoWait
 
-A new Flutter project.
+**NoWait** es una aplicación que nace con la idea de **nunca hacer colas físicas**. Ofrecemos un sistema en el que puedes realizar colas virtuales, gestionadas de manera automática. Este es el proyecto **no_wait_front-end**, creado con [Flutter](https://flutter.dev), donde estamos implementando mejoras para ofrecer una interfaz amigable que te permita entender rápidamente cómo funciona el sistema de frontend de NoWait.
 
-## Getting Started
+## 🏗️ Arquitectura
 
-This project is a starting point for a Flutter application.
+El proyecto sigue una **arquitectura hexagonal** con una capa adicional de presentación. En la capa de presentación se muestran las pantallas, widgets, vistas y funciones necesarias para una experiencia **responsive** y amigable con el usuario. 
 
-A few resources to get you started if this is your first Flutter project:
+### Detalles de la Arquitectura
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- **Capa de Presentación**: Interactúa directamente con el usuario.
+- **Arquitectura Hexagonal**: Gestiona el envío y la recepción de datos con el **backend**. La capa más externa (presentación) se comunica únicamente con la capa de aplicación.
+- **Comunicación**: Utiliza modelos y repositorios de dominio que se conectan a través de adaptadores de infraestructura. 
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+En este sistema, hay un **switch** que elige de dónde se va a proveer la información, que puede ser un **endPoint** (de cualquier backend). Se separa la lógica del backend al que se le hace la petición del resto, permitiendo así, en un futuro, cambiar el proveedor de dicha información en el frontend. También se puede obtener información de un **DEMO** proporcionado por el mismo frontend, lo que facilita la creación de vistas demostrativas al presentar el producto NoWait.
+
+Este switch entre **endPoint** y **DEMO** es gestionado por el "core" de la aplicación, específicamente en el **server_locator**, donde mediante la librería [GetIt](https://pub.dev/packages/get_it) se instancian las dependencias necesarias para la aplicación. Dentro de este archivo, puedes cambiar el proveedor de datos (endPoint o DEMO).
+
+---
+
+¡Gracias por tu interés en NoWait! Si tienes preguntas, no dudes en contactarnos. 😊
