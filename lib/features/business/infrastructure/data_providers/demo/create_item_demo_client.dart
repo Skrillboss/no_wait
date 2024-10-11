@@ -1,27 +1,28 @@
-import 'package:todo_turno/features/business/application/dto/add_item_request_DTO.dart';
 import 'package:todo_turno/features/business/infrastructure/data_providers/repositories/create_item_client_repository.dart';
+
+import '../../../../item/application/dto/item_request_DTO.dart';
 
 class CreateItemDemoClient extends CreateItemClientRepository {
   @override
   Future<Map<String, dynamic>> createItem(
-      AddItemRequestDTO addItemRequestDTO) async {
+      String businessId, ItemRequestDTO itemRequestDTO) async {
     final Map<String, dynamic> response = {
-      'businessId': '1',
+      'businessId': businessId,
       'itemResponseDTO': {
         'id': '3',
-        'name': addItemRequestDTO.createItemRequestDTO.name,
-        'description': addItemRequestDTO.createItemRequestDTO.description,
+        'name': itemRequestDTO.name,
+        'description': itemRequestDTO.description,
         'numberPeopleWaiting': 0,
-        'peoplePerShift': addItemRequestDTO.createItemRequestDTO.peoplePerShift,
+        'peoplePerShift': itemRequestDTO.peoplePerShift,
         'numberShiftsWaiting': 0,
         'rating': 0.0,
-        'mainImagePath': addItemRequestDTO.createItemRequestDTO.mainImagePath,
+        'mainImagePath': itemRequestDTO.mainImagePath,
         'secondaryImagePath':
-        addItemRequestDTO.createItemRequestDTO.secondaryImagePath,
+        itemRequestDTO.secondaryImagePath,
         'currentWaitingDuration': 0.0,
         'durationPerShifts':
-        addItemRequestDTO.createItemRequestDTO.durationPerShifts,
-        'status': addItemRequestDTO.createItemRequestDTO.status,
+        itemRequestDTO.durationPerShifts,
+        'status': itemRequestDTO.status,
         'shifts': null
       }
     };

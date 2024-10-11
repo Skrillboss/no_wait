@@ -5,7 +5,6 @@ import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:todo_turno/features/business/application/dto/add_item_request_DTO.dart';
 import 'package:todo_turno/features/item/domain/entities/item.dart';
 import 'package:todo_turno/presentation/views/add/qr_view.dart';
 import '../../../features/business/application/use_cases/add_item.dart';
@@ -13,7 +12,7 @@ import '../../../features/image/application/use_cases/compress_file.dart';
 import '../../../features/image/application/use_cases/create_photo.dart';
 import '../../../features/image/application/use_cases/take_photo.dart';
 import '../../../features/image/domain/entities/image_data.dart';
-import '../../../features/item/application/dto/create_item_request_DTO.dart';
+import '../../../features/item/application/dto/item_request_DTO.dart';
 import '../../../features/user/application/provider/user_provider.dart';
 import '../../provider/views_list_provider/views_list_provider.dart';
 import '../../widgets/custom_input_widget.dart';
@@ -73,7 +72,7 @@ class _QrGenerateViewState extends State<QrGenerateView> {
         }
       }
 
-      CreateItemRequestDTO createItemRequestDTO = CreateItemRequestDTO(
+      ItemRequestDTO itemRequestDTO = ItemRequestDTO(
           name: _nameController.text,
           description: _descriptionController.text,
           peoplePerShift: int.parse(_peoplePerShiftController.text),
@@ -81,10 +80,8 @@ class _QrGenerateViewState extends State<QrGenerateView> {
           secondaryImagePath: secondaryImageData.displayUrl,
           durationPerShifts: _durationPerShiftInMinutes,
           status: itemStatusView.name);
-      AddItemRequestDTO addItemRequestDTO =
-          AddItemRequestDTO(businessId, createItemRequestDTO);
 
-      Item item = await addItem.call(addItemRequestDTO: addItemRequestDTO);
+      Item item = await addItem.call(businessId: businessId, itemRequestDTO: itemRequestDTO);
       viewsListProvider.setQrScannerView = QrView(item: item);
     }
   }

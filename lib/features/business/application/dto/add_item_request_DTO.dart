@@ -1,8 +1,8 @@
-import '../../../item/application/dto/create_item_request_DTO.dart';
+import '../../../item/application/dto/item_request_DTO.dart';
 
 class AddItemRequestDTO {
   final String businessId;
-  final CreateItemRequestDTO createItemRequestDTO;
+  final ItemRequestDTO createItemRequestDTO;
 
   AddItemRequestDTO(this.businessId, this.createItemRequestDTO);
 
