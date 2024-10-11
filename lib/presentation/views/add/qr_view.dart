@@ -36,11 +36,6 @@ class _QrViewState extends State<QrView> {
 
     String? businessId = userProvider.getBusinessId();
 
-    if (businessId != null) {
-      saveItemIdToMailRequestDTO =
-          SaveItemIdToMailRequestDTO(businessId, widget.item.id);
-    }
-
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -65,9 +60,10 @@ class _QrViewState extends State<QrView> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   ElevatedButton(
-                    onPressed: () =>{
+                    onPressed: () => {
+                      //TODO: MANEJAR EN CASO DE NO CONSEGUIR EL BUSINESSID
                       saveItemIdToMail.call(
-                          saveItemDTO: saveItemIdToMailRequestDTO)
+                          businessId: businessId!, itemId: widget.item.id)
                     },
                     style: ElevatedButton.styleFrom(
                       fixedSize: const Size.fromWidth(150),

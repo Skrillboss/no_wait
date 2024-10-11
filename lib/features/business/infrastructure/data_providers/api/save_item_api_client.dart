@@ -11,12 +11,12 @@ class SaveItemApiClient extends SaveItemClientRepository {
 
   @override
   Future<bool> saveItemIntoMail(
-      {required SaveItemIdToMailRequestDTO saveItemDTO}) async {
+      {required String businessId, required String itemId}) async {
     try {
       final Response response = await requestHandler.postRequest(
-          endPoint: '/business/item/saveQR/mail',
-          dataDecode: saveItemDTO.toJson(),
-          errorCode: 2000);
+        endPoint: '/business/item/$businessId/$itemId/sendQR/mail',
+        errorCode: 2000,
+      );
       return jsonDecode(response.body);
     } on CustomException {
       rethrow;

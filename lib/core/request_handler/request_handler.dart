@@ -99,7 +99,7 @@ class RequestHandler {
   Future<Response> postRequest({
     String? baseApiUrl,
     required String endPoint,
-    required Object? dataDecode,
+    Object? dataDecode,
     required int errorCode,
     bool isFormData = false, // Nuevo parámetro para controlar si es form-data
     bool useToken = true,
