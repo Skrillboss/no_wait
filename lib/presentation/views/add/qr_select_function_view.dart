@@ -70,7 +70,7 @@ class _QrSelectFunctionViewState extends State<QrSelectFunctionView> {
                   ),
                 ),
                 const SizedBox(height: 50),
-                if (userProvider.getUser!.roleList.contains(UserRole.ADMIN))
+                if (userProvider.getUser!.role.name == 'ADMIN')
                   ElevatedButton(
                     onPressed: () => {
                       viewsListProvider.setQrScannerView =
