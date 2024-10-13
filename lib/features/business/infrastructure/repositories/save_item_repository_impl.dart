@@ -9,7 +9,7 @@ class SaveItemRepositoryImpl extends SaveItemRepository{
   SaveItemRepositoryImpl({required this.apiClient});
 
   @override
-  Future<bool> saveItemIntoMail({required SaveItemIdToMailRequestDTO saveItemDTO}) async{
-    return await apiClient.saveItemIntoMail(saveItemDTO: saveItemDTO);
+  Future<bool> saveItemIntoMail({required String businessId, required String itemId}) async{
+    return await apiClient.saveItemIntoMail(businessId: businessId, itemId: itemId);
   }
 }

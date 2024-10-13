@@ -3,7 +3,7 @@ import 'package:todo_turno/features/business/infrastructure/data_providers/repos
 
 class SaveItemDemoClient extends SaveItemClientRepository{
   @override
-  Future<bool> saveItemIntoMail({required SaveItemIdToMailRequestDTO saveItemDTO}) async{
+  Future<bool> saveItemIntoMail({required String businessId, required String itemId}) async{
     await Future.delayed(const Duration(seconds: 1));
     return true;
   }

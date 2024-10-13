@@ -16,7 +16,7 @@ class RequestHandler {
   RequestHandler._internal();
 
   final http.Client httpClient = GetIt.instance<http.Client>();
-  final String baseNoWaitUrl = 'https://9f29-85-61-254-238.ngrok-free.app';
+  final String baseNoWaitUrl = 'https://e184-85-61-254-238.ngrok-free.app';
   final JwtTokenManager _tokenManager = JwtTokenManager();
 
   /// ***************************************************************************
@@ -99,7 +99,7 @@ class RequestHandler {
   Future<Response> postRequest({
     String? baseApiUrl,
     required String endPoint,
-    required Object? dataDecode,
+    Object? dataDecode,
     required int errorCode,
     bool isFormData = false, // Nuevo parámetro para controlar si es form-data
     bool useToken = true,

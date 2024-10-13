@@ -1,4 +1,4 @@
-class CreateItemRequestDTO {
+class ItemRequestDTO {
   final String name;
   final String description;
   final int peoplePerShift;
@@ -7,7 +7,7 @@ class CreateItemRequestDTO {
   final int durationPerShifts; // En minutos
   final String status; // Representa el ItemStatus como String
 
-  CreateItemRequestDTO({
+  ItemRequestDTO({
     required this.name,
     required this.description,
     required this.peoplePerShift,
@@ -16,4 +16,16 @@ class CreateItemRequestDTO {
     required this.durationPerShifts,
     required this.status,
   });
+
+  Map<String, dynamic> toJson(){
+    return {
+      'name': name,
+      'description': description,
+      'peoplePerShift': peoplePerShift,
+      'mainImagePath': mainImagePath,
+      'secondaryImagePath': secondaryImagePath,
+      'durationPerShifts': durationPerShifts,
+      'status': status,
+    };
+  }
 }
