@@ -16,6 +16,8 @@ En este sistema, hay un **switch** que elige de dónde se va a proveer la inform
 
 Este switch entre **endPoint** y **DEMO** es gestionado por el "core" de la aplicación, específicamente en el **server_locator**, donde mediante la librería [GetIt](https://pub.dev/packages/get_it) se instancian las dependencias necesarias para la aplicación. Dentro de este archivo, puedes cambiar el proveedor de datos (endPoint o DEMO).
 
+Cuenta con un sistema de autoRefresh para actualizar los tokens (accessToken y refreshToken, de 10 minutos y 1 dia manejados respectivamente) en el que al realizar cada una de las peticiones se manda el accessToken y en caso de que este este caducado y el [Back-end](https://github.com/Skrillboss/no_wait_backEnd) responda con un codigo en especifico (actualmente es el 401) envie automaticamente una peticion para actualizar el accessToken con el header Authorization enviando el refreshToken.
+
 ---
 
 ¡Gracias por tu interés en NoWait! Si tienes preguntas, no dudes en contactarnos. 😊
