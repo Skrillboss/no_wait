@@ -11,7 +11,7 @@ class UserMapper {
       nickName: json['nickName'],
       email: json['email'],
       phoneNumber: json['phoneNumber'],
-      roleList: RoleMapper.listFromJson(json['roleDTOList'] as List<dynamic>),
+      role: RoleMapper.fromJson(json['roleDTO']),
       paymentInfoList: json['paymentInfoResponseDTOList'] != null
           ? PaymentInfoMapper.listFromJson(
               json['paymentInfoResponseDTOList'] as List<dynamic>)

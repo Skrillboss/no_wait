@@ -7,11 +7,11 @@ class AuthRefreshTokenApiClient extends AuthRefreshTokenClientRepository{
   final RequestHandler requestHandler = RequestHandler();
 
   @override
-  Future<Map<String, dynamic>> login(String refreshToken) async {
+  Future<Map<String, dynamic>> login(String accessToken) async {
     try{
       final response = await requestHandler.postRequest(
-          endPoint: '/login/refreshToken',
-          dataDecode: {'refreshToken': refreshToken},
+          endPoint: '/user/refreshToken',
+          dataDecode: {'accessToken': accessToken},
           errorCode: 2000);
       return jsonDecode(response.body);
     } on CustomException{

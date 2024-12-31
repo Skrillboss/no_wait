@@ -13,7 +13,7 @@ class User {
   String nickName;
   String email;
   String phoneNumber;
-  List<UserRole> roleList;
+  UserRole role;
   List<PaymentInfo?> paymentInfoList;
   Business? business;
   List<Shift?> shiftList;
@@ -23,18 +23,18 @@ class User {
     required this.nickName,
     required this.email,
     required this.phoneNumber,
-    required this.roleList,
+    required this.role,
     required this.paymentInfoList,
     required this.business,
     required this.shiftList,
   }) : assert(
-          _validateUser(roleList, paymentInfoList, business),
+          _validateUser(role, paymentInfoList, business),
           'For ADMIN role, PaymentInfo and Business are required',
         );
 
-  static bool _validateUser(List<UserRole> roleList,
+  static bool _validateUser(UserRole role,
       List<PaymentInfo?> paymentInfoList, Business? business) {
-    bool isAdmin = roleList.contains(UserRole.ADMIN);
+    bool isAdmin = role.name == 'ADMIN';
     if (isAdmin) {
       return paymentInfoList.isNotEmpty && business != null;
     }
