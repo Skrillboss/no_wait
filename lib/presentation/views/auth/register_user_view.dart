@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_turno/core/custom_exception/custom_exception.dart';
 import 'package:todo_turno/features/business/application/dto/register_business_request_DTO.dart';
 import 'package:todo_turno/features/image/application/use_cases/take_photo.dart';
 import 'package:todo_turno/features/image/domain/entities/image_data.dart';
@@ -119,7 +120,7 @@ class _RegisterUserViewState extends State<RegisterUserView> {
         email: _emailController.text,
         phoneNumber: _phoneUserController.value.international,
         password: _passwordController.text,
-        userRole: [registerRoleDTO],
+        userRole: registerRoleDTO,
         paymentInfoList: [registerPaymentInfoDTO],
         business: registerBusinessDTO,
       );
@@ -132,8 +133,13 @@ class _RegisterUserViewState extends State<RegisterUserView> {
             duration: const Duration(seconds: 5),
           ),
         );
-      } catch (e) {
-        print('========================HA OCURRIDO EL SIGUIENTE ERROR: $e');
+      } on CustomException catch (customException) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(customException.showErrorToUser()),
+            duration: const Duration(seconds: 5),
+          ),
+        );
       } finally {
         if (mounted) {
           setState(() {

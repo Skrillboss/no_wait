@@ -9,9 +9,9 @@ class RegisterUserDTO {
   final String email;
   final String phoneNumber;
   final String password;
-  final List<RegisterRoleDTO> userRole;
-  final List<RegisterPaymentInfoDTO?> paymentInfoList; // Lista de PaymentInfo
-  final RegisterBusinessRequestDTO? business; // Objeto Business (opcional)
+  final RegisterRoleDTO userRole;
+  final List<RegisterPaymentInfoDTO?> paymentInfoList;
+  final RegisterBusinessRequestDTO? business;
 
   RegisterUserDTO({
     required this.name,
@@ -41,7 +41,7 @@ class RegisterUserDTO {
       'email': email,
       'phoneNumber': phoneNumber,
       'password': password,
-      'roleRequestDTOList': userRole.map((i) => i.toJson()).toList(),
+      'roleRequestDTO': userRole,
       'paymentInfoRequestDTOList': paymentInfoList
           .where((i) => i != null)
           .map((i) => i!.toJson())
