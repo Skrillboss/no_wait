@@ -51,17 +51,17 @@ class _LoginUserViewState extends State<LoginUserView> {
           changeView(context, UserProfileView());
         }
       }on CustomException catch(e){
-        e.errorCodes.map((appError){
+        for (var appError in e.errorCodes) {
           switch(appError){
-            case 'APP-2007':
+            case 2007:
               errorMessage = 'El usuario con el apodo: ${_nickNameController.text} no existe';
               //TODO: meter este texto dentro de una constante que se controle por el idioma
-            case 'APP-3002':
+            case 3002:
               errorMessage = 'Usuario o contraseña incorrecta';
             default:
               errorMessage = 'A ocurrido un error, intentelo mas tarde';
           }
-        });
+        }
       }finally{
         if(mounted){
           setState(() {

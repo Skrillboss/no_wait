@@ -127,7 +127,6 @@ class RequestHandler {
           var streamedResponse = await request.send();
           return await http.Response.fromStream(streamedResponse);
         } else {
-          // if JSON
           return await _requestHandler(()async{
             return httpClient.post(
               Uri.parse('$baseUrl$endPoint'),
