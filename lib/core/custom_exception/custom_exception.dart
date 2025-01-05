@@ -29,7 +29,7 @@ CustomException:
     String formatedError = 'Error Dev: $errorCodes \nError Http: $statusCode';
 
     // Filtrar los códigos visibles al usuario (entre 2000 y 3999)
-    List<int> visibleErrors = errorCodes.where((code) => code >= 2000 && code < 4000).toList();
+    List<int> visibleErrors = errorCodes.where((code) => code >= 1000 && code < 4000).toList();
 
     // Si hay errores visibles, formatear las explicaciones asociadas
     if (visibleErrors.isNotEmpty) {
