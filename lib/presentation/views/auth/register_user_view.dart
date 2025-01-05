@@ -206,8 +206,6 @@ class _RegisterUserViewState extends State<RegisterUserView> {
           ButtonSegment<UserRole>(
               value: UserRole.USER, icon: Icon(Icons.person)),
           ButtonSegment<UserRole>(
-              value: UserRole.MANAGER, icon: Icon(Icons.badge)),
-          ButtonSegment<UserRole>(
               value: UserRole.ADMIN, icon: Icon(Icons.admin_panel_settings))
         ],
         selected: <UserRole>{userRoleView},
